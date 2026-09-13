@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#F7FBF8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,9 +15,7 @@
     <!-- Global Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
@@ -31,7 +27,7 @@
             --surface-input: #FFFFFF;
             --surface-glass: rgba(255, 255, 255, 0.92);
 
-            /* Exact Screenshot Forest Green Palette */
+            /* Forest Green Palette */
             --forest-950: #02231A;
             --forest-900: #064E3B;
             --forest-800: #055944;
@@ -39,7 +35,7 @@
             --forest-600: #059669;
             --forest-500: #10B981;
             --forest-100: #D1FAE5;
-            --forest-50: #ECFDF5;
+            --forest-50:  #ECFDF5;
 
             --ink-headline: #04382A;
             --ink-title: #090D14;
@@ -70,8 +66,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        html,
-        body {
+        html, body {
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
@@ -79,7 +74,7 @@
             overflow-x: hidden;
         }
 
-        /* Subtle Ambient Lighting */
+        /* Subtle Ambient Canvas */
         .ambient-canvas {
             position: fixed;
             inset: 0;
@@ -91,7 +86,7 @@
         }
 
         /* ==========================================================================
-           2. DISCREET FLOATING TOAST (BACKGROUND NETWORK / ERROR FEEDBACK)
+           2. DISCREET FLOATING TOAST (BACKGROUND NETWORK & FEEDBACK)
            ========================================================================== */
         .toast-wrapper {
             position: fixed;
@@ -153,49 +148,80 @@
 
         .register-card {
             width: 100%;
-            max-width: 420px;
+            max-width: 410px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             animation: cardEntrance 0.7s var(--ease-spring) forwards;
         }
 
         @keyframes cardEntrance {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* App Emblem Box */
+        .brand-header-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .app-logo-box {
+            width: 66px;
+            height: 66px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: 0 12px 24px -4px rgba(6, 78, 59, 0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-wordmark {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            color: var(--forest-900);
+            line-height: 1.1;
         }
 
         /* Header Block from Screenshot */
         .header-block {
             width: 100%;
             text-align: left;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .header-title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
-            letter-spacing: -0.035em;
+            letter-spacing: -0.03em;
             color: var(--ink-headline);
+            margin-bottom: 4px;
             line-height: 1.2;
-            margin-bottom: 6px;
         }
 
         .header-subtitle {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 500;
             color: var(--ink-body);
             letter-spacing: -0.01em;
             line-height: 1.45;
         }
 
-        /* Top Google SSO Button (As Requested) */
+        /* Top Google SSO Button */
         .btn-google-sso {
             width: 100%;
             height: 52px;
@@ -212,7 +238,7 @@
             cursor: pointer;
             transition: all 0.2s var(--ease-smooth);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .btn-google-sso:hover {
@@ -226,8 +252,8 @@
         }
 
         .btn-google-sso svg {
-            width: 19px;
-            height: 19px;
+            width: 18px;
+            height: 18px;
         }
 
         /* OR Divider */
@@ -235,7 +261,7 @@
             display: flex;
             align-items: center;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .divider-line {
@@ -255,13 +281,13 @@
         }
 
         /* ==========================================================================
-           4. FORM INPUT APPARATUS (ALL 6 EXACT SCREENSHOT FIELDS)
+           4. FORM INPUT APPARATUS (EXACT 6 SCREENSHOT FIELDS)
            ========================================================================== */
         .auth-form {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 13px;
+            gap: 12px;
         }
 
         .input-group {
@@ -329,7 +355,7 @@
             color: var(--ink-headline);
         }
 
-        /* Forest Green Register Button */
+        /* Solid Forest Green Register Button */
         .btn-register-submit {
             position: relative;
             width: 100%;
@@ -346,7 +372,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 8px;
+            margin-top: 6px;
             transition: all 0.25s var(--ease-spring);
         }
 
@@ -370,15 +396,11 @@
             animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* Login Redirection Footer */
         .login-redirect-footer {
-            margin-top: 24px;
+            margin-top: 22px;
             font-size: 13.5px;
             color: var(--ink-body);
             text-align: center;
@@ -398,10 +420,9 @@
         }
     </style>
 </head>
-
 <body>
 
-    <!-- Ambient Subtle Background -->
+    <!-- Ambient Subtle Canvas -->
     <div class="ambient-canvas"></div>
 
     <!-- Floating Background Toast Notification -->
@@ -421,74 +442,71 @@
 
         <div class="register-card">
 
-            <!-- 1. Header Block from Screenshot -->
+            <!-- 1. App Emblem Header with Logo -->
+            <div class="brand-header-group">
+                <div class="app-logo-box">
+                    <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Roz E Hisab Logo">
+                </div>
+                <h1 class="brand-wordmark">Roz E Hisab</h1>
+            </div>
+
+            <!-- 2. Header Block from Screenshot -->
             <div class="header-block">
-                <h1 class="header-title">Create Your Account</h1>
+                <h2 class="header-title">Create Your Account</h2>
                 <p class="header-subtitle">Join Roz E Hisab and start managing your records today.</p>
             </div>
 
-            <!-- 2. One-Tap Continue with Google (Placed at Top as Requested) [1] -->
+            <!-- 3. One-Tap Continue with Google (Positioned at Top) -->
             <button type="button" class="btn-google-sso" id="googleSignUpBtn">
                 <svg viewBox="0 0 48 48">
-                    <path fill="#FFC107"
-                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
-                    <path fill="#FF3D00"
-                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
-                    <path fill="#4CAF50"
-                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
-                    <path fill="#1976D2"
-                        d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
                 </svg>
-                <span>Continue with Google</span>
+                <span id="googleBtnLabel">Continue with Google</span>
             </button>
 
-            <!-- 3. OR Divider -->
+            <!-- 4. OR Divider -->
             <div class="divider-row">
                 <div class="divider-line"></div>
                 <span class="divider-text">OR</span>
                 <div class="divider-line"></div>
             </div>
 
-            <!-- 4. Registration Form (All 6 Screenshot Fields) -->
+            <!-- 5. Registration Form (All 6 Screenshot Fields) -->
             <form class="auth-form" id="registerForm" novalidate>
-
+                
                 <!-- Field 1: Full Name -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <input type="text" id="fullNameInput" class="field-core" placeholder="Full Name" required
-                        autocomplete="name">
+                    <input type="text" id="fullNameInput" class="field-core" placeholder="Full Name" required autocomplete="name">
                 </div>
 
                 <!-- Field 2: Username -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"></circle>
                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
                     </svg>
-                    <input type="text" id="usernameInput" class="field-core" placeholder="Username" required
-                        autocomplete="username">
+                    <input type="text" id="usernameInput" class="field-core" placeholder="Username" required autocomplete="username">
                 </div>
 
                 <!-- Field 3: Email Address -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
-                    <input type="email" id="emailInput" class="field-core" placeholder="Email Address" required
-                        autocomplete="email">
+                    <input type="email" id="emailInput" class="field-core" placeholder="Email Address" required autocomplete="email">
                 </div>
 
                 <!-- Field 4: Phone Number -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
                         <line x1="12" y1="18" x2="12.01" y2="18"></line>
                     </svg>
@@ -497,17 +515,13 @@
 
                 <!-- Field 5: Password with Show/Hide Toggle -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
-                    <input type="password" id="passwordInput" class="field-core" placeholder="Password" required
-                        autocomplete="new-password">
-                    <button type="button" class="btn-eye-toggle" id="eyeToggleBtn1"
-                        aria-label="Toggle password visibility">
-                        <svg id="eyeIcon1" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <input type="password" id="passwordInput" class="field-core" placeholder="Password" required autocomplete="new-password">
+                    <button type="button" class="btn-eye-toggle" id="eyeToggleBtn1" aria-label="Toggle password visibility">
+                        <svg id="eyeIcon1" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
                         </svg>
@@ -516,17 +530,13 @@
 
                 <!-- Field 6: Confirm Password with Show/Hide Toggle -->
                 <div class="input-group">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
-                    <input type="password" id="confirmPasswordInput" class="field-core" placeholder="Confirm Password"
-                        required autocomplete="new-password">
-                    <button type="button" class="btn-eye-toggle" id="eyeToggleBtn2"
-                        aria-label="Toggle confirm password visibility">
-                        <svg id="eyeIcon2" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <input type="password" id="confirmPasswordInput" class="field-core" placeholder="Confirm Password" required autocomplete="new-password">
+                    <button type="button" class="btn-eye-toggle" id="eyeToggleBtn2" aria-label="Toggle confirm password visibility">
+                        <svg id="eyeIcon2" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
                         </svg>
@@ -541,7 +551,7 @@
 
             </form>
 
-            <!-- 5. Bottom Login Switcher -->
+            <!-- 6. Bottom Login Switcher -->
             <div class="login-redirect-footer">
                 Already have an account?<a href="login.html">Login</a>
             </div>
@@ -551,27 +561,31 @@
     </main>
 
     <!-- ==========================================================================
-       6. CORE FIREBASE REGISTRATION & WORKSPACE INITIALIZATION ENGINE
+       6. CORE FIREBASE GOOGLE AUTO-RETURN & WORKSPACE INITIALIZATION ENGINE
        ========================================================================== -->
     <script type="module">
-        import {
-            auth,
-            provider,
-            signInWithPopup,
-            db
+        import { 
+            auth, 
+            provider, 
+            db 
         } from './firebase/firebase-config.js';
-        import {
-            createUserWithEmailAndPassword,
-            updateProfile,
-            onAuthStateChanged
+
+        import { 
+            createUserWithEmailAndPassword, 
+            updateProfile, 
+            signInWithPopup, 
+            signInWithRedirect, 
+            getRedirectResult, 
+            onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-        import {
-            doc,
-            setDoc,
-            getDoc,
-            collection,
-            addDoc,
-            serverTimestamp
+
+        import { 
+            doc, 
+            getDoc, 
+            setDoc, 
+            collection, 
+            addDoc, 
+            serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
         // DOM Handles
@@ -586,6 +600,7 @@
         const btnLabel = document.getElementById('btnLabel');
         const btnSpinner = document.getElementById('btnSpinner');
         const googleSignUpBtn = document.getElementById('googleSignUpBtn');
+        const googleBtnLabel = document.getElementById('googleBtnLabel');
         const eyeToggleBtn1 = document.getElementById('eyeToggleBtn1');
         const eyeToggleBtn2 = document.getElementById('eyeToggleBtn2');
         const eyeIcon1 = document.getElementById('eyeIcon1');
@@ -598,8 +613,8 @@
         function notify(message, isError = true) {
             clearTimeout(toastTimer);
             toastMsg.innerText = message;
-            toastBox.querySelector('.toast-capsule').style.background = isError
-                ? "rgba(185, 28, 28, 0.95)"
+            toastBox.querySelector('.toast-capsule').style.background = isError 
+                ? "rgba(185, 28, 28, 0.95)" 
                 : "rgba(6, 78, 59, 0.95)";
             toastBox.classList.add('active');
             toastTimer = setTimeout(() => {
@@ -607,10 +622,80 @@
             }, 3600);
         }
 
-        // Auto-Redirect if Already Logged In
-        onAuthStateChanged(auth, (user) => {
+        // Generate Random Cryptographic Invite Code
+        function generateInviteCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'RZH-';
+            for (let i = 0; i < 4; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Initialize / Verify Master Workspace in Firestore
+        async function bootstrapWorkspace(user, fullName, username, phone) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (!userDoc.exists()) {
+                    const inviteCode = generateInviteCode();
+
+                    // Create Family Workspace Document
+                    const familyRef = await addDoc(collection(db, "families"), {
+                        name: `${fullName}'s Household Vault`,
+                        ownerUid: user.uid,
+                        inviteCode: inviteCode,
+                        currency: "PKR",
+                        createdAt: serverTimestamp()
+                    });
+
+                    // Create Detailed User Profile Document
+                    await setDoc(doc(db, "users", user.uid), {
+                        uid: user.uid,
+                        displayName: fullName,
+                        username: username || fullName.toLowerCase().replace(/\s+/g, '_'),
+                        email: user.email,
+                        phoneNumber: phone || null,
+                        familyId: familyRef.id,
+                        role: "owner",
+                        createdAt: serverTimestamp()
+                    });
+
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", familyRef.id);
+                    localStorage.setItem("ROZ_ACTIVE_USER_NAME", fullName);
+                } else {
+                    const uData = userDoc.data();
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", uData.familyId || "DEFAULT_FAMILY");
+                }
+            } catch (err) {
+                console.warn("[Workspace Sync Cache]:", err);
+            }
+        }
+
+        // ==========================================================================
+        // AUTOMATIC RETURN CATCHER (FROM GOOGLE AUTH REDIRECT OR PERSISTENT SESSION)
+        // ==========================================================================
+
+        // 1. Check if returning from full page Google Redirect (Mobile / Vercel Support)
+        getRedirectResult(auth).then(async (result) => {
+            if (result && result.user) {
+                notify("Google Identity Confirmed! Initializing Vault...", false);
+                const user = result.user;
+                const fallbackName = user.displayName || "Family Owner";
+                await bootstrapWorkspace(user, fallbackName, fallbackName.toLowerCase().replace(/\s+/g, '_'), user.phoneNumber);
+                window.location.replace("dashboard.html");
+            }
+        }).catch((error) => {
+            if (error.code !== 'auth/popup-closed-by-user') {
+                notify("Google Authentication Error: " + error.message);
+            }
+        });
+
+        // 2. Global State Listener (Auto-routes to dashboard if active)
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                window.location.href = "dashboard.html";
+                const fallbackName = user.displayName || "Family Owner";
+                await bootstrapWorkspace(user, fallbackName, fallbackName.toLowerCase().replace(/\s+/g, '_'), user.phoneNumber);
+                window.location.replace("dashboard.html");
             }
         });
 
@@ -619,7 +704,7 @@
             button.addEventListener('click', () => {
                 const isPass = input.type === "password";
                 input.type = isPass ? "text" : "password";
-                icon.innerHTML = isPass
+                icon.innerHTML = isPass 
                     ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`
                     : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
             });
@@ -641,50 +726,6 @@
             }
         }
 
-        // Generate Random Cryptographic Invite Code (e.g. RZH-9281)
-        function generateInviteCode() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let code = 'RZH-';
-            for (let i = 0; i < 4; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return code;
-        }
-
-        // Initialize Master Workspace in Firestore
-        async function bootstrapWorkspace(user, fullName, username, phone) {
-            const inviteCode = generateInviteCode();
-
-            // 1. Create Family Workspace Document
-            const familyRef = await addDoc(collection(db, "families"), {
-                name: `${fullName}'s Household Vault`,
-                ownerUid: user.uid,
-                inviteCode: inviteCode,
-                currency: "PKR",
-                createdAt: serverTimestamp()
-            });
-
-            const familyId = familyRef.id;
-
-            // 2. Create Detailed User Profile Document
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
-                displayName: fullName,
-                username: username || fullName.toLowerCase().replace(/\s+/g, '_'),
-                email: user.email,
-                phoneNumber: phone || null,
-                familyId: familyId,
-                role: "owner",
-                createdAt: serverTimestamp()
-            });
-
-            // 3. Cache Active Session in LocalStorage
-            localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", familyId);
-            localStorage.setItem("ROZ_ACTIVE_USER_NAME", fullName);
-
-            return familyId;
-        }
-
         // Form Submit: Manual Email/Password Registration
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -696,7 +737,6 @@
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
 
-            // Validations
             if (!fullName || !username || !email || !password || !confirmPassword) {
                 notify("Please fill out all required fields.");
                 return;
@@ -720,17 +760,13 @@
             setLoading(true);
 
             try {
-                // Create User with Firebase Auth
                 const cred = await createUserWithEmailAndPassword(auth, email, password);
                 await updateProfile(cred.user, { displayName: fullName });
 
-                // Initialize Family Workspace in Firestore
                 await bootstrapWorkspace(cred.user, fullName, username, phone);
 
                 notify("Account Initialized! Unlocking Vault...", false);
-                setTimeout(() => {
-                    window.location.href = "dashboard.html";
-                }, 350);
+                // onAuthStateChanged will handle automatic clean replacement to dashboard.html
 
             } catch (error) {
                 setLoading(false);
@@ -744,41 +780,43 @@
             }
         });
 
-        // One-Tap Google Registration Handler
+        // ==========================================================================
+        // SEAMLESS GOOGLE SIGN-UP (POPUP WITH REDIRECT FALLBACK FOR MOBILE/VERCEL)
+        // ==========================================================================
         googleSignUpBtn.addEventListener('click', async () => {
             if (!navigator.onLine) {
                 notify("Network offline. Connection required for Google.");
                 return;
             }
 
-            setLoading(true);
+            googleBtnLabel.innerText = "Connecting Google...";
+            googleSignUpBtn.disabled = true;
 
             try {
+                // Try Popup First
                 const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                // Check if user already exists in Firestore
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (!userDoc.exists()) {
+                if (result && result.user) {
+                    notify("Identity Confirmed! Initializing Vault...", false);
+                    const user = result.user;
                     const fallbackName = user.displayName || "Family Owner";
                     await bootstrapWorkspace(user, fallbackName, fallbackName.toLowerCase().replace(/\s+/g, '_'), user.phoneNumber);
-                } else {
-                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", userDoc.data().familyId);
+                    window.location.replace("dashboard.html");
                 }
-
-                notify("Identity Verified. Unlocking Vault...", false);
-                setTimeout(() => {
-                    window.location.href = "dashboard.html";
-                }, 350);
-
             } catch (error) {
-                setLoading(false);
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    notify("Google Sign-In was cancelled or failed.");
+                // If popup blocked on mobile device, seamlessly fallback to Redirect!
+                if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+                    notify("Opening secure Google gateway...", false);
+                    await signInWithRedirect(auth, provider);
+                } else if (error.code !== 'auth/popup-closed-by-user') {
+                    googleBtnLabel.innerText = "Continue with Google";
+                    googleSignUpBtn.disabled = false;
+                    notify("Google Sign-Up Error: " + error.message);
+                } else {
+                    googleBtnLabel.innerText = "Continue with Google";
+                    googleSignUpBtn.disabled = false;
                 }
             }
         });
     </script>
 </body>
-
 </html>
