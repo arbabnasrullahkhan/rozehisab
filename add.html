@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#F8FAFC">
+    <meta name="theme-color" content="#FAFAFA">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Roz E Hisab — Universal Entry Terminal</title>
@@ -15,60 +15,46 @@
     <!-- Global Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
-           1. ROZ E HISAB EMERALD LUXURY DESIGN TOKENS
+           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (LIGHT LUXURY)
            ========================================================================== */
         :root {
             --canvas: #F8FAFC;
             --surface: #FFFFFF;
             --surface-subtle: #F1F5F9;
-            --surface-dock: rgba(255, 255, 255, 0.94);
-
-            --brand-primary: #047857;
-            --brand-deep: #064E3B;
-            --brand-mint: #ECFDF5;
-            --brand-emerald: #10B981;
-
-            --ink-headline: #04382A;
-            --ink-title: #0F172A;
-            --ink-secondary: #475569;
-            --ink-tertiary: #94A3B8;
-
-            /* Category Specific Accents */
-            --cat-food: #F59E0B;
-            --cat-food-bg: #FEF3C7;
-            --cat-home: #3B82F6;
-            --cat-home-bg: #EFF6FF;
-            --cat-transport: #10B981;
-            --cat-transport-bg: #ECFDF5;
-            --cat-school: #8B5CF6;
-            --cat-school-bg: #F5F3FF;
-            --cat-agri: #059669;
-            --cat-agri-bg: #E6F4EA;
-            --cat-shop: #0284C7;
-            --cat-shop-bg: #E0F2FE;
-            --cat-advance: #D97706;
-            --cat-advance-bg: #FEF3C7;
-            --cat-other: #06B6D4;
-            --cat-other-bg: #ECFEFF;
-
-            --danger-ink: #EF4444;
-            --danger-bg: #FEF2F2;
-
+            --surface-glass: rgba(255, 255, 255, 0.88);
             --border-subtle: rgba(15, 23, 42, 0.06);
-            --border-card: #EDF2F7;
-            --border-focus: #059669;
+            --border-card: rgba(15, 23, 42, 0.08);
+            --border-focus: #047857; /* Emerald Focus */
 
-            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
-            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
-            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
-            --shadow-toast: 0 18px 36px -6px rgba(15, 23, 42, 0.16);
+            --ink-primary: #090D14;
+            --ink-secondary: #525C6F;
+            --ink-tertiary: #8A94A6;
+            --ink-inverse: #FFFFFF;
+
+            --brand-primary: #047857; /* Forest Green */
+            --brand-hover: #064E3B;
+            --brand-glow: rgba(4, 120, 87, 0.22);
+            --brand-gradient: linear-gradient(135deg, #059669 0%, #064E3B 100%);
+            --brand-subtle-bg: #ECFDF5;
+
+            --income-color: #10B981;
+            --expense-color: #EF4444;
+
+            --status-online: #10B981;
+            --status-offline: #F59E0B;
+            --accent-emerald: #059669;
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+            --shadow-subtle: 0 4px 20px -2px rgba(9, 13, 20, 0.03);
+            --shadow-card: 0 20px 45px -10px rgba(9, 13, 20, 0.05), 0 0 0 1px rgba(9, 13, 20, 0.03);
+            --shadow-island: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -85,98 +71,120 @@
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
-            color: var(--ink-title);
+            color: var(--ink-primary);
             overflow-x: hidden;
         }
 
-        /* Mobile Container Frame */
-        .mobile-viewport {
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
             width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background: var(--canvas);
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 100px;
-            position: relative;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         /* ==========================================================================
-           2. EXECUTIVE TOP APP BAR
+           2. APPLE-STYLE DYNAMIC ISLAND TOP BAR
            ========================================================================== */
-        .top-appbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
+        .island-container {
+            position: fixed;
+            top: env(safe-area-inset-top, 16px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            width: 92%;
+            max-width: 520px;
+            pointer-events: none;
+        }
+
+        .dynamic-island {
+            pointer-events: auto;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            padding: 10px 18px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-radius: 100px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-island);
+            transition: all 0.4s var(--ease-spring);
         }
 
-        .btn-header-back {
+        .island-action-back {
             display: flex;
             align-items: center;
             gap: 6px;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--ink-secondary);
             text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
             background: var(--surface-subtle);
-            border: 1px solid var(--border-subtle);
             transition: all 0.2s ease;
         }
 
-        .btn-header-back:hover {
-            color: var(--brand-deep);
+        .island-action-back:hover {
+            color: var(--ink-primary);
             background: #E2E8F0;
         }
 
-        .header-title-str {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--ink-headline);
+        .island-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-primary);
             letter-spacing: -0.02em;
         }
 
-        .app-logo-mini {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+        .island-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-beacon {
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--status-online);
         }
 
-        .app-logo-mini img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .settings-icon-btn {
+            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .settings-icon-btn:hover {
+            color: var(--brand-primary);
         }
 
         /* ==========================================================================
-           3. TOAST NOTIFICATIONS
+           3. TOAST NOTIFICATIONS APPARATUS
            ========================================================================== */
         .toast-wrapper {
             position: fixed;
-            top: env(safe-area-inset-top, 20px);
+            top: calc(env(safe-area-inset-top, 20px) + 65px);
             left: 50%;
-            transform: translateX(-50%) translateY(-24px);
+            transform: translateX(-50%) translateY(-20px);
             opacity: 0;
             visibility: hidden;
-            z-index: 1000;
-            transition: all 0.35s var(--ease-spring);
+            z-index: 600;
+            transition: all 0.4s var(--ease-spring);
             pointer-events: none;
             width: 90%;
-            max-width: 400px;
+            max-width: 440px;
         }
 
         .toast-wrapper.active {
@@ -187,212 +195,223 @@
         }
 
         .toast-capsule {
-            background: rgba(15, 23, 42, 0.94);
-            color: #FFFFFF;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             padding: 12px 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             gap: 12px;
             box-shadow: var(--shadow-toast);
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 500;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .toast-capsule svg {
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-        }
-
         /* ==========================================================================
-           4. FORM BODY STREAM
+           4. MAIN INPUT VIEWPORT APPARATUS
            ========================================================================== */
-        .content-stream {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 16px;
-        }
-
-        /* Type Switcher: Expense vs Income */
-        .type-switcher-card {
-            background: var(--surface-subtle);
-            border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 4px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
-        }
-
-        .type-toggle-btn {
-            height: 40px;
-            border: none;
-            border-radius: 12px;
-            background: transparent;
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--ink-secondary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .type-toggle-btn.active.expense {
-            background: var(--surface);
-            color: var(--danger-ink);
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
-        }
-
-        .type-toggle-btn.active.income {
-            background: var(--surface);
-            color: var(--brand-deep);
-            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
-        }
-
-        /* Realtime Voice Dictation Card */
-        .voice-terminal-card {
-            background: var(--surface);
-            border-radius: 22px;
-            padding: 18px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
+        .viewport {
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .voice-terminal-card.listening {
-            border-color: var(--brand-emerald);
-            background: #F0FDF4;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        }
-
-        .voice-text-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .voice-title-str {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--ink-headline);
-        }
-
-        .voice-caption-str {
-            font-size: 12px;
-            color: var(--ink-secondary);
-            line-height: 1.35;
-        }
-
-        .btn-voice-mic {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: var(--brand-mint);
-            border: none;
-            color: var(--brand-deep);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: all 0.25s var(--ease-spring);
-        }
-
-        .btn-voice-mic.active {
-            background: var(--brand-deep);
-            color: white;
-            animation: pulseWave 1.4s infinite alternate;
-        }
-
-        @keyframes pulseWave {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 78, 59, 0.4); }
-            100% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(6, 78, 59, 0); }
-        }
-
-        /* Universal Form Chassis */
-        .entry-form-card {
-            background: var(--surface);
-            border-radius: 24px;
-            padding: 22px 18px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
+            z-index: 10;
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: calc(env(safe-area-inset-top, 20px) + 72px) 18px calc(env(safe-area-inset-bottom, 20px) + 110px) 18px;
             display: flex;
             flex-direction: column;
             gap: 18px;
         }
 
+        /* Expense vs Income Type Toggle */
+        .type-toggle-wrapper {
+            background: var(--surface);
+            border-radius: 100px;
+            padding: 6px;
+            display: flex;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-card);
+        }
+
+        .type-toggle-btn {
+            flex: 1;
+            height: 40px;
+            border-radius: 100px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-tertiary);
+            cursor: pointer;
+            transition: all 0.25s var(--ease-spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .type-toggle-btn.active.expense {
+            background: var(--danger-bg);
+            color: var(--expense-color);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        }
+
+        .type-toggle-btn.active.income {
+            background: var(--brand-subtle-bg);
+            color: var(--income-color);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Speech Recognition Terminal */
+        .voice-terminal-card {
+            background: var(--surface);
+            border-radius: 26px;
+            padding: 20px 22px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .voice-terminal-card.listening {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 4px var(--brand-glow);
+        }
+
+        .voice-meta-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .voice-heading {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .voice-caption {
+            font-size: 12px;
+            color: var(--ink-tertiary);
+            line-height: 1.35;
+        }
+
+        .voice-mic-fab {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .voice-mic-fab:active {
+            transform: scale(0.92);
+        }
+
+        .voice-mic-fab.active {
+            background: var(--brand-primary);
+            color: white;
+            border-color: var(--brand-primary);
+            animation: pulseMic 1.4s infinite alternate;
+        }
+
+        @keyframes pulseMic {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(4, 120, 87, 0.4); }
+            100% { transform: scale(1.08); box-shadow: 0 0 0 14px rgba(4, 120, 87, 0); }
+        }
+
+        /* Main Form Card */
+        .entry-form-card {
+            background: var(--surface);
+            border-radius: 30px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-card);
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* Form Group */
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             text-align: left;
         }
 
         .field-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--ink-headline);
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ink-primary);
+            letter-spacing: -0.01em;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .field-core {
+        .field-input {
             width: 100%;
-            height: 50px;
+            height: 52px;
             background: var(--surface-subtle);
             border: 1.5px solid transparent;
-            border-radius: 14px;
-            padding: 0 16px;
-            font-size: 14.5px;
+            border-radius: 15px;
+            padding: 0 18px;
+            font-size: 15px;
             font-weight: 600;
-            color: var(--ink-title);
+            color: var(--ink-primary);
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s var(--ease-smooth);
         }
 
-        .field-core::placeholder {
+        .field-input::placeholder {
             color: var(--ink-tertiary);
             font-weight: 400;
         }
 
-        .field-core:focus {
+        .field-input:focus {
             background: var(--surface);
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.14);
+            box-shadow: 0 0 0 4px var(--brand-glow);
         }
 
-        /* Quick Suggestions Shelf */
-        .quick-suggestions-shelf {
+        /* Quick Suggestions Shelf (Horizontally Scrollable) */
+        .quick-tags-shelf {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 2px;
+            padding-bottom: 6px;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
-        .quick-suggestions-shelf::-webkit-scrollbar { display: none; }
+
+        .quick-tags-shelf::-webkit-scrollbar {
+            display: none;
+        }
 
         .tag-pill {
             background: var(--surface-subtle);
             border: 1px solid var(--border-subtle);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 100px;
-            font-size: 11.5px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--ink-secondary);
             cursor: pointer;
             white-space: nowrap;
@@ -400,72 +419,113 @@
         }
 
         .tag-pill:hover {
-            background: var(--brand-mint);
-            color: var(--brand-deep);
+            background: #E2E8F0;
+            color: var(--ink-primary);
         }
 
-        /* Category Chips Grid */
-        .category-chips-grid {
+        /* Visual Interactive Category Grid */
+        .category-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
         }
 
-        .cat-choice-chip {
+        .cat-chip {
             background: var(--surface-subtle);
             border: 1.5px solid transparent;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 10px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 4px;
             cursor: pointer;
             transition: all 0.2s var(--ease-spring);
+            text-align: center;
         }
 
-        .cat-choice-chip.active {
-            background: var(--brand-mint);
-            border-color: var(--brand-emerald);
-            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.15);
+        .cat-chip .cat-emoji {
+            font-size: 18px;
         }
 
-        .cat-choice-chip.active .cat-choice-name {
-            color: var(--brand-deep);
-            font-weight: 800;
-        }
-
-        .cat-choice-emoji { font-size: 18px; }
-        .cat-choice-name {
+        .cat-chip .cat-name {
             font-size: 10.5px;
             font-weight: 600;
             color: var(--ink-secondary);
         }
 
-        /* Quantity & Unit Row */
-        .dual-inputs-row {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 10px;
+        .cat-chip.active {
+            background: var(--brand-subtle-bg);
+            border-color: var(--brand-primary);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.12);
         }
 
-        /* Dynamic Per-Unit Intelligence Card */
-        .unit-rate-banner {
+        .cat-chip.active .cat-name {
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        /* Dual Quantity & Unit Input */
+        .qty-unit-row {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 12px;
+        }
+
+        .field-select {
+            width: 100%;
+            height: 52px;
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 15px;
+            padding: 0 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-primary);
+            outline: none;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-smooth);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+
+        .field-select:focus {
+            background: var(--surface);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 4px var(--brand-glow);
+        }
+
+        /* Dynamic Per-Unit Metric Engine */
+        .unit-intelligence-card {
             display: none;
             background: #F0FDF4;
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            border-radius: 14px;
-            padding: 12px 14px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            padding: 12px 16px;
             align-items: center;
             justify-content: space-between;
             animation: fadeIn 0.3s ease;
         }
 
-        .unit-rate-label { font-size: 12px; font-weight: 700; color: #059669; }
-        .unit-rate-num { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 800; color: #064E3B; }
+        .unit-intel-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-emerald);
+        }
 
-        /* Expandable Accordion */
-        .spec-accordion-btn {
+        .unit-intel-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--accent-emerald);
+        }
+
+        /* Expandable Accordion Specifications */
+        .accordion-trigger {
             background: none;
             border: none;
             display: flex;
@@ -473,63 +533,64 @@
             justify-content: space-between;
             width: 100%;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--ink-secondary);
             cursor: pointer;
-            padding: 4px 0;
+            padding: 8px 0;
         }
 
-        .spec-accordion-btn svg {
+        .accordion-trigger svg {
             transition: transform 0.3s var(--ease-spring);
         }
 
-        .spec-accordion-btn.open svg {
+        .accordion-trigger.open svg {
             transform: rotate(180deg);
         }
 
-        .spec-accordion-body {
+        .accordion-body {
             display: none;
             flex-direction: column;
-            gap: 12px;
-            padding-top: 8px;
+            gap: 14px;
+            padding-top: 10px;
         }
 
-        .spec-accordion-body.open { display: flex; }
+        .accordion-body.open {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
 
-        /* Commit Action Button */
-        .btn-commit-entry {
+        /* Master Submit Action Button */
+        .btn-commit {
             width: 100%;
-            height: 54px;
+            height: 56px;
+            background: var(--brand-gradient);
             border: none;
-            border-radius: 14px;
-            background: linear-gradient(180deg, #055944 0%, #03392B 100%);
-            color: #FFFFFF;
+            border-radius: 16px;
             font-size: 15.5px;
-            font-weight: 800;
-            letter-spacing: -0.01em;
+            font-weight: 700;
+            color: white;
             cursor: pointer;
-            box-shadow: var(--shadow-fab);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 6px;
+            box-shadow: 0 16px 32px -4px rgba(4, 120, 87, 0.4);
             transition: all 0.25s var(--ease-spring);
         }
 
-        .btn-commit-entry:hover {
+        .btn-commit:hover {
             transform: translateY(-1.5px);
-            box-shadow: 0 18px 36px -6px rgba(5, 89, 68, 0.52);
+            box-shadow: 0 20px 36px -4px rgba(4, 120, 87, 0.5);
         }
 
-        .btn-commit-entry:active {
+        .btn-commit:active {
             transform: scale(0.98);
         }
 
         .btn-spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: #FFFFFF;
             border-radius: 50%;
@@ -538,369 +599,382 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ==========================================================================
-           5. LUXURY MOBILE ISLAND DOCK
-           ========================================================================== */
-        .dock-container {
+        /* Custom Category Modal */
+        .modal-overlay {
             position: fixed;
-            bottom: env(safe-area-inset-bottom, 14px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 500;
-            width: 92%;
-            max-width: 440px;
-            pointer-events: none;
+            inset: 0;
+            background: rgba(9, 13, 20, 0.45);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: none;
+            align-items: flex-end; /* Bottom Sheet Style */
+            justify-content: center;
         }
 
-        .mobile-dock {
-            pointer-events: auto;
+        .modal-overlay.active { display: flex; }
+
+        .modal-window {
+            background: var(--surface);
+            border-radius: 30px 30px 0 0;
+            padding: 30px 24px 40px 24px;
             width: 100%;
-            height: 68px;
-            background: var(--surface-dock);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            border-radius: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: var(--shadow-dock);
+            max-width: 520px;
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: slideUp 0.3s var(--ease-spring) forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header-row {
             display: flex;
             align-items: center;
-            justify-content: space-around;
-            padding: 0 8px;
+            justify-content: space-between;
         }
 
-        .dock-btn {
+        /* Verified Footer */
+        .footer-dock {
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 4px;
-            color: var(--ink-tertiary);
-            text-decoration: none;
-            width: 54px;
-            height: 100%;
-            transition: all 0.2s ease;
+            gap: 8px;
         }
 
-        .dock-btn svg { width: 21px; height: 21px; stroke-width: 2; }
-        .dock-btn span { font-size: 10px; font-weight: 700; }
-        .dock-btn.active { color: var(--brand-deep); }
-
-        .dock-fab-wrapper {
-            position: relative;
-            top: -20px;
-            width: 58px;
-            height: 58px;
-            display: flex;
+        .signature-pill {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            box-shadow: var(--shadow-subtle);
+            text-decoration: none;
         }
 
-        .dock-fab {
-            width: 58px;
-            height: 58px;
+        .signature-dot {
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
-            box-shadow: var(--shadow-fab);
-            border: 3.5px solid var(--surface);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.25s var(--ease-spring);
+            background: var(--brand-primary);
         }
 
-        .dock-fab:active { transform: scale(0.92); }
-        .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
+        .signature-text {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Main Mobile Frame Viewport -->
-    <main class="mobile-viewport">
+    <!-- Spatial Background Lighting -->
+    <div class="ambient-canvas"></div>
 
-        <!-- 1. Top Appbar -->
-        <header class="top-appbar">
-            <a href="dashboard.html" class="btn-header-back">
+    <!-- Apple-Style Dynamic Island Header -->
+    <div class="island-container">
+        <header class="dynamic-island">
+            <a href="dashboard.html" class="island-action-back">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 <span>Back</span>
             </a>
-
-            <h1 class="header-title-str" id="screenTitle">Add Outflow</h1>
-
-            <div class="app-logo-mini">
-                <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
+            <span class="island-title">Log Record</span>
+            <div class="island-right-actions">
+                <div class="status-beacon">
+                    <div class="beacon-dot" id="networkDot"></div>
+                </div>
+                <!-- Properly Fixed Settings Icon -->
+                <a href="settings.html" class="settings-icon-btn" title="Settings">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </a>
             </div>
         </header>
+    </div>
 
-        <!-- 2. Form Stream -->
-        <div class="content-stream">
-
-            <!-- Type Switcher: Expense vs Income -->
-            <div class="type-switcher-card">
-                <button type="button" class="type-toggle-btn active expense" id="btnTypeExpense">
-                    <span>🔴</span>
-                    <span>Expense (خرچہ)</span>
-                </button>
-                <button type="button" class="type-toggle-btn income" id="btnTypeIncome">
-                    <span>🟢</span>
-                    <span>Income (آمدن)</span>
-                </button>
-            </div>
-
-            <!-- Intelligent Speech-to-Data Card -->
-            <section class="voice-terminal-card" id="voiceCard">
-                <div class="voice-text-meta">
-                    <h3 class="voice-title-str" id="voiceTitle">Voice Intelligent Input</h3>
-                    <p class="voice-caption-str" id="voiceCaption">Say e.g.: "5 KG Chawal 1500" or "Diesel 2800"</p>
-                </div>
-                <button type="button" class="btn-voice-mic" id="micBtn" title="Start voice dictation">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                        <line x1="12" y1="19" x2="12" y2="22"></line>
-                    </svg>
-                </button>
-            </section>
-
-            <!-- Universal Transaction Form -->
-            <form class="entry-form-card" id="transactionForm" novalidate>
-
-                <!-- 1. Item Name / Description -->
-                <div class="form-group">
-                    <label class="field-label" for="itemNameInput">
-                        <span>Description (کیا خریدا یا کمایا؟)</span>
-                        <span style="font-size:11px; color:var(--ink-tertiary);">REQUIRED</span>
-                    </label>
-                    <input type="text" id="itemNameInput" class="field-core" placeholder="e.g. Basmati Rice, Chicken, Electric Bill" required autofocus>
-
-                    <!-- Quick Tag Chips -->
-                    <div class="quick-suggestions-shelf">
-                        <span class="tag-pill" data-name="Rice" data-cat="Grocery" data-unit="KG">Rice</span>
-                        <span class="tag-pill" data-name="Chicken" data-cat="Grocery" data-unit="KG">Chicken</span>
-                        <span class="tag-pill" data-name="Milk" data-cat="Grocery" data-unit="Liter">Milk</span>
-                        <span class="tag-pill" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">Oil</span>
-                        <span class="tag-pill" data-name="Electricity Bill" data-cat="Household" data-unit="Amount">Electricity</span>
-                        <span class="tag-pill" data-name="Fuel / Petrol" data-cat="Transport" data-unit="Liter">Fuel</span>
-                        <span class="tag-pill" data-name="Fertilizer / Urea" data-cat="Zameen" data-unit="Bags">Fertilizer</span>
-                    </div>
-                </div>
-
-                <!-- 2. Category Chips Grid -->
-                <div class="form-group">
-                    <label class="field-label">Sector Classification</label>
-                    <div class="category-chips-grid" id="catGrid">
-                        <div class="cat-choice-chip active" data-cat="Grocery">
-                            <span class="cat-choice-emoji">🛒</span>
-                            <span class="cat-choice-name">Grocery</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Food">
-                            <span class="cat-choice-emoji">🍱</span>
-                            <span class="cat-choice-name">Food</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Household">
-                            <span class="cat-choice-emoji">⚡</span>
-                            <span class="cat-choice-name">Utilities</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Transport">
-                            <span class="cat-choice-emoji">⛽</span>
-                            <span class="cat-choice-name">Fuel</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="School">
-                            <span class="cat-choice-emoji">🎓</span>
-                            <span class="cat-choice-name">School</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Zameen">
-                            <span class="cat-choice-emoji">🚜</span>
-                            <span class="cat-choice-name">Agriculture</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Shop">
-                            <span class="cat-choice-emoji">🏪</span>
-                            <span class="cat-choice-name">Shop</span>
-                        </div>
-                        <div class="cat-choice-chip" data-cat="Advance">
-                            <span class="cat-choice-emoji">💵</span>
-                            <span class="cat-choice-name">Advance</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Quantity & Unit Selection -->
-                <div class="dual-inputs-row">
-                    <div class="form-group">
-                        <label class="field-label" for="qtyInput">Quantity</label>
-                        <input type="number" id="qtyInput" class="field-core" value="1" step="any" min="0.01" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="field-label" for="unitInput">Unit Measure</label>
-                        <select id="unitInput" class="field-core">
-                            <option value="KG">KG (Kilogram)</option>
-                            <option value="Gram">Gram</option>
-                            <option value="Liter">Liter</option>
-                            <option value="Packet">Packet</option>
-                            <option value="Piece">Piece / Full</option>
-                            <option value="Dozen">Dozen</option>
-                            <option value="Box">Box</option>
-                            <option value="Bags">Bags (بوریاں)</option>
-                            <option value="Amount">Amount Based</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- 4. Total Amount (Rs.) -->
-                <div class="form-group">
-                    <label class="field-label" for="totalAmountInput">
-                        <span>Total Paid / Received (Rs.)</span>
-                        <span style="font-size:11px; color:var(--ink-tertiary);">PRIMARY</span>
-                    </label>
-                    <input type="number" id="totalAmountInput" class="field-core" placeholder="e.g. 1500" min="1" required style="font-size: 20px; font-weight: 800; color: var(--brand-deep);">
-                </div>
-
-                <!-- 5. Realtime Per-Unit Rate Intelligence Banner -->
-                <div class="unit-rate-banner" id="unitRateBanner">
-                    <span class="unit-rate-label">Calculated Rate:</span>
-                    <span class="unit-rate-num" id="unitRateValue">≈ Rs. 0 / Unit</span>
-                </div>
-
-                <!-- 6. Expandable Optional Specifications -->
-                <div>
-                    <button type="button" class="spec-accordion-btn" id="accordionBtn">
-                        <span>Shop / Vendor & Payment Details</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    </button>
-                    <div class="spec-accordion-body" id="accordionBody">
-                        <div class="form-group">
-                            <label class="field-label" for="vendorInput">Shop / Vendor / Source</label>
-                            <input type="text" id="vendorInput" class="field-core" placeholder="e.g. Al-Madina Store, Shell Pump">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="field-label" for="paymentModeSelect">Payment Mode</label>
-                            <select id="paymentModeSelect" class="field-core">
-                                <option value="Cash">💵 Cash in Hand</option>
-                                <option value="Bank">🏦 Bank / Card Transfer</option>
-                                <option value="JazzCash">📱 JazzCash / EasyPaisa</option>
-                                <option value="Due">⏳ Khata / Due Payment</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="field-label" for="notesInput">Notes / Purpose</label>
-                            <input type="text" id="notesInput" class="field-core" placeholder="e.g. Monthly ration, Guest tea">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Master Commit Button -->
-                <button type="submit" class="btn-commit-entry" id="commitBtn">
-                    <span id="btnLabel">Commit Transaction (محفوظ کریں)</span>
-                    <div class="btn-spinner" id="btnSpinner"></div>
-                </button>
-
-            </form>
-
-        </div>
-
-        <!-- 3. Bottom Mobile Dock -->
-        <div class="dock-container">
-            <nav class="mobile-dock">
-                <a href="dashboard.html" class="dock-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    <span>Home</span>
-                </a>
-
-                <a href="daily-register.html" class="dock-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                    <span>Register</span>
-                </a>
-
-                <!-- Central Add Action FAB -->
-                <div class="dock-fab-wrapper">
-                    <a href="add.html" class="dock-fab active" title="Add Record">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    </a>
-                </div>
-
-                <a href="reports.html" class="dock-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    <span>Reports</span>
-                </a>
-
-                <a href="settings.html" class="dock-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                    <span>Settings</span>
-                </a>
-            </nav>
-        </div>
-
-    </main>
-
-    <!-- Floating Background Toast Notification -->
+    <!-- Luxury Floating Toast Notification -->
     <div class="toast-wrapper" id="toastBox">
         <div class="toast-capsule">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             <span id="toastMsg">Notification message</span>
         </div>
     </div>
 
+    <!-- Master Viewport -->
+    <main class="viewport">
+
+        <!-- Expense vs Income Type Toggle -->
+        <div class="type-toggle-wrapper">
+            <button type="button" class="type-toggle-btn active expense" id="tabExpense">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
+                Expense (Outflow)
+            </button>
+            <button type="button" class="type-toggle-btn income" id="tabIncome">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                Income (Inflow)
+            </button>
+        </div>
+
+        <!-- REALTIME MULTILINGUAL VOICE TERMINAL -->
+        <section class="voice-terminal-card" id="voiceCard">
+            <div class="voice-meta-block">
+                <h3 class="voice-heading" id="voiceHeading">Smart Voice Entry</h3>
+                <p class="voice-caption" id="voiceCaption">Say: "5 kg rice 1500" or "پانچ کلو چاول پندرہ سو"</p>
+            </div>
+            <button type="button" class="voice-mic-fab" id="micBtn" title="Start voice dictation">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="22"></line>
+                </svg>
+            </button>
+        </section>
+
+        <!-- UNIVERSAL TRANSACTION RECORD FORM -->
+        <form class="entry-form-card" id="entryForm" novalidate>
+            
+            <!-- 1. ITEM SPECIFICATION -->
+            <div class="form-group">
+                <label class="field-label" for="itemName">
+                    <span id="itemNameLabel">What was purchased?</span>
+                    <span style="font-size:11px; color:var(--ink-tertiary);">REQUIRED</span>
+                </label>
+                <input type="text" id="itemName" class="field-input" placeholder="e.g. Basmati Rice, Electric Bill, Salary" required autofocus>
+                
+                <!-- Quick Suggestion Tags (Horizontally Scrollable) -->
+                <div class="quick-tags-shelf" id="quickTagsExpense">
+                    <span class="tag-pill" data-name="Rice" data-cat="Grocery" data-unit="KG">Rice</span>
+                    <span class="tag-pill" data-name="Chicken" data-cat="Grocery" data-unit="KG">Chicken</span>
+                    <span class="tag-pill" data-name="Milk" data-cat="Grocery" data-unit="Liter">Milk</span>
+                    <span class="tag-pill" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">Cooking Oil</span>
+                    <span class="tag-pill" data-name="Flour/Atta" data-cat="Grocery" data-unit="KG">Flour/Atta</span>
+                    <span class="tag-pill" data-name="Sugar" data-cat="Grocery" data-unit="KG">Sugar</span>
+                    <span class="tag-pill" data-name="Vegetables" data-cat="Food" data-unit="Amount Based">Vegetables</span>
+                    <span class="tag-pill" data-name="Electricity Bill" data-cat="Household" data-unit="Amount Based">Electricity</span>
+                    <span class="tag-pill" data-name="Masoor Dal" data-cat="Grocery" data-unit="KG">Masoor Dal</span>
+                    <span class="tag-pill" data-name="Eggs" data-cat="Grocery" data-unit="Dozen">Eggs</span>
+                    <span class="tag-pill" data-name="Bread" data-cat="Grocery" data-unit="Piece">Bread</span>
+                </div>
+                <!-- Quick Tags for Income (Hidden by default) -->
+                <div class="quick-tags-shelf" id="quickTagsIncome" style="display:none;">
+                    <span class="tag-pill" data-name="Monthly Salary" data-cat="Salary" data-unit="Amount Based">Salary</span>
+                    <span class="tag-pill" data-name="Business Profit" data-cat="Business" data-unit="Amount Based">Business</span>
+                    <span class="tag-pill" data-name="Crop Sale" data-cat="Agriculture" data-unit="Amount Based">Crop Sale</span>
+                    <span class="tag-pill" data-name="Rent Received" data-cat="Property" data-unit="Amount Based">Rent Received</span>
+                    <span class="tag-pill" data-name="Freelance" data-cat="Side Hustle" data-unit="Amount Based">Freelance</span>
+                </div>
+            </div>
+
+            <!-- 2. CATEGORY SELECTOR -->
+            <div class="form-group">
+                <label class="field-label">Category Classification</label>
+                <div class="category-grid" id="categoryGrid">
+                    <!-- Default Categories (Changes based on type) -->
+                    <div class="cat-chip active" data-cat="Grocery"><span class="cat-emoji">🛒</span><span class="cat-name">Grocery</span></div>
+                    <div class="cat-chip" data-cat="Food"><span class="cat-emoji">🍱</span><span class="cat-name">Food</span></div>
+                    <div class="cat-chip" data-cat="Household"><span class="cat-emoji">🏠</span><span class="cat-name">Home</span></div>
+                    <div class="cat-chip" data-cat="School"><span class="cat-emoji">🎓</span><span class="cat-name">School</span></div>
+                    <div class="cat-chip" data-cat="Zameen"><span class="cat-emoji">🚜</span><span class="cat-name">Zameen</span></div>
+                    <div class="cat-chip" data-cat="Shop"><span class="cat-emoji">🏪</span><span class="cat-name">Shop</span></div>
+                    <div class="cat-chip" data-cat="Advance"><span class="cat-emoji">💵</span><span class="cat-name">Advance</span></div>
+                    <!-- Add Custom Category Button -->
+                    <div class="cat-chip" id="addCategoryBtn" style="background:var(--surface); border:1.5px dashed var(--border-focus);"><span class="cat-emoji">➕</span><span class="cat-name" style="color:var(--ink-headline);">New</span></div>
+                </div>
+            </div>
+
+            <!-- 3. QUANTITY & UNIT SPECIFICATION -->
+            <div class="qty-unit-row">
+                <div class="form-group">
+                    <label class="field-label" for="quantityInput">Quantity</label>
+                    <input type="number" id="quantityInput" class="field-input" value="1" step="any" min="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label class="field-label" for="unitSelect">Measurement Unit</label>
+                    <select id="unitSelect" class="field-select">
+                        <option value="Amount Based" selected>Amount Based</option>
+                        <option value="KG">Kilogram (kg)</option>
+                        <option value="Gram">Gram (g)</option>
+                        <option value="Liter">Liter (L)</option>
+                        <option value="Packet">Packet / Pack</option>
+                        <option value="Piece">Piece / Full</option>
+                        <option value="Dozen">Dozen</option>
+                        <option value="Box">Box / Carton</option>
+                        <option value="Bag">Bag / Sack / Bori</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 4. TOTAL EXPENDITURE AMOUNT -->
+            <div class="form-group">
+                <label class="field-label" for="totalPrice">
+                    <span>Total Amount (Rs.)</span>
+                    <span style="font-size:11px; color:var(--ink-tertiary);">PRIMARY</span>
+                </label>
+                <input type="number" id="totalPrice" class="field-input" placeholder="e.g. 1500" step="any" min="1" required style="font-size: 20px; font-weight: 800; color: var(--brand-primary);">
+            </div>
+
+            <!-- 5. REALTIME PER-UNIT INTELLIGENCE TELEMETRY -->
+            <div class="unit-intelligence-card" id="unitIntelligenceCard">
+                <span class="unit-intel-label">Calculated Unit Rate:</span>
+                <span class="unit-intel-val" id="unitIntelVal">≈ Rs. 0 / Unit</span>
+            </div>
+
+            <!-- 6. ACCORDION EXPANDABLE SPECIFICATIONS (PAYMENT & NOTES) -->
+            <div>
+                <button type="button" class="accordion-trigger" id="specToggle">
+                    <span>Payment & Optional Details</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="accordion-body" id="specBody">
+                    <div class="form-group">
+                        <label class="field-label" for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" class="field-select">
+                            <option value="Cash / By Hand">Cash / By Hand</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Mobile Wallet">Mobile Wallet (JazzCash/Easypaisa)</option>
+                            <option value="Credit/Debit Card">Credit/Debit Card</option>
+                            <option value="Unpaid / Udhaar">Unpaid / Udhaar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label" for="purposeNote">Purpose / Reason / Note</label>
+                        <input type="text" id="purposeNote" class="field-input" placeholder="e.g. Monthly stock, Guests visiting">
+                    </div>
+                </div>
+            </div>
+
+            <!-- MASTER COMMIT ACTION BUTTON -->
+            <button type="submit" class="btn-commit" id="commitBtn">
+                <span id="btnLabel">Commit to Vault (محفوظ کریں)</span>
+                <div class="btn-spinner" id="btnSpinner"></div>
+            </button>
+
+        </form>
+
+        <!-- VERIFIED BESPOKE FOOTER -->
+        <footer class="footer-dock">
+            <div class="signature-pill">
+                <div class="signature-dot"></div>
+                <div class="signature-text">POWERED BY ROZ E HISAB</div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- CUSTOM CATEGORY BOTTOM SHEET / MODAL -->
+    <div class="modal-overlay" id="addCategoryModal">
+        <div class="modal-window">
+            <div class="modal-header-row">
+                <h3 class="modal-title" style="font-size:16px;">Add Custom Category</h3>
+                <button type="button" class="modal-close-btn" id="closeCatModalBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="form-group">
+                <label class="field-label">Category Name</label>
+                <input type="text" id="newCatName" class="field-input" placeholder="e.g. Pets, Business" autocomplete="off">
+            </div>
+            <button type="button" class="btn-commit" id="saveCustomCatBtn" style="height:48px; font-size:14px; margin-top:10px;">Apply to Transaction</button>
+        </div>
+    </div>
+
     <!-- ==========================================================================
-       6. CORE FIREBASE & SPEECH-TO-DATA INTEGRATION ENGINE
+       5. REALTIME FIREBASE, MULTILINGUAL VOICE & STRICT LOGIC ENGINE
        ========================================================================== -->
     <script type="module">
-        import { auth, db } from './firebase/firebase-config.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
+            getFirestore, 
             collection, 
             addDoc, 
-            serverTimestamp 
+            serverTimestamp,
+            enableIndexedDbPersistence 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // DOM Handles
-        const screenTitle = document.getElementById('screenTitle');
-        const btnTypeExpense = document.getElementById('btnTypeExpense');
-        const btnTypeIncome = document.getElementById('btnTypeIncome');
-        const itemNameInput = document.getElementById('itemNameInput');
-        const catGrid = document.getElementById('catGrid');
-        const qtyInput = document.getElementById('qtyInput');
-        const unitInput = document.getElementById('unitInput');
-        const totalAmountInput = document.getElementById('totalAmountInput');
-        const unitRateBanner = document.getElementById('unitRateBanner');
-        const unitRateValue = document.getElementById('unitRateValue');
-        const accordionBtn = document.getElementById('accordionBtn');
-        const accordionBody = document.getElementById('accordionBody');
-        const vendorInput = document.getElementById('vendorInput');
-        const paymentModeSelect = document.getElementById('paymentModeSelect');
-        const notesInput = document.getElementById('notesInput');
-        const transactionForm = document.getElementById('transactionForm');
+        // Verified Architecture Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
+            authDomain: "roz-e-hisab.firebaseapp.com",
+            projectId: "roz-e-hisab",
+            storageBucket: "roz-e-hisab.firebasestorage.app",
+            messagingSenderId: "776423119730",
+            appId: "1:776423119730:web:19c78561f4826224771beb",
+            measurementId: "G-17Q9D41WNR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        enableIndexedDbPersistence(db).catch(() => {});
+
+        // DOM Nodes
+        const networkDot = document.getElementById('networkDot');
+        const toastBox = document.getElementById('toastBox');
+        const toastMsg = document.getElementById('toastMsg');
+        
+        // Transaction Type Toggles
+        const tabExpense = document.getElementById('tabExpense');
+        const tabIncome = document.getElementById('tabIncome');
+        let currentTxType = "expense"; // "expense" | "income"
+
+        // Form Elements
+        const entryForm = document.getElementById('entryForm');
+        const itemName = document.getElementById('itemName');
+        const itemNameLabel = document.getElementById('itemNameLabel');
+        const categoryGrid = document.getElementById('categoryGrid');
+        const quantityInput = document.getElementById('quantityInput');
+        const unitSelect = document.getElementById('unitSelect');
+        const totalPrice = document.getElementById('totalPrice');
+        const unitIntelligenceCard = document.getElementById('unitIntelligenceCard');
+        const unitIntelVal = document.getElementById('unitIntelVal');
+        const specToggle = document.getElementById('specToggle');
+        const specBody = document.getElementById('specBody');
+        const paymentMethod = document.getElementById('paymentMethod');
+        const purposeNote = document.getElementById('purposeNote');
+        
         const commitBtn = document.getElementById('commitBtn');
         const btnLabel = document.getElementById('btnLabel');
         const btnSpinner = document.getElementById('btnSpinner');
+        
+        // Voice Elements
         const micBtn = document.getElementById('micBtn');
         const voiceCard = document.getElementById('voiceCard');
-        const voiceTitle = document.getElementById('voiceTitle');
+        const voiceHeading = document.getElementById('voiceHeading');
         const voiceCaption = document.getElementById('voiceCaption');
-        const toastBox = document.getElementById('toastBox');
-        const toastMsg = document.getElementById('toastMsg');
 
-        // State Machine
-        let activeType = "expense"; // "expense" or "income"
-        let activeCategory = "Grocery";
+        // Categories
+        let selectedCategory = "Grocery";
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const addCategoryModal = document.getElementById('addCategoryModal');
+        const closeCatModalBtn = document.getElementById('closeCatModalBtn');
+        const saveCustomCatBtn = document.getElementById('saveCustomCatBtn');
+        const newCatName = document.getElementById('newCatName');
+        const quickTagsExpense = document.getElementById('quickTagsExpense');
+        const quickTagsIncome = document.getElementById('quickTagsIncome');
+
         let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
-        let currentUser = null;
 
-        // URL Query Param Reader (e.g. add.html?type=income)
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('type') === 'income') {
-            switchToType('income');
+        // Network Status
+        function updateNetwork() {
+            networkDot.style.backgroundColor = navigator.onLine ? "var(--status-online)" : "var(--status-offline)";
         }
+        window.addEventListener('online', updateNetwork);
+        window.addEventListener('offline', updateNetwork);
+        updateNetwork();
 
         // Toast Feedback Dispatcher
         let toastTimer;
@@ -908,201 +982,344 @@
             clearTimeout(toastTimer);
             toastMsg.innerText = msg;
             toastBox.querySelector('.toast-capsule').style.background = isError 
-                ? "rgba(185, 28, 28, 0.95)" 
-                : "rgba(6, 78, 59, 0.95)";
+                ? "rgba(220, 38, 38, 0.94)" 
+                : "rgba(16, 185, 129, 0.94)"; // Green for success
             toastBox.classList.add('active');
-            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3600);
         }
 
-        // Type Switcher Logic
-        function switchToType(type) {
-            activeType = type;
-            if (type === 'income') {
-                btnTypeIncome.classList.add('active', 'income');
-                btnTypeExpense.classList.remove('active', 'expense');
-                screenTitle.innerText = "Add Inflow (آمدن)";
-                btnLabel.innerText = "Commit Income (آمدن محفوظ کریں)";
+        // --- EXPENSE / INCOME TOGGLE LOGIC ---
+        function switchTransactionType(type) {
+            currentTxType = type;
+            tabExpense.classList.remove('active', 'expense');
+            tabIncome.classList.remove('active', 'income');
+
+            // Reset Categories visually (Keep Add Category Button at end)
+            const addBtnHTML = `<div class="cat-chip" id="addCategoryBtn" style="background:var(--surface); border:1.5px dashed var(--border-focus);"><span class="cat-emoji">➕</span><span class="cat-name" style="color:var(--ink-headline);">New</span></div>`;
+
+            if (type === "expense") {
+                tabExpense.classList.add('active', 'expense');
+                itemNameLabel.innerText = "What was purchased?";
+                quickTagsExpense.style.display = "flex";
+                quickTagsIncome.style.display = "none";
+                totalPrice.style.color = "var(--brand-primary)";
+                
+                categoryGrid.innerHTML = `
+                    <div class="cat-chip active" data-cat="Grocery"><span class="cat-emoji">🛒</span><span class="cat-name">Grocery</span></div>
+                    <div class="cat-chip" data-cat="Food"><span class="cat-emoji">🍱</span><span class="cat-name">Food</span></div>
+                    <div class="cat-chip" data-cat="Household"><span class="cat-emoji">🏠</span><span class="cat-name">Home</span></div>
+                    <div class="cat-chip" data-cat="School"><span class="cat-emoji">🎓</span><span class="cat-name">School</span></div>
+                    <div class="cat-chip" data-cat="Zameen"><span class="cat-emoji">🚜</span><span class="cat-name">Zameen</span></div>
+                    <div class="cat-chip" data-cat="Shop"><span class="cat-emoji">🏪</span><span class="cat-name">Shop</span></div>
+                    <div class="cat-chip" data-cat="Advance"><span class="cat-emoji">💵</span><span class="cat-name">Advance</span></div>
+                    ${addBtnHTML}
+                `;
+                selectedCategory = "Grocery";
             } else {
-                btnTypeExpense.classList.add('active', 'expense');
-                btnTypeIncome.classList.remove('active', 'income');
-                screenTitle.innerText = "Add Outflow (خرچہ)";
-                btnLabel.innerText = "Commit Expense (خرچہ محفوظ کریں)";
-            }
-        }
-        btnTypeExpense.addEventListener('click', () => switchToType('expense'));
-        btnTypeIncome.addEventListener('click', () => switchToType('income'));
+                tabIncome.classList.add('active', 'income');
+                itemNameLabel.innerText = "Source of Income?";
+                quickTagsExpense.style.display = "none";
+                quickTagsIncome.style.display = "flex";
+                totalPrice.style.color = "var(--income-color)";
 
-        // Category Choice Chip Click
-        catGrid.querySelectorAll('.cat-choice-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                catGrid.querySelectorAll('.cat-choice-chip').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-                activeCategory = chip.getAttribute('data-cat');
+                categoryGrid.innerHTML = `
+                    <div class="cat-chip active" data-cat="Salary"><span class="cat-emoji">💼</span><span class="cat-name">Salary</span></div>
+                    <div class="cat-chip" data-cat="Business"><span class="cat-emoji">📈</span><span class="cat-name">Business</span></div>
+                    <div class="cat-chip" data-cat="Agriculture"><span class="cat-emoji">🌾</span><span class="cat-name">Agriculture</span></div>
+                    <div class="cat-chip" data-cat="Property"><span class="cat-emoji">🏢</span><span class="cat-name">Property</span></div>
+                    <div class="cat-chip" data-cat="Freelance"><span class="cat-emoji">💻</span><span class="cat-name">Freelance</span></div>
+                    <div class="cat-chip" data-cat="Gift"><span class="cat-emoji">🎁</span><span class="cat-name">Gift</span></div>
+                    <div class="cat-chip" data-cat="Advance Return"><span class="cat-emoji">↩️</span><span class="cat-name">Returned</span></div>
+                    ${addBtnHTML}
+                `;
+                selectedCategory = "Salary";
+                
+                // For income, Amount Based is practically always used
+                unitSelect.value = "Amount Based";
+                quantityInput.value = 1;
+                calculatePerUnitRate();
+            }
+
+            attachCategoryListeners();
+        }
+
+        tabExpense.addEventListener('click', () => switchTransactionType("expense"));
+        tabIncome.addEventListener('click', () => switchTransactionType("income"));
+
+        // --- CATEGORY CHIPS LOGIC ---
+        function attachCategoryListeners() {
+            categoryGrid.querySelectorAll('.cat-chip').forEach(chip => {
+                if(chip.id === 'addCategoryBtn') {
+                    chip.addEventListener('click', () => addCategoryModal.classList.add('active'));
+                    return;
+                }
+                chip.addEventListener('click', () => {
+                    categoryGrid.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    selectedCategory = chip.getAttribute('data-cat');
+                });
             });
+        }
+        attachCategoryListeners();
+
+        // Custom Category Modal Logic
+        closeCatModalBtn.addEventListener('click', () => addCategoryModal.classList.remove('active'));
+        
+        saveCustomCatBtn.addEventListener('click', () => {
+            const val = newCatName.value.trim();
+            if(!val) { notify("Please enter a category name."); return; }
+            
+            // Remove active state from others
+            categoryGrid.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            
+            // Create new chip before the Add button
+            const newChip = document.createElement('div');
+            newChip.className = 'cat-chip active';
+            newChip.setAttribute('data-cat', val);
+            newChip.innerHTML = `<span class="cat-emoji">📌</span><span class="cat-name">${val.length > 8 ? val.substring(0,8)+'..' : val}</span>`;
+            
+            const addBtn = document.getElementById('addCategoryBtn');
+            categoryGrid.insertBefore(newChip, addBtn);
+            
+            selectedCategory = val;
+            newCatName.value = "";
+            addCategoryModal.classList.remove('active');
+            attachCategoryListeners(); // Re-attach listeners to include new chip
         });
 
-        // Quick Tag Suggestions Click
+        // Quick Tag Suggestions
         document.querySelectorAll('.tag-pill').forEach(tag => {
             tag.addEventListener('click', () => {
-                itemNameInput.value = tag.getAttribute('data-name');
+                itemName.value = tag.getAttribute('data-name');
                 const cat = tag.getAttribute('data-cat');
                 const unit = tag.getAttribute('data-unit');
-
-                catGrid.querySelectorAll('.cat-choice-chip').forEach(c => {
-                    if (c.getAttribute('data-cat') === cat) c.click();
+                
+                // Select Category if it exists
+                let found = false;
+                categoryGrid.querySelectorAll('.cat-chip').forEach(c => {
+                    if (c.getAttribute('data-cat') === cat) {
+                        c.click();
+                        found = true;
+                    }
                 });
-
-                unitInput.value = unit;
-                totalAmountInput.focus();
+                
+                // Select Unit
+                unitSelect.value = unit;
+                totalPrice.focus();
                 calculatePerUnitRate();
             });
         });
 
-        // Accordion Toggle
-        accordionBtn.addEventListener('click', () => {
-            accordionBtn.classList.toggle('open');
-            accordionBody.classList.toggle('open');
+        // Expandable Specifications Accordion
+        specToggle.addEventListener('click', () => {
+            specToggle.classList.toggle('open');
+            specBody.classList.toggle('open');
         });
 
-        // Flexible Realtime Per-Unit Rate Engine
+        // Flexible Pricing Calculation Engine
         function calculatePerUnitRate() {
-            const qty = parseFloat(qtyInput.value);
-            const total = parseFloat(totalAmountInput.value);
-            const unit = unitInput.value;
+            const qty = parseFloat(quantityInput.value);
+            const total = parseFloat(totalPrice.value);
+            const unit = unitSelect.value;
 
-            if (qty > 0 && total > 0 && unit !== "Amount") {
-                const rate = (total / qty).toFixed(2);
-                unitRateValue.innerText = `≈ Rs. ${parseFloat(rate).toLocaleString()} / ${unit}`;
-                unitRateBanner.style.display = "flex";
+            if (qty > 0 && total > 0 && unit !== "Amount Based") {
+                const perUnit = (total / qty).toFixed(2);
+                unitIntelVal.innerText = `≈ Rs. ${parseFloat(perUnit).toLocaleString()} / ${unit}`;
+                unitIntelligenceCard.style.display = 'flex';
             } else {
-                unitRateBanner.style.display = "none";
+                unitIntelligenceCard.style.display = 'none';
             }
         }
-        qtyInput.addEventListener('input', calculatePerUnitRate);
-        totalAmountInput.addEventListener('input', calculatePerUnitRate);
-        unitInput.addEventListener('change', calculatePerUnitRate);
+
+        quantityInput.addEventListener('input', calculatePerUnitRate);
+        totalPrice.addEventListener('input', calculatePerUnitRate);
+        unitSelect.addEventListener('change', calculatePerUnitRate);
 
         // ==========================================================================
-        // SMART VOICE SPEECH-TO-DATA PARSING ENGINE
+        // SMART MULTILINGUAL VOICE ENGINE WITH SILENCE AUTO-STOP
         // ==========================================================================
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
         if (SpeechRecognition) {
             const recognizer = new SpeechRecognition();
-            recognizer.continuous = false;
-            recognizer.interimResults = false;
-            recognizer.lang = 'en-US'; // Captures Urdu/Roman Urdu numbers & names cleanly
+            recognizer.continuous = true; // Keep listening to catch pauses
+            recognizer.interimResults = true;
+            // Supports English, Urdu, Hindi processing. 'en-US' captures Roman Urdu/Pakistani English very well.
+            recognizer.lang = 'en-US'; 
+
+            let silenceTimer = null;
+            let isFinalProcessed = false;
+
+            function stopRecognition() {
+                if (voiceCard.classList.contains('listening')) {
+                    recognizer.stop();
+                    voiceCard.classList.remove('listening');
+                    micBtn.classList.remove('active');
+                    voiceHeading.innerText = "Processing Data...";
+                    voiceCaption.innerText = "Extracting values...";
+                }
+            }
+
+            function resetSilenceTimer() {
+                clearTimeout(silenceTimer);
+                silenceTimer = setTimeout(() => {
+                    stopRecognition();
+                }, 3000); // 3 seconds of silence auto-stops the mic
+            }
 
             micBtn.addEventListener('click', () => {
                 if (voiceCard.classList.contains('listening')) {
-                    recognizer.stop();
+                    stopRecognition();
                 } else {
-                    recognizer.start();
+                    isFinalProcessed = false;
+                    try {
+                        recognizer.start();
+                    } catch(e) {}
                 }
             });
 
             recognizer.onstart = () => {
                 voiceCard.classList.add('listening');
                 micBtn.classList.add('active');
-                voiceTitle.innerText = "Listening Intelligently...";
-                voiceCaption.innerText = "Speak now: (e.g. '5 KG Chawal 1500')";
+                voiceHeading.innerText = "Listening...";
+                voiceCaption.innerText = "Speak naturally (e.g. '5 kg rice 1500')";
+                resetSilenceTimer();
             };
 
             recognizer.onresult = (event) => {
-                const transcript = event.results[0][0].transcript.toLowerCase().trim();
-                voiceTitle.innerText = "Parsing Speech...";
-                voiceCaption.innerText = `Heard: "${transcript}"`;
+                resetSilenceTimer(); // Reset timer on any noise/speech
 
-                // 1. Extract Price (last numbers or preceded by rs/rupay/ke/ka)
-                let priceMatch = transcript.match(/(?:rs\.?|rupees|ke|ka)?\s*(\d+(?:\.\d+)?)\s*(?:rupees|rs)?$/i) || 
-                                 transcript.match(/(\d+(?:\.\d+)?)\s*(?:rs|rupees)/i) ||
-                                 transcript.match(/\b\d+\b(?=[^\d]*$)/);
+                let interimTranscript = '';
+                let finalTranscript = '';
 
-                // 2. Extract Qty + Unit
-                let qtyUnitMatch = transcript.match(/(\d+(?:\.\d+)?)\s*(kg|kilo|gram|gm|liter|litre|packet|pack|piece|dozen|box|bottle|bags|bori)/i);
-
-                let parsedQty = 1;
-                let parsedUnit = "Piece";
-                let parsedPrice = 0;
-                let parsedItem = transcript;
-
-                if (qtyUnitMatch) {
-                    parsedQty = parseFloat(qtyUnitMatch[1]);
-                    const rawUnit = qtyUnitMatch[2].toLowerCase();
-                    if (rawUnit.includes('kg') || rawUnit.includes('kilo')) parsedUnit = "KG";
-                    else if (rawUnit.includes('gram') || rawUnit.includes('gm')) parsedUnit = "Gram";
-                    else if (rawUnit.includes('lit')) parsedUnit = "Liter";
-                    else if (rawUnit.includes('pack')) parsedUnit = "Packet";
-                    else if (rawUnit.includes('bag') || rawUnit.includes('bori')) parsedUnit = "Bags";
-                    else if (rawUnit.includes('dozen')) parsedUnit = "Dozen";
-                    else parsedUnit = "Piece";
-
-                    parsedItem = parsedItem.replace(qtyUnitMatch[0], '');
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
                 }
 
-                if (priceMatch) {
-                    parsedPrice = parseFloat(priceMatch[1]);
-                    parsedItem = parsedItem.replace(priceMatch[0], '');
+                const currentText = finalTranscript || interimTranscript;
+                voiceCaption.innerText = `"${currentText}"`;
+
+                if (finalTranscript && !isFinalProcessed) {
+                    isFinalProcessed = true;
+                    processVoiceTranscript(finalTranscript);
                 }
-
-                // Clean and title-case Item Name
-                parsedItem = parsedItem.replace(/\b(for|ke|ka|worth|total|of)\b/gi, '').trim();
-                if (parsedItem.length > 0) {
-                    itemNameInput.value = parsedItem.charAt(0).toUpperCase() + parsedItem.slice(1);
-                }
-
-                qtyInput.value = parsedQty;
-                unitInput.value = parsedUnit;
-                if (parsedPrice > 0) totalAmountInput.value = parsedPrice;
-
-                calculatePerUnitRate();
-                notify("Voice Entry Parsed Successfully!", false);
             };
 
-            recognizer.onerror = () => {
-                voiceTitle.innerText = "Voice Recognition Idle";
-                voiceCaption.innerText = "Tap mic to speak.";
+            recognizer.onerror = (e) => {
+                clearTimeout(silenceTimer);
+                voiceCard.classList.remove('listening');
+                micBtn.classList.remove('active');
+                voiceHeading.innerText = "Voice Recognition Stopped";
+                voiceCaption.innerText = "Tap mic to try again.";
             };
 
             recognizer.onend = () => {
-                voiceCard.classList.remove('listening');
-                micBtn.classList.remove('active');
-                if (voiceTitle.innerText.includes("Listening")) {
-                    voiceTitle.innerText = "Voice Intelligent Input";
-                    voiceCaption.innerText = "Say e.g.: '5 KG Chawal 1500'";
+                clearTimeout(silenceTimer);
+                if (voiceCard.classList.contains('listening')) {
+                    stopRecognition();
                 }
+                // If stopped without final processing, process the last seen text in caption if needed.
+                if(!isFinalProcessed && voiceCaption.innerText.length > 5 && !voiceCaption.innerText.includes("Speak naturally")) {
+                    const cleanText = voiceCaption.innerText.replace(/"/g, '');
+                    processVoiceTranscript(cleanText);
+                }
+                
+                setTimeout(() => {
+                    voiceHeading.innerText = "Smart Voice Entry";
+                    voiceCaption.innerText = "Say: '5 kg rice 1500'";
+                }, 2000);
             };
+
+            function processVoiceTranscript(transcript) {
+                transcript = transcript.toLowerCase().trim();
+
+                // Advanced Regex Parsing
+                // 1. Find Currency/Amount: Looks for numbers near currency words or just the last number
+                let amount = 0;
+                let currencyMatch = transcript.match(/(?:rs\.?|rupees|pkr|rupay|ropee)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:rs\.?|rupees|pkr|rupay|ropee)/i);
+                if (currencyMatch) {
+                    amount = parseFloat(currencyMatch[1] || currencyMatch[2]);
+                    transcript = transcript.replace(currencyMatch[0], ''); // Remove from string
+                }
+
+                // 2. Find Qty + Unit
+                let qty = 1;
+                let unit = "Amount Based";
+                let unitMatch = transcript.match(/(\d+(?:\.\d+)?)\s*(kg|kilo|gram|g|liter|litre|l|packet|pack|piece|dozen|box|carton|bag|sack|bori)/i);
+                
+                if (unitMatch) {
+                    qty = parseFloat(unitMatch[1]);
+                    const rawUnit = unitMatch[2];
+                    if (rawUnit.includes('kg') || rawUnit.includes('kilo')) unit = "KG";
+                    else if (rawUnit.includes('gram') || rawUnit === 'g') unit = "Gram";
+                    else if (rawUnit.includes('lit') || rawUnit === 'l') unit = "Liter";
+                    else if (rawUnit.includes('pack')) unit = "Packet";
+                    else if (rawUnit.includes('doz')) unit = "Dozen";
+                    else if (rawUnit.includes('box') || rawUnit.includes('carton')) unit = "Box";
+                    else if (rawUnit.includes('bag') || rawUnit.includes('sack') || rawUnit.includes('bori')) unit = "Bag";
+                    else unit = "Piece";
+
+                    transcript = transcript.replace(unitMatch[0], ''); // Remove from string
+                }
+
+                // 3. Fallback: If no currency word was found, find the LAST remaining number as Amount
+                if (amount === 0) {
+                    let nums = transcript.match(/\b\d+(?:\.\d+)?\b/g);
+                    if (nums && nums.length > 0) {
+                        amount = parseFloat(nums[nums.length - 1]);
+                        transcript = transcript.replace(nums[nums.length - 1], '');
+                    }
+                }
+
+                // 4. Cleanup remaining text for Item Name
+                let item = transcript.replace(/\b(for|ke|ka|worth|total|of|and|aur)\b/gi, '').trim();
+                
+                // Populate Form Safely
+                if (item.length > 0) {
+                    itemName.value = item.charAt(0).toUpperCase() + item.slice(1);
+                }
+                quantityInput.value = qty;
+                unitSelect.value = unit;
+                if (amount > 0) totalPrice.value = amount;
+
+                calculatePerUnitRate();
+                notify("Voice Parsed! Review and Save.", false);
+            }
+
         } else {
             micBtn.style.display = 'none';
-            voiceCaption.innerText = "Speech Recognition not supported in this browser.";
+            voiceCaption.innerText = "Voice Dictation not supported.";
         }
 
         // ==========================================================================
-        // MASTER RECORD COMMITMENT ENGINE (FIRESTORE TRANSACTION)
+        // STRICT MASTER RECORD COMMITMENT ENGINE (BUG-FREE ISOLATION)
         // ==========================================================================
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = "login.html";
                 return;
             }
-            currentUser = user;
 
-            transactionForm.addEventListener('submit', async (e) => {
+            entryForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const name = itemNameInput.value.trim();
-                const qty = parseFloat(qtyInput.value) || 1;
-                const unit = unitInput.value;
-                const total = parseFloat(totalAmountInput.value);
-                const vendor = vendorInput.value.trim();
-                const paymentMode = paymentModeSelect.value;
-                const notes = notesInput.value.trim();
+                const name = itemName.value.trim();
+                const qty = parseFloat(quantityInput.value) || 1;
+                const unit = unitSelect.value;
+                const total = parseFloat(totalPrice.value);
+                const payMethod = paymentMethod.value;
+                const notes = purposeNote.value.trim();
 
                 if (!name || isNaN(total) || total <= 0) {
-                    notify("Please provide a valid description and total amount.");
+                    notify("Please specify valid item name and total amount.");
                     return;
                 }
 
+                // UI Loading state
                 btnLabel.style.display = 'none';
                 btnSpinner.style.display = 'block';
                 commitBtn.disabled = true;
@@ -1111,16 +1328,17 @@
                 const dateKey = now.toISOString().split('T')[0];
                 const timeKey = now.toTimeString().split(' ')[0];
 
-                const payload = {
-                    type: activeType, // "expense" or "income"
+                // CRITICAL FIX: Explicit transaction type ('expense' or 'income') is saved.
+                // It ensures dashboard aggregations DO NOT cross-pollinate.
+                const recordPayload = {
+                    type: currentTxType, 
                     itemName: name,
-                    category: activeCategory,
+                    category: selectedCategory,
                     quantity: qty,
                     unit: unit,
                     totalPrice: total,
-                    unitPrice: (qty > 0 && unit !== "Amount") ? parseFloat((total / qty).toFixed(2)) : total,
-                    vendor: vendor || null,
-                    paymentMode: paymentMode,
+                    unitPrice: (qty > 0 && unit !== "Amount Based") ? parseFloat((total / qty).toFixed(2)) : total,
+                    paymentMethod: payMethod,
                     notes: notes || null,
                     date: dateKey,
                     time: timeKey,
@@ -1133,17 +1351,17 @@
                 };
 
                 try {
-                    await addDoc(collection(db, "records"), payload);
-                    notify("Transaction Committed to Vault!", false);
+                    await addDoc(collection(db, "records"), recordPayload);
+                    notify("Transaction Committed Successfully!", false);
                     setTimeout(() => {
                         window.location.href = "dashboard.html";
-                    }, 350);
-                } catch(err) {
-                    // IndexedDB will store locally and sync automatically
-                    notify("Stored in Local Vault. Syncing...", false);
+                    }, 400);
+                } catch (err) {
+                    console.warn("[Local Offline Write]:", err);
+                    notify("Record Stored Locally. Sync pending.", false);
                     setTimeout(() => {
                         window.location.href = "dashboard.html";
-                    }, 350);
+                    }, 400);
                 }
             });
         });
