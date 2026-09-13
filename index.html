@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FAFAFC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Sovereign Household Ledger</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Precision Swiss & Keynote Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. ARTISANAL ARCHITECTURAL SYSTEM (LUXURY LIGHT MONOCHROME)
+           ========================================================================== */
+        :root {
+            --canvas: #FAFAFC;
+            --surface: #FFFFFF;
+            --surface-subtle: #F1F4F9;
+            --surface-glass: rgba(255, 255, 255, 0.86);
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-strong: rgba(15, 23, 42, 0.12);
+
+            --ink-primary: #090D14;
+            --ink-secondary: #475569;
+            --ink-tertiary: #94A3B8;
+            --ink-inverse: #FFFFFF;
+
+            --brand-primary: #0047FF;
+            --brand-deep: #002288;
+            --brand-glow: rgba(0, 71, 255, 0.20);
+            --brand-gradient: linear-gradient(135deg, #0047FF 0%, #002288 100%);
+
+            --status-online: #059669;
+            --status-online-glow: rgba(5, 150, 105, 0.35);
+            --status-offline: #D97706;
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+            --shadow-subtle: 0 4px 20px -2px rgba(9, 13, 20, 0.03);
+            --shadow-island: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            --shadow-emblem: 0 24px 48px -12px rgba(0, 71, 255, 0.22), 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--canvas);
+            color: var(--ink-primary);
+        }
+
+        /* Subtle Geometric Grid & Lighting Scrim */
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(120% 80% at 50% 0%, #FFFFFF 0%, rgba(248, 250, 252, 0.7) 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-mesh {
+            position: fixed;
+            width: 650px;
+            height: 650px;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, var(--brand-glow) 0%, rgba(0, 71, 255, 0) 70%);
+            opacity: 0.45;
+            filter: blur(100px);
+            z-index: 0;
+            animation: pulseMesh 7s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulseMesh {
+            0% {
+                transform: translate(-50%, -50%) scale(0.88);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.12);
+                opacity: 0.55;
+            }
+        }
+
+        /* ==========================================================================
+           2. BESPOKE HARDWARE DYNAMIC ISLAND
+           ========================================================================== */
+        .island-container {
+            position: fixed;
+            top: env(safe-area-inset-top, 18px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .dynamic-island {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 18px 8px 14px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-island);
+            transition: all 0.4s var(--ease-spring);
+        }
+
+        .status-beacon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 8px;
+            height: 8px;
+        }
+
+        .status-beacon .core-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--status-online);
+            box-shadow: 0 0 8px var(--status-online-glow);
+            transition: background-color 0.3s ease;
+        }
+
+        .status-beacon .radar-wave {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1.5px solid var(--status-online);
+            animation: radarPulse 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.6;
+        }
+
+        @keyframes radarPulse {
+            0% {
+                transform: scale(0.6);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(2.1);
+                opacity: 0;
+            }
+        }
+
+        .island-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--ink-secondary);
+        }
+
+        .island-mode-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: var(--surface-subtle);
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* ==========================================================================
+           3. MASTER STAGE (MINIMALIST APPARATUS)
+           ========================================================================== */
+        .stage {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: calc(env(safe-area-inset-top, 24px) + 75px) 24px calc(env(safe-area-inset-bottom, 24px) + 28px) 24px;
+            will-change: transform, opacity;
+        }
+
+        .core-identity {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: 30px;
+            transform: translateY(12px);
+            opacity: 0;
+            animation: enterHero 0.9s 0.1s var(--ease-spring) forwards;
+        }
+
+        @keyframes enterHero {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Artisanal Monolith Emblem */
+        .emblem-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emblem-aura {
+            position: absolute;
+            inset: -10px;
+            border-radius: 34px;
+            background: radial-gradient(circle, var(--brand-glow) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0.85;
+            filter: blur(14px);
+        }
+
+        .emblem-core {
+            position: relative;
+            width: 88px;
+            height: 88px;
+            border-radius: 26px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F1F4F9 100%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-emblem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.6s var(--ease-spring);
+        }
+
+        .emblem-core img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 26px;
+        }
+
+        .emblem-specular-sheen {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 52%);
+            pointer-events: none;
+        }
+
+        .brand-title {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.045em;
+            color: var(--ink-primary);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            letter-spacing: -0.01em;
+            max-width: 320px;
+            line-height: 1.45;
+        }
+
+        /* ==========================================================================
+           4. LIQUID TELEMETRY PROGRESS CONSOLE
+           ========================================================================== */
+        .telemetry-deck {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: auto;
+            margin-bottom: 38px;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: enterHero 0.9s 0.3s var(--ease-spring) forwards;
+        }
+
+        .telemetry-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .telemetry-step {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .telemetry-step .spinner-micro {
+            width: 11px;
+            height: 11px;
+            border: 1.5px solid var(--border-strong);
+            border-top-color: var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .telemetry-counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .progress-track {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            background: #E6EDF5;
+            border-radius: 999px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        .progress-beam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--brand-gradient);
+            border-radius: 999px;
+            transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 0 12px var(--brand-primary);
+        }
+
+        .progress-beam::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: beamGleam 1.4s infinite linear;
+        }
+
+        @keyframes beamGleam {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* ==========================================================================
+           5. INSTITUTIONAL METADATA FOOTER
+           ========================================================================== */
+        .footer-dock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: enterHero 0.9s 0.45s var(--ease-spring) forwards;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            box-shadow: var(--shadow-subtle);
+            text-decoration: none;
+        }
+
+        .security-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--brand-primary);
+        }
+
+        .security-text {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--ink-secondary);
+            text-transform: uppercase;
+        }
+
+        .legal-micro {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--ink-tertiary);
+            letter-spacing: 0.01em;
+        }
+
+        /* Fluid Cinematic Transition */
+        .transition-exit {
+            opacity: 0 !important;
+            transform: scale(0.98) translateY(-10px) !important;
+            transition: all 0.4s var(--ease-spring) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Atmospheric Spatial Background -->
+    <div class="ambient-canvas"></div>
+    <div class="ambient-mesh"></div>
+
+    <!-- Apple-Style Dynamic Island -->
+    <div class="island-container">
+        <div class="dynamic-island" id="islandBar">
+            <div class="status-beacon">
+                <div class="core-dot" id="networkDot"></div>
+                <div class="radar-wave" id="networkRadar"></div>
+            </div>
+            <span class="island-label" id="networkLabel">System Active</span>
+            <span class="island-mode-tag" id="networkTag">ONLINE</span>
+        </div>
+    </div>
+
+    <!-- Master Viewport Stage -->
+    <main class="stage" id="stageView">
+
+        <!-- Visual Monolith Emblem & Typography -->
+        <div class="core-identity">
+            <div class="emblem-wrapper">
+                <div class="emblem-aura"></div>
+                <div class="emblem-core">
+                    <!-- High-Resolution Monolith Vector Glyph with Fail-Safe Fallback -->
+                    <img src="assets/logo.png"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%230047FF\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'9\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';"
+                        alt="Roz E Hisab Shield">
+                    <div class="emblem-specular-sheen"></div>
+                </div>
+            </div>
+
+            <h1 class="brand-title">Roz E Hisab</h1>
+            <p class="brand-subtitle">Autonomous Financial Register & Multi-Household Ledger Engine</p>
+        </div>
+
+        <!-- Liquid Telemetry Progress Console -->
+        <div class="telemetry-deck">
+            <div class="telemetry-meta">
+                <div class="telemetry-step">
+                    <span class="spinner-micro" id="stepSpinner"></span>
+                    <span id="stepLabel">Mounting Security Vault...</span>
+                </div>
+                <span class="telemetry-counter" id="progressPercent">0%</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-beam" id="progressBeam"></div>
+            </div>
+        </div>
+
+        <!-- Institutional Security Badge & Cryptographic Isolation Reference -->
+        <footer class="footer-dock">
+            <div class="security-badge">
+                <div class="security-dot"></div>
+                <div class="security-text">MILITARY GRADE ENCRYPTED VAULT</div>
+            </div>
+            <div class="legal-micro">V2.4 SOVEREIGN KERNEL • LOCAL-FIRST ISOLATION</div>
+        </footer>
+
+    </main>
+
+    <!-- ==========================================================================
+       6. CORE AUTONOMOUS TRIAGE & PERSISTENCE ENGINE
+       ========================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { getFirestore, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // Verified Enterprise Firebase Architecture
+        const firebaseConfig = {
+            apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
+            authDomain: "roz-e-hisab.firebaseapp.com",
+            projectId: "roz-e-hisab",
+            storageBucket: "roz-e-hisab.firebasestorage.app",
+            messagingSenderId: "776423119730",
+            appId: "1:776423119730:web:19c78561f4826224771beb",
+            measurementId: "G-17Q9D41WNR"
+        };
+
+        // DOM Anchors
+        const progressBeam = document.getElementById('progressBeam');
+        const progressPercent = document.getElementById('progressPercent');
+        const stepLabel = document.getElementById('stepLabel');
+        const stepSpinner = document.getElementById('stepSpinner');
+        const networkDot = document.getElementById('networkDot');
+        const networkRadar = document.getElementById('networkRadar');
+        const networkLabel = document.getElementById('networkLabel');
+        const networkTag = document.getElementById('networkTag');
+        const stageView = document.getElementById('stageView');
+
+        let isOnline = navigator.onLine;
+
+        // Dynamic Island Network Status Listener
+        function updateNetworkTopology() {
+            isOnline = navigator.onLine;
+            if (isOnline) {
+                if (networkDot) networkDot.style.backgroundColor = "var(--status-online)";
+                if (networkRadar) {
+                    networkRadar.style.borderColor = "var(--status-online)";
+                    networkRadar.style.display = "block";
+                }
+                if (networkLabel) networkLabel.innerText = "Sync Engine Ready";
+                if (networkTag) {
+                    networkTag.innerText = "ONLINE";
+                    networkTag.style.color = "var(--status-online)";
+                }
+            } else {
+                if (networkDot) networkDot.style.backgroundColor = "var(--status-offline)";
+                if (networkRadar) networkRadar.style.display = "none";
+                if (networkLabel) networkLabel.innerText = "Encrypted Local Vault";
+                if (networkTag) {
+                    networkTag.innerText = "OFFLINE";
+                    networkTag.style.color = "var(--status-offline)";
+                }
+            }
+        }
+
+        window.addEventListener('online', updateNetworkTopology);
+        window.addEventListener('offline', updateNetworkTopology);
+        updateNetworkTopology();
+
+        // High-Precision Boot Telemetry Sequence
+        let progress = 0;
+        function setBootProgress(val, message) {
+            progress = Math.min(val, 100);
+            if (progressBeam) progressBeam.style.width = `${progress}%`;
+            if (progressPercent) progressPercent.innerText = `${Math.floor(progress)}%`;
+            if (message && stepLabel) stepLabel.innerText = message;
+        }
+
+        // Initialize Firebase with Local Offline Persistence
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            enableIndexedDbPersistence(db).catch((err) => {
+                console.warn("[Roz E Hisab Persistence]:", err.code);
+            });
+        } catch (e) {
+            console.error("[Kernel Initialization Exception]:", e);
+        }
+
+        // Executive Smooth Bootloader Timeline & Triage Logic
+        async function runBootSequence() {
+            setBootProgress(18, "Initializing Hardware Isolation...");
+            await new Promise(r => setTimeout(r, 320));
+
+            setBootProgress(45, "Mounting IndexedDB Offline Registry...");
+            await new Promise(r => setTimeout(r, 350));
+
+            setBootProgress(72, "Auditing User Profile & Gateway...");
+
+            // Smart Triage Matrix:
+            // 1. Check if first time user (never seen onboarding)
+            const hasSeenOnboarding = localStorage.getItem("ROZ_ONBOARDED_V2");
+            let resolvedDestination = "onboarding.html";
+
+            if (!hasSeenOnboarding) {
+                // First-time user detected -> Send directly to Onboarding Flow
+                resolvedDestination = "onboarding.html";
+            } else {
+                // Returning user -> Verify Authentication Credentials
+                const authCheckPromise = new Promise((resolve) => {
+                    if (!auth) {
+                        resolve("login.html");
+                        return;
+                    }
+                    const unsubscribe = onAuthStateChanged(auth, (user) => {
+                        unsubscribe();
+                        if (user) {
+                            resolve("dashboard.html");
+                        } else {
+                            // Check if an offline session token exists in local storage
+                            const localCachedSession = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID");
+                            if (localCachedSession && !isOnline) {
+                                resolve("dashboard.html");
+                            } else {
+                                resolve("login.html");
+                            }
+                        }
+                    });
+
+                    // Mobile Safety Timeout: Never hang the boot screen on slow networks
+                    setTimeout(() => {
+                        const localCachedSession = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID");
+                        resolve(localCachedSession ? "dashboard.html" : "login.html");
+                    }, 1800);
+                });
+
+                resolvedDestination = await authCheckPromise;
+            }
+
+            setBootProgress(94, "Synchronizing Ledger Nodes...");
+            await new Promise(r => setTimeout(r, 260));
+
+            setBootProgress(100, "Ready");
+            if (stepSpinner) stepSpinner.style.display = "none";
+            if (stepLabel) stepLabel.style.color = "var(--brand-primary)";
+
+            // Silky Screen Exit
+            await new Promise(r => setTimeout(r, 180));
+            if (stageView) stageView.classList.add('transition-exit');
+
+            setTimeout(() => {
+                window.location.href = resolvedDestination;
+            }, 380);
+        }
+
+        // Execute immediately upon load
+        window.addEventListener('DOMContentLoaded', runBootSequence);
+    </script>
+</body>
+
+</html>

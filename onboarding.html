@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F7FBF8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Get Started</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Precision Swiss Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. EXACT SCREENSHOT EMERALD ARCHITECTURE TOKENS
+           ========================================================================== */
+        :root {
+            --canvas: #F7FBF8;
+            --surface: #FFFFFF;
+            --surface-glass: rgba(255, 255, 255, 0.88);
+
+            /* Exact Screenshot Forest Green Gradient Palette */
+            --forest-950: #02231A;
+            --forest-900: #064E3B;
+            --forest-800: #055944;
+            --forest-700: #047857;
+            --forest-600: #059669;
+            --forest-500: #10B981;
+            --forest-400: #34D399;
+            --forest-200: #A7F3D0;
+            --forest-100: #D1FAE5;
+            --forest-50: #ECFDF5;
+
+            --ink-headline: #04382A;
+            --ink-body: #4A635A;
+            --ink-tertiary: #92A79F;
+
+            --border-subtle: rgba(6, 78, 59, 0.08);
+            --btn-gradient: linear-gradient(180deg, #055944 0%, #03392B 100%);
+            --btn-active: #02261C;
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --shadow-subtle: 0 4px 20px -2px rgba(6, 78, 59, 0.04);
+            --shadow-btn: 0 16px 36px -8px rgba(5, 89, 68, 0.44), 0 2px 4px rgba(6, 78, 59, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--canvas);
+            color: var(--ink-headline);
+            position: fixed;
+        }
+
+        /* Ambient Organic Mesh Lighting */
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(100% 70% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.8) 55%, #F0FDF4 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-orb {
+            position: fixed;
+            width: 520px;
+            height: 520px;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: breatheHalo 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes breatheHalo {
+            0% {
+                transform: translate(-50%, -50%) scale(0.92);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.85;
+            }
+        }
+
+        /* ==========================================================================
+           2. CLEAN BESPOKE TOP NAVBAR (WITH LOGO & SKIP)
+           ========================================================================== */
+        .top-navbar {
+            position: fixed;
+            top: env(safe-area-inset-top, 16px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            z-index: 500;
+            pointer-events: none;
+        }
+
+        .brand-badge {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 6px 14px 6px 8px;
+            border-radius: 100px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-subtle);
+            text-decoration: none;
+        }
+
+        .brand-logo-frame {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--forest-900);
+        }
+
+        .brand-logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-badge span {
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--forest-900);
+        }
+
+        .btn-skip {
+            pointer-events: auto;
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink-body);
+            cursor: pointer;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .btn-skip:hover {
+            color: var(--forest-900);
+            background: #FFFFFF;
+        }
+
+        .btn-skip:active {
+            transform: scale(0.95);
+        }
+
+        /* ==========================================================================
+           3. MASTER SLIDER CHASSIS
+           ========================================================================== */
+        .stage-viewport {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-top: calc(env(safe-area-inset-top, 20px) + 55px);
+            padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 24px);
+        }
+
+        .slider-track {
+            display: flex;
+            width: 300%;
+            height: calc(100% - 110px);
+            transition: transform 0.52s var(--ease-spring);
+            touch-action: pan-y;
+            will-change: transform;
+            cursor: grab;
+        }
+
+        .slider-track:active {
+            cursor: grabbing;
+        }
+
+        .slide-screen {
+            width: 33.333333%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px 16px 24px;
+            text-align: center;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* ==========================================================================
+           4. ARTISANAL 1:1 VECTOR ART CONTAINERS
+           ========================================================================== */
+        .illustration-stage {
+            flex: 1;
+            width: 100%;
+            max-height: 52vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .illustration-glow-pod {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(167, 243, 208, 0.45) 0%, rgba(236, 253, 245, 0.1) 65%, transparent 70%);
+            filter: blur(14px);
+            z-index: 0;
+        }
+
+        .hero-svg-art {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 310px;
+            height: auto;
+            max-height: 280px;
+            filter: drop-shadow(0 14px 28px rgba(6, 78, 59, 0.08));
+            animation: floatArt 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatArt {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-7px);
+            }
+        }
+
+        /* ==========================================================================
+           5. EXACT TYPOGRAPHIC SPECIFICATIONS
+           ========================================================================== */
+        .slide-text-block {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 0 8px;
+            margin-top: 12px;
+            margin-bottom: 8px;
+            animation: fadeInUp 0.65s var(--ease-spring);
+        }
+
+        .slide-headline {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--ink-headline);
+            line-height: 1.22;
+            max-width: 320px;
+        }
+
+        .slide-subtext {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--ink-body);
+            line-height: 1.54;
+            max-width: 300px;
+            letter-spacing: -0.01em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================================================
+           6. FIXED BOTTOM CONTROLS DOCK (DOTS & CTA BUTTON)
+           ========================================================================== */
+        .bottom-dock {
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            z-index: 50;
+        }
+
+        /* Pagination Dots from Screenshot */
+        .pagination-capsule {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 12px;
+        }
+
+        .dot-node {
+            width: 7.5px;
+            height: 7.5px;
+            border-radius: 999px;
+            background: #CBE0D8;
+            transition: width 0.4s var(--ease-elastic), background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot-node.active {
+            width: 7.5px;
+            background: var(--forest-900);
+        }
+
+        /* Screenshot Exact Green Button */
+        .btn-dock-cta {
+            position: relative;
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: 14px;
+            background: var(--btn-gradient);
+            color: #FFFFFF;
+            font-size: 15.5px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+            box-shadow: var(--shadow-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .btn-dock-cta:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 20px 40px -8px rgba(5, 89, 68, 0.54);
+        }
+
+        .btn-dock-cta:active {
+            transform: scale(0.98);
+            background: var(--btn-active);
+        }
+
+        .stage-exit {
+            opacity: 0 !important;
+            transform: scale(0.97) !important;
+            transition: all 0.4s var(--ease-spring) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Atmospheric Lighting Scrim -->
+    <div class="ambient-canvas"></div>
+    <div class="ambient-orb"></div>
+
+    <!-- Minimalist Top Bar (With Logo) -->
+    <header class="top-navbar">
+        <div class="brand-badge">
+            <div class="brand-logo-frame">
+                <img src="assets/logo.png"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';"
+                    alt="Logo">
+            </div>
+            <span>Roz E Hisab</span>
+        </div>
+
+        <button type="button" class="btn-skip" id="skipBtn" aria-label="Skip to Login">Skip</button>
+    </header>
+
+    <!-- Master Viewport Stage -->
+    <main class="stage-viewport" id="stageViewport">
+
+        <!-- 3-Screen Slider Track -->
+        <div class="slider-track" id="sliderTrack">
+
+            <!-- ==========================================================================
+               SCREEN 1: MANAGE YOUR DAILY EXPENSES (HOUSE & FAMILY)
+               ========================================================================== -->
+            <section class="slide-screen" id="slide1">
+                <div class="illustration-stage">
+                    <div class="illustration-glow-pod"></div>
+
+                    <!-- Exact Screenshot 1 Vector Art (House, Oak Trees, Loving Family Trio) -->
+                    <svg class="hero-svg-art" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="treeGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#A7F3D0" />
+                                <stop offset="100%" stop-color="#34D399" />
+                            </linearGradient>
+                            <linearGradient id="treeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#6EE7B7" />
+                                <stop offset="100%" stop-color="#059669" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Soft Background Clouds -->
+                        <path
+                            d="M42 135C32 135 24 144 26 156C16 158 12 170 24 176H75C84 176 88 163 78 157C80 144 62 135 42 135Z"
+                            fill="#ECFDF5" opacity="0.85" />
+                        <path
+                            d="M262 118C254 118 247 124 249 135C240 136 238 147 246 153H290C297 153 300 142 293 137C295 126 280 118 262 118Z"
+                            fill="#ECFDF5" opacity="0.85" />
+
+                        <!-- Layered Emerald Garden Trees -->
+                        <circle cx="65" cy="175" r="46" fill="url(#treeGrad1)" opacity="0.75" />
+                        <circle cx="255" cy="170" r="50" fill="url(#treeGrad1)" opacity="0.75" />
+                        <circle cx="48" cy="195" r="38" fill="url(#treeGrad2)" opacity="0.95" />
+                        <circle cx="272" cy="192" r="40" fill="url(#treeGrad2)" opacity="0.95" />
+                        <!-- Tree Trunks -->
+                        <rect x="44" y="222" width="8" height="22" rx="4" fill="#064E3B" opacity="0.65" />
+                        <rect x="268" y="222" width="9" height="22" rx="4" fill="#064E3B" opacity="0.65" />
+
+                        <!-- Modern Architectural House -->
+                        <!-- Chimney -->
+                        <rect x="184" y="60" width="16" height="36" rx="3" fill="#E2E8F0" stroke="#064E3B"
+                            stroke-width="3" />
+                        <path d="M180 60H204" stroke="#064E3B" stroke-width="3.5" stroke-linecap="round" />
+                        <!-- Main House Box -->
+                        <rect x="105" y="98" width="110" height="130" rx="4" fill="#FFFFFF" stroke="#064E3B"
+                            stroke-width="4" />
+                        <!-- Gable Roof Peak -->
+                        <path d="M88 106L160 48L232 106" stroke="#064E3B" stroke-width="9" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M96 102L160 52L224 102" stroke="#10B981" stroke-width="3" stroke-linecap="round"
+                            stroke-linejoin="round" />
+
+                        <!-- Attic Window & 4 Panes -->
+                        <rect x="172" y="112" width="26" height="26" rx="5" fill="#D1FAE5" stroke="#064E3B"
+                            stroke-width="3" />
+                        <line x1="185" y1="112" x2="185" y2="138" stroke="#064E3B" stroke-width="2.5" />
+                        <line x1="172" y1="125" x2="198" y2="125" stroke="#064E3B" stroke-width="2.5" />
+
+                        <!-- Front Door -->
+                        <path d="M118 228V180C118 174 122 170 128 170H144C150 170 154 174 154 180V228" fill="#ECFDF5"
+                            stroke="#064E3B" stroke-width="3.5" />
+                        <circle cx="147" cy="202" r="2.5" fill="#064E3B" />
+
+                        <!-- Family Characters (Father, Mother, Child) -->
+                        <!-- Father (Left) -->
+                        <ellipse cx="118" cy="154" rx="14" ry="16" fill="#FEF3C7" stroke="#064E3B" stroke-width="3" />
+                        <path
+                            d="M106 150C106 142 112 138 118 138C126 138 131 142 131 148C127 148 126 144 121 144C115 144 112 147 110 151Z"
+                            fill="#064E3B" />
+                        <path d="M109 157C109 167 127 167 127 157C127 162 124 167 118 167C112 167 109 162 109 157Z"
+                            fill="#064E3B" />
+                        <path d="M98 228V186C98 178 106 173 115 173H121C130 173 138 178 138 186V228" fill="#D1FAE5"
+                            stroke="#064E3B" stroke-width="3.5" />
+
+                        <!-- Mother (Right) -->
+                        <ellipse cx="204" cy="158" rx="13" ry="15" fill="#FEF3C7" stroke="#064E3B" stroke-width="3" />
+                        <path
+                            d="M190 162C190 144 218 144 218 162C218 174 214 184 214 184C208 178 206 174 204 174C202 174 199 178 194 184C194 184 190 174 190 162Z"
+                            fill="#064E3B" />
+                        <path d="M188 228V188C188 180 195 176 203 176H206C214 176 221 180 221 188V228" fill="#FFFFFF"
+                            stroke="#064E3B" stroke-width="3.5" />
+
+                        <!-- Son (Center Front) -->
+                        <circle cx="161" cy="178" r="11" fill="#FEF3C7" stroke="#064E3B" stroke-width="2.8" />
+                        <path d="M151 176C151 168 156 166 161 166C166 166 171 168 171 176" stroke="#064E3B"
+                            stroke-width="3.2" stroke-linecap="round" />
+                        <path d="M147 228V199C147 193 152 189 158 189H164C170 189 175 193 175 199V228" fill="#047857"
+                            stroke="#064E3B" stroke-width="3.2" />
+
+                        <!-- Base Lawn Baseline -->
+                        <path d="M20 228H300" stroke="#064E3B" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                </div>
+
+                <div class="slide-text-block">
+                    <h1 class="slide-headline">Manage Your Daily Expenses</h1>
+                    <p class="slide-subtext">Keep your household records organized and stay on track with your goals.
+                    </p>
+                </div>
+            </section>
+
+
+            <!-- ==========================================================================
+               SCREEN 2: ALL YOUR RECORDS IN ONE PLACE (PHONE & ORBITING BADGES)
+               ========================================================================== -->
+            <section class="slide-screen" id="slide2">
+                <div class="illustration-stage">
+                    <div class="illustration-glow-pod"></div>
+
+                    <!-- Exact Screenshot 2 Vector Art (Smartphone with 6 Orbiting Category Badges) -->
+                    <svg class="hero-svg-art" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Orbiting Dotted Ring -->
+                        <ellipse cx="160" cy="140" rx="108" ry="94" stroke="#A7F3D0" stroke-width="2.5"
+                            stroke-dasharray="7 7" />
+
+                        <!-- Central Smartphone Chassis -->
+                        <rect x="124" y="66" width="72" height="146" rx="18" fill="#FFFFFF" stroke="#064E3B"
+                            stroke-width="4.2" />
+                        <line x1="147" y1="75" x2="173" y2="75" stroke="#064E3B" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Ledger Interface inside Phone -->
+                        <rect x="133" y="90" width="54" height="10" rx="4" fill="#D1FAE5" stroke="#059669"
+                            stroke-width="1.5" />
+                        <circle cx="140" cy="95" r="2.5" fill="#047857" />
+
+                        <rect x="133" y="107" width="44" height="7" rx="3.5" fill="#A7F3D0" />
+                        <circle cx="140" cy="110.5" r="2" fill="#059669" />
+
+                        <rect x="133" y="121" width="50" height="7" rx="3.5" fill="#E2E8F0" />
+                        <rect x="133" y="135" width="38" height="7" rx="3.5" fill="#E2E8F0" />
+                        <rect x="133" y="149" width="46" height="7" rx="3.5" fill="#E2E8F0" />
+
+                        <!-- Home Bar Indicator -->
+                        <rect x="146" y="196" width="28" height="3" rx="1.5" fill="#064E3B" />
+
+                        <!-- 6 SATELLITE BUBBLES FROM SCREENSHOT -->
+                        <!-- Badge 1: Top Center - School Backpack 🎒 -->
+                        <g transform="translate(160, 36)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <path d="M-6 4V-3C-6 -6.5 -3.5 -9 0 -9C3.5 -9 6 -6.5 6 -3V4H-6Z" fill="#D1FAE5"
+                                stroke="#064E3B" stroke-width="2" />
+                            <rect x="-8" y="-1" width="16" height="9" rx="3" fill="#10B981" stroke="#064E3B"
+                                stroke-width="2" />
+                            <line x1="-3" y1="3" x2="3" y2="3" stroke="#FFFFFF" stroke-width="1.5" />
+                        </g>
+
+                        <!-- Badge 2: Top Right - Milk / Grocery Jug 🥛 -->
+                        <g transform="translate(250, 78)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <rect x="-6" y="-7" width="12" height="15" rx="3" fill="#A7F3D0" stroke="#064E3B"
+                                stroke-width="2" />
+                            <path d="M-4 -7L-2 -10H2L4 -7" stroke="#064E3B" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="0" cy="0" r="2.5" fill="#064E3B" />
+                        </g>
+
+                        <!-- Badge 3: Right Center - Store / Shopfront 🏪 -->
+                        <g transform="translate(268, 156)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <path d="M-8 -2L0 -7L8 -2V6H-8V-2Z" fill="#D1FAE5" stroke="#064E3B" stroke-width="2" />
+                            <rect x="-3" y="1" width="6" height="5" fill="#047857" />
+                        </g>
+
+                        <!-- Badge 4: Bottom Right - Healthcare Cross 🏥 -->
+                        <g transform="translate(202, 224)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <path d="M-3 -7H3V-3H7V3H3V7H-3V3H-7V-3H-3V-7Z" fill="#34D399" stroke="#064E3B"
+                                stroke-width="1.8" />
+                        </g>
+
+                        <!-- Badge 5: Bottom Left - Sprout / Agriculture 🌱 -->
+                        <g transform="translate(74, 186)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <path d="M0 6V-2C0 -2 -5 -4 -7 0C-9 4 0 6 0 6Z" fill="#059669" stroke="#064E3B"
+                                stroke-width="1.5" />
+                            <path d="M0 -1C0 -1 4 -6 8 -4C10 0 2 2 0 2" fill="#10B981" stroke="#064E3B"
+                                stroke-width="1.5" />
+                        </g>
+
+                        <!-- Badge 6: Left Center - House / Utilities 🏠 -->
+                        <g transform="translate(52, 110)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <path d="M-7 4V-1L0 -7L7 -1V4H-7Z" fill="#6EE7B7" stroke="#064E3B" stroke-width="2" />
+                            <rect x="-2" y="0" width="4" height="4" fill="#064E3B" />
+                        </g>
+
+                        <!-- Badge 7: Top Left - Orchard Tree 🌳 -->
+                        <g transform="translate(94, 50)">
+                            <circle cx="0" cy="0" r="19" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <circle cx="0" cy="-3" r="7" fill="#10B981" stroke="#064E3B" stroke-width="2" />
+                            <line x1="0" y1="4" x2="0" y2="7" stroke="#064E3B" stroke-width="2.5"
+                                stroke-linecap="round" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="slide-text-block">
+                    <h1 class="slide-headline">All Your Records in One Place</h1>
+                    <p class="slide-subtext">From groceries to school fees, track everything with ease.</p>
+                </div>
+            </section>
+
+
+            <!-- ==========================================================================
+               SCREEN 3: SIMPLE, SECURE & RELIABLE (LEDGER & VAULT SHIELD)
+               ========================================================================== -->
+            <section class="slide-screen" id="slide3">
+                <div class="illustration-stage">
+                    <div class="illustration-glow-pod"></div>
+
+                    <!-- Exact Screenshot 3 Vector Art (Digital Binder, 3D Shield, Magnifying Lens) -->
+                    <svg class="hero-svg-art" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#10B981" />
+                                <stop offset="50%" stop-color="#047857" />
+                                <stop offset="100%" stop-color="#064E3B" />
+                            </linearGradient>
+                            <linearGradient id="bookCoverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#04382A" />
+                                <stop offset="100%" stop-color="#064E3B" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Soft Botanical Leaves -->
+                        <path d="M265 72C250 40 285 30 285 30C285 30 290 65 265 72Z" fill="#6EE7B7" opacity="0.65" />
+                        <path d="M255 205C235 180 268 170 268 170C268 170 278 198 255 205Z" fill="#A7F3D0"
+                            opacity="0.85" />
+                        <path d="M48 95C65 75 75 105 75 105C75 105 45 115 48 95Z" fill="#A7F3D0" opacity="0.5" />
+
+                        <!-- Open Binder Book Cover -->
+                        <rect x="66" y="76" width="188" height="132" rx="16" fill="url(#bookCoverGrad)" stroke="#022C22"
+                            stroke-width="4" />
+                        <!-- White Inner Book Pages -->
+                        <rect x="74" y="82" width="172" height="120" rx="12" fill="#FFFFFF" />
+
+                        <!-- Ribbon Bookmark -->
+                        <path d="M220 74V102L227 96L234 102V74H220Z" fill="#10B981" stroke="#064E3B" stroke-width="2" />
+                        <line x1="160" y1="82" x2="160" y2="202" stroke="#E2E8F0" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Left Page Lines -->
+                        <circle cx="94" cy="110" r="4.5" fill="#10B981" />
+                        <rect x="105" y="108" width="38" height="5.5" rx="2.5" fill="#CBD5E1" />
+
+                        <circle cx="94" cy="128" r="4.5" fill="#10B981" />
+                        <rect x="105" y="126" width="46" height="5.5" rx="2.5" fill="#E2E8F0" />
+
+                        <circle cx="94" cy="146" r="4.5" fill="#CBD5E1" />
+                        <rect x="105" y="144" width="34" height="5.5" rx="2.5" fill="#E2E8F0" />
+
+                        <circle cx="94" cy="164" r="4.5" fill="#CBD5E1" />
+                        <rect x="105" y="162" width="42" height="5.5" rx="2.5" fill="#E2E8F0" />
+
+                        <!-- Right Page Lines -->
+                        <rect x="175" y="108" width="55" height="5.5" rx="2.5" fill="#E2E8F0" />
+                        <rect x="175" y="126" width="48" height="5.5" rx="2.5" fill="#E2E8F0" />
+                        <rect x="175" y="144" width="52" height="5.5" rx="2.5" fill="#E2E8F0" />
+
+                        <!-- Magnifying Glass (Top Right) -->
+                        <g transform="translate(232, 58)">
+                            <circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#064E3B" stroke-width="3" />
+                            <circle cx="0" cy="0" r="10" fill="#ECFDF5" />
+                            <path d="M-4 -3C-4 -6 0 -7 3 -6" stroke="#10B981" stroke-width="2" stroke-linecap="round" />
+                            <line x1="10" y1="10" x2="21" y2="21" stroke="#064E3B" stroke-width="4.5"
+                                stroke-linecap="round" />
+                        </g>
+
+                        <!-- Holographic Emerald Shield with Circular Checkmark -->
+                        <g filter="drop-shadow(0 12px 24px rgba(6, 78, 59, 0.28))">
+                            <path d="M160 92L198 108V146C198 172 160 192 160 192C160 192 122 172 122 146V108L160 92Z"
+                                fill="url(#shieldGrad)" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round" />
+                            <path d="M160 99L190 112V144C190 164 160 181 160 181C160 181 130 164 130 144V112L160 99Z"
+                                stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" />
+                            <!-- White Loop Checkmark from Screenshot -->
+                            <path
+                                d="M144 140C144 150 152 156 160 156C168 156 176 150 176 138M176 138L168 146M176 138L184 146"
+                                stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="slide-text-block">
+                    <h1 class="slide-headline">Simple, Secure & Reliable</h1>
+                    <p class="slide-subtext">Your data is safe, always. Built for your family's peace of mind.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Fixed Bottom Controls (Exact Screenshot Match) -->
+        <footer class="bottom-dock">
+            <!-- 3 Dots Pagination -->
+            <nav class="pagination-capsule" id="paginationCapsule">
+                <div class="dot-node active" data-slide="0"></div>
+                <div class="dot-node" data-slide="1"></div>
+                <div class="dot-node" data-slide="2"></div>
+            </nav>
+
+            <!-- Action Button ("Next" -> "Get Started") -->
+            <button type="button" class="btn-dock-cta" id="ctaBtn">
+                <span id="ctaLabel">Next</span>
+            </button>
+        </footer>
+
+    </main>
+
+    <!-- ==========================================================================
+       7. NATIVE TOUCH SWIPE, SOUND SYNTHESIS & ROUTING ENGINE
+       ========================================================================== -->
+    <script>
+        // DOM Handles
+        const sliderTrack = document.getElementById('sliderTrack');
+        const dotNodes = document.querySelectorAll('.dot-node');
+        const ctaBtn = document.getElementById('ctaBtn');
+        const ctaLabel = document.getElementById('ctaLabel');
+        const skipBtn = document.getElementById('skipBtn');
+        const stageViewport = document.getElementById('stageViewport');
+
+        let activeIndex = 0;
+        const totalScreens = 3;
+
+        // Subtle Synthesized Audio
+        let audioCtx = null;
+        function playPip(isSuccess = false) {
+            try {
+                if (!audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) audioCtx = new AudioContext();
+                }
+                if (!audioCtx) return;
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                if (!isSuccess) {
+                    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(500, audioCtx.currentTime + 0.04);
+                    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.045);
+                } else {
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.13);
+                }
+            } catch (e) { }
+        }
+
+        function triggerHaptic() {
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(15);
+            }
+        }
+
+        // Slide Navigation
+        function navigateToSlide(index, playAudio = true) {
+            if (index < 0 || index >= totalScreens) return;
+            activeIndex = index;
+
+            sliderTrack.style.transform = `translateX(-${activeIndex * 33.333333}%)`;
+
+            dotNodes.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === activeIndex);
+            });
+
+            if (activeIndex === totalScreens - 1) {
+                ctaLabel.innerText = "Get Started";
+            } else {
+                ctaLabel.innerText = "Next";
+            }
+
+            if (playAudio) {
+                playPip(activeIndex === totalScreens - 1);
+                triggerHaptic();
+            }
+        }
+
+        // Exit Onboarding & Complete
+        function exitOnboarding() {
+            playPip(true);
+            triggerHaptic();
+
+            localStorage.setItem("ROZ_ONBOARDED_V2", "true");
+            stageViewport.classList.add('stage-exit');
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 360);
+        }
+
+        // Event Listeners
+        ctaBtn.addEventListener('click', () => {
+            if (activeIndex < totalScreens - 1) {
+                navigateToSlide(activeIndex + 1);
+            } else {
+                exitOnboarding();
+            }
+        });
+
+        skipBtn.addEventListener('click', exitOnboarding);
+
+        dotNodes.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetSlide = parseInt(dot.getAttribute('data-slide'));
+                navigateToSlide(targetSlide);
+            });
+        });
+
+        // 1:1 Physical Touch Swipe
+        let touchOriginX = 0;
+        let currentTouchX = 0;
+        let isTouching = false;
+
+        sliderTrack.addEventListener('touchstart', (e) => {
+            touchOriginX = e.touches[0].clientX;
+            currentTouchX = touchOriginX;
+            isTouching = true;
+            sliderTrack.style.transition = 'none';
+        }, { passive: true });
+
+        sliderTrack.addEventListener('touchmove', (e) => {
+            if (!isTouching) return;
+            currentTouchX = e.touches[0].clientX;
+            const deltaX = currentTouchX - touchOriginX;
+
+            const baseShift = -(activeIndex * (100 / 3));
+            const dragPercent = (deltaX / window.innerWidth) * (100 / 3);
+            const isAtEdge = (activeIndex === 0 && deltaX > 0) || (activeIndex === totalScreens - 1 && deltaX < 0);
+            const resistance = isAtEdge ? 0.28 : 1;
+
+            sliderTrack.style.transform = `translateX(${baseShift + (dragPercent * resistance)}%)`;
+        }, { passive: true });
+
+        sliderTrack.addEventListener('touchend', () => {
+            if (!isTouching) return;
+            isTouching = false;
+            sliderTrack.style.transition = 'transform 0.52s var(--ease-spring)';
+
+            const totalDelta = currentTouchX - touchOriginX;
+            if (totalDelta < -48 && activeIndex < totalScreens - 1) {
+                navigateToSlide(activeIndex + 1);
+            } else if (totalDelta > 48 && activeIndex > 0) {
+                navigateToSlide(activeIndex - 1);
+            } else {
+                navigateToSlide(activeIndex, false);
+            }
+        });
+
+        // Mouse Drag for Desktop
+        let isMouseDown = false;
+        sliderTrack.addEventListener('mousedown', (e) => {
+            touchOriginX = e.clientX;
+            currentTouchX = touchOriginX;
+            isMouseDown = true;
+            sliderTrack.style.transition = 'none';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            currentTouchX = e.clientX;
+            const deltaX = currentTouchX - touchOriginX;
+            const baseShift = -(activeIndex * (100 / 3));
+            const dragPercent = (deltaX / window.innerWidth) * (100 / 3);
+            sliderTrack.style.transform = `translateX(${baseShift + dragPercent}%)`;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            sliderTrack.style.transition = 'transform 0.52s var(--ease-spring)';
+            const delta = currentTouchX - touchOriginX;
+            if (delta < -50 && activeIndex < totalScreens - 1) {
+                navigateToSlide(activeIndex + 1);
+            } else if (delta > 50 && activeIndex > 0) {
+                navigateToSlide(activeIndex - 1);
+            } else {
+                navigateToSlide(activeIndex, false);
+            }
+        });
+    </script>
+</body>
+
+</html>

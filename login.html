@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F7FBF8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Login</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Global Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. EXACT SCREENSHOT FOREST & MINT DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --canvas: #F7FBF8;
+            --surface: #FFFFFF;
+            --surface-input: #FFFFFF;
+            --surface-glass: rgba(255, 255, 255, 0.92);
+
+            /* Exact Screenshot Forest Green Palette */
+            --forest-950: #02231A;
+            --forest-900: #064E3B;
+            --forest-800: #055944;
+            --forest-700: #047857;
+            --forest-600: #059669;
+            --forest-500: #10B981;
+            --forest-100: #D1FAE5;
+            --forest-50: #ECFDF5;
+
+            --ink-headline: #04382A;
+            --ink-title: #090D14;
+            --ink-body: #64748B;
+            --ink-placeholder: #94A3B8;
+
+            --border-input: #E2E8E4;
+            --border-focus: #059669;
+
+            --btn-gradient: linear-gradient(180deg, #055944 0%, #03392B 100%);
+            --btn-active: #02261C;
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+            --shadow-card: 0 20px 45px -12px rgba(6, 78, 59, 0.06);
+            --shadow-btn: 0 14px 28px -6px rgba(5, 89, 68, 0.38);
+            --shadow-toast: 0 18px 36px -6px rgba(15, 23, 42, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--canvas);
+            color: var(--ink-headline);
+            overflow-x: hidden;
+        }
+
+        /* Subtle Ambient Lighting */
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(100% 70% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.6) 60%, #F7FBF8 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. DISCREET FLOATING TOAST (BACKGROUND NETWORK / ERROR FEEDBACK)
+           ========================================================================== */
+        .toast-wrapper {
+            position: fixed;
+            top: env(safe-area-inset-top, 20px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-24px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            transition: all 0.35s var(--ease-spring);
+            pointer-events: none;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .toast-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-capsule {
+            background: rgba(15, 23, 42, 0.94);
+            color: #FFFFFF;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-toast);
+            font-size: 13.5px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast-capsule svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ==========================================================================
+           3. MAIN LOGIN CONTAINER (EXACT SCREENSHOT LAYOUT)
+           ========================================================================== */
+        .viewport-wrapper {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: calc(env(safe-area-inset-top, 24px) + 20px) 24px calc(env(safe-area-inset-bottom, 24px) + 20px) 24px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: cardEntrance 0.7s var(--ease-spring) forwards;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Brand Emblem Header */
+        .brand-header-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .app-logo-box {
+            width: 68px;
+            height: 68px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: 0 12px 24px -4px rgba(6, 78, 59, 0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-wordmark {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            color: var(--forest-900);
+            line-height: 1.1;
+        }
+
+        /* Welcome Text Block */
+        .welcome-block {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .welcome-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--ink-headline);
+            margin-bottom: 4px;
+        }
+
+        .welcome-subtitle {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--ink-body);
+            letter-spacing: -0.01em;
+        }
+
+        /* ==========================================================================
+           4. FORM INPUT APPARATUS (EXACT ICONS & FIELD STYLING)
+           ========================================================================== */
+        .auth-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            height: 52px;
+            background: var(--surface-input);
+            border: 1.5px solid var(--border-input);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            transition: all 0.22s var(--ease-smooth);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.015);
+        }
+
+        .input-group:focus-within {
+            border-color: var(--border-focus);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+        }
+
+        .input-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--ink-placeholder);
+            flex-shrink: 0;
+            margin-right: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .input-group:focus-within .input-icon {
+            color: var(--forest-700);
+        }
+
+        .field-core {
+            flex: 1;
+            height: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--ink-headline);
+        }
+
+        .field-core::placeholder {
+            color: var(--ink-placeholder);
+            font-weight: 400;
+        }
+
+        .btn-eye-toggle {
+            background: none;
+            border: none;
+            color: var(--ink-placeholder);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .btn-eye-toggle:hover {
+            color: var(--ink-headline);
+        }
+
+        /* Forest Green Action Button */
+        .btn-login-submit {
+            position: relative;
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            background: var(--btn-gradient);
+            color: #FFFFFF;
+            font-size: 15.5px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+            box-shadow: var(--shadow-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 6px;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .btn-login-submit:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 18px 36px -6px rgba(5, 89, 68, 0.52);
+        }
+
+        .btn-login-submit:active {
+            transform: scale(0.98);
+            background: var(--btn-active);
+        }
+
+        .btn-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #FFFFFF;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Forgot Password Link */
+        .forgot-pass-link {
+            align-self: center;
+            margin-top: 6px;
+            color: var(--forest-600);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-pass-link:hover {
+            color: var(--forest-900);
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           5. OR DIVIDER & SOCIAL AUTH (EXACT MATCH, NO APPLE)
+           ========================================================================== */
+        .divider-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 20px 0 18px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #E5EDE7;
+        }
+
+        .divider-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94A3B8;
+            padding: 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Continue with Google Button */
+        .btn-google-sso {
+            width: 100%;
+            height: 50px;
+            background: #FFFFFF;
+            border: 1.5px solid var(--border-input);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1E293B;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-smooth);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-google-sso:hover {
+            background: #FBFDFB;
+            border-color: #CBD5E1;
+            transform: translateY(-1px);
+        }
+
+        .btn-google-sso:active {
+            transform: scale(0.98);
+        }
+
+        .btn-google-sso svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Register Redirection Footer */
+        .register-redirect-footer {
+            margin-top: 24px;
+            font-size: 13.5px;
+            color: var(--ink-body);
+            text-align: center;
+        }
+
+        .register-redirect-footer a {
+            color: var(--forest-700);
+            font-weight: 700;
+            text-decoration: none;
+            margin-left: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .register-redirect-footer a:hover {
+            color: var(--forest-950);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Subtle Background -->
+    <div class="ambient-canvas"></div>
+
+    <!-- Floating Background Toast Notification -->
+    <div class="toast-wrapper" id="toastBox">
+        <div class="toast-capsule">
+            <svg id="toastIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span id="toastMsg">Notification message</span>
+        </div>
+    </div>
+
+    <!-- Master Viewport Container -->
+    <main class="viewport-wrapper">
+
+        <div class="login-card">
+
+            <!-- 1. App Emblem Header (Exact Screenshot Badge) -->
+            <div class="brand-header-group">
+                <div class="app-logo-box">
+                    <img src="assets/logo.png"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';"
+                        alt="Roz E Hisab Logo">
+                </div>
+                <h1 class="brand-wordmark">Roz E Hisab</h1>
+            </div>
+
+            <!-- 2. Welcome Headline Block -->
+            <div class="welcome-block">
+                <h2 class="welcome-title">Welcome Back!</h2>
+                <p class="welcome-subtitle">Login to your account to continue.</p>
+            </div>
+
+            <!-- 3. Form Apparatus -->
+            <form class="auth-form" id="loginForm" novalidate>
+
+                <!-- Email or Phone Number Field -->
+                <div class="input-group">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input type="email" id="emailInput" class="field-core" placeholder="Email or Phone Number" required
+                        autocomplete="email">
+                </div>
+
+                <!-- Password Field with Show/Hide Toggle -->
+                <div class="input-group">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <input type="password" id="passwordInput" class="field-core" placeholder="Password" required
+                        autocomplete="current-password">
+                    <button type="button" class="btn-eye-toggle" id="eyeToggleBtn"
+                        aria-label="Toggle password visibility">
+                        <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Solid Forest Green Login Button -->
+                <button type="submit" class="btn-login-submit" id="loginSubmitBtn">
+                    <span id="btnLabel">Login</span>
+                    <div class="btn-spinner" id="btnSpinner"></div>
+                </button>
+
+                <!-- Forgot Password Link -->
+                <a href="forgot-password.html" class="forgot-pass-link">Forgot Password?</a>
+
+            </form>
+
+            <!-- 4. OR Divider -->
+            <div class="divider-row">
+                <div class="divider-line"></div>
+                <span class="divider-text">OR</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <!-- 5. Continue with Google (Apple Omitted as Requested) -->
+            <button type="button" class="btn-google-sso" id="googleSsoBtn">
+                <svg viewBox="0 0 48 48">
+                    <path fill="#FFC107"
+                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                    <path fill="#FF3D00"
+                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                    <path fill="#4CAF50"
+                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                    <path fill="#1976D2"
+                        d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                </svg>
+                <span>Continue with Google</span>
+            </button>
+
+            <!-- 6. Bottom Registration Switcher -->
+            <div class="register-redirect-footer">
+                Don't have an account?<a href="register.html">Register</a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ==========================================================================
+       6. CORE FIREBASE BACKEND INTEGRATION ENGINE (VIA FIREBASE-CONFIG.JS)
+       ========================================================================== -->
+    <script type="module">
+        import {
+            auth,
+            provider,
+            signInWithEmailAndPassword,
+            signInWithPopup,
+            onAuthStateChanged
+        } from './firebase/firebase-config.js';
+
+        // DOM Handles
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        const btnLabel = document.getElementById('btnLabel');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const eyeToggleBtn = document.getElementById('eyeToggleBtn');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const googleSsoBtn = document.getElementById('googleSsoBtn');
+        const toastBox = document.getElementById('toastBox');
+        const toastMsg = document.getElementById('toastMsg');
+
+        // Discreet Non-Obtrusive Toast Engine
+        let toastTimer;
+        function notify(message, isError = true) {
+            clearTimeout(toastTimer);
+            toastMsg.innerText = message;
+            toastBox.querySelector('.toast-capsule').style.background = isError
+                ? "rgba(185, 28, 28, 0.95)"
+                : "rgba(6, 78, 59, 0.95)";
+            toastBox.classList.add('active');
+            toastTimer = setTimeout(() => {
+                toastBox.classList.remove('active');
+            }, 3600);
+        }
+
+        // Auto-Redirect if Already Authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        // Password Show / Hide Toggle
+        eyeToggleBtn.addEventListener('click', () => {
+            const isPass = passwordInput.type === "password";
+            passwordInput.type = isPass ? "text" : "password";
+            eyeIcon.innerHTML = isPass
+                ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`
+                : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+        });
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                btnLabel.style.display = "none";
+                btnSpinner.style.display = "block";
+                loginSubmitBtn.disabled = true;
+                googleSsoBtn.disabled = true;
+            } else {
+                btnLabel.style.display = "block";
+                btnSpinner.style.display = "none";
+                loginSubmitBtn.disabled = false;
+                googleSsoBtn.disabled = false;
+            }
+        }
+
+        // Email / Password Login Handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                notify("Please enter your email and password.");
+                return;
+            }
+
+            if (!navigator.onLine) {
+                notify("Network offline. Please connect to internet to verify.");
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                notify("Login Successful! Redirecting...", false);
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 350);
+            } catch (error) {
+                setLoading(false);
+                let message = "Authentication failed. Please verify credentials.";
+                if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                    message = "Invalid email or password.";
+                } else if (error.code === 'auth/too-many-requests') {
+                    message = "Too many attempts. Account locked temporarily.";
+                }
+                notify(message);
+            }
+        });
+
+        // Google SSO Handler
+        googleSsoBtn.addEventListener('click', async () => {
+            if (!navigator.onLine) {
+                notify("Network offline. Sign-in requires an active connection.");
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                await signInWithPopup(auth, provider);
+                notify("Access Granted. Unlocking...", false);
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 350);
+            } catch (error) {
+                setLoading(false);
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    notify("Google Sign-In was cancelled or failed.");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
