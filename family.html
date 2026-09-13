@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Family Workspace & Access Control</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Global Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. ROZ E HISAB EMERALD LUXURY DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --canvas: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-subtle: #F1F5F9;
+            --surface-dock: rgba(255, 255, 255, 0.94);
+
+            --brand-primary: #047857;
+            --brand-deep: #064E3B;
+            --brand-mint: #ECFDF5;
+            --brand-emerald: #10B981;
+            --brand-gradient: linear-gradient(135deg, #055944 0%, #03392B 100%);
+
+            --ink-headline: #04382A;
+            --ink-title: #0F172A;
+            --ink-secondary: #475569;
+            --ink-tertiary: #94A3B8;
+
+            --status-owner: #D97706;
+            --status-owner-bg: #FEF3C7;
+            --status-editor: #047857;
+            --status-editor-bg: #ECFDF5;
+            --status-viewer: #64748B;
+            --status-viewer-bg: #F1F5F9;
+
+            --danger-ink: #EF4444;
+            --danger-bg: #FEF2F2;
+
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-card: #EDF2F7;
+            --border-focus: #059669;
+
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
+            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
+            --shadow-modal: 0 -20px 60px rgba(0, 0, 0, 0.15);
+            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--canvas);
+            color: var(--ink-title);
+            overflow-x: hidden;
+        }
+
+        .mobile-viewport {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--canvas);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. EXECUTIVE TOP APP BAR (UNIFIED SPECIFICATION)
+           ========================================================================== */
+        .top-appbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .app-logo-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(5, 89, 68, 0.25);
+        }
+
+        .app-logo-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-title-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-title-str {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header-subtitle-str {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--brand-emerald);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            transition: background-color 0.3s ease;
+        }
+
+        .header-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-header-action {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-header-action:hover {
+            color: var(--brand-deep);
+            background: #E2E8F0;
+        }
+
+        /* ==========================================================================
+           3. TOAST NOTIFICATIONS
+           ========================================================================== */
+        .toast-wrapper {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 20px) + 65px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 800;
+            transition: all 0.4s var(--ease-spring);
+            pointer-events: none;
+            width: 90%;
+            max-width: 440px;
+        }
+
+        .toast-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-capsule {
+            background: rgba(4, 56, 42, 0.95);
+            color: white;
+            backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-toast);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           4. MAIN CONTENT STREAM
+           ========================================================================== */
+        .content-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Family Workspace Hero Card */
+        .family-hero-card {
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            border-radius: 26px;
+            padding: 24px 20px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .family-hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 130px;
+            height: 130px;
+            background: rgba(16, 185, 129, 0.22);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .hero-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-tag {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #A7F3D0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .workspace-members-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 9px;
+            border-radius: 100px;
+            color: #D1FAE5;
+        }
+
+        .workspace-name-display {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: white;
+            line-height: 1.2;
+        }
+
+        /* Passcode Interactive Box */
+        .invite-display-card {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .invite-label-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .invite-caption {
+            font-size: 10px;
+            font-weight: 700;
+            color: #A7F3D0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .invite-code-str {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-share-invite {
+            background: var(--brand-emerald);
+            border: none;
+            border-radius: 12px;
+            padding: 9px 15px;
+            color: #02231A;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .btn-share-invite:hover {
+            background: #34D399;
+        }
+
+        .btn-share-invite:active {
+            transform: scale(0.96);
+        }
+
+        /* Join Another Family Card */
+        .join-family-card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 18px 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .join-heading {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-headline);
+        }
+
+        .join-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .join-code-input {
+            flex: 1;
+            height: 46px;
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            padding: 0 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-title);
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        .join-code-input:focus {
+            background: var(--surface);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+        }
+
+        .btn-join-family {
+            height: 46px;
+            padding: 0 18px;
+            background: var(--brand-gradient);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* Members Directory Shelf */
+        .section-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .section-title {
+            font-size: 15.5px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+        }
+
+        .members-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .member-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 16px 16px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .member-card:hover {
+            border-color: rgba(5, 150, 105, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .member-left-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .member-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--brand-mint);
+            color: var(--brand-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .member-name-str {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--ink-title);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-username-str {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .member-email-str {
+            font-size: 11px;
+            color: var(--ink-tertiary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-right-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .role-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .role-owner {
+            background: var(--status-owner-bg);
+            color: var(--status-owner);
+        }
+
+        .role-editor {
+            background: var(--status-editor-bg);
+            color: var(--status-editor);
+        }
+
+        .role-viewer {
+            background: var(--status-viewer-bg);
+            color: var(--status-viewer);
+        }
+
+        /* Permissions Matrix Card */
+        .permissions-matrix-card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .matrix-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-headline);
+        }
+
+        .matrix-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .matrix-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 12.5px;
+            color: var(--ink-secondary);
+            line-height: 1.4;
+        }
+
+        .matrix-icon {
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Self Leave Button */
+        .btn-self-leave {
+            width: 100%;
+            height: 48px;
+            background: var(--surface);
+            border: 1.5px solid var(--border-card);
+            color: var(--danger-ink);
+            border-radius: 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-self-leave:hover {
+            background: var(--danger-bg);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        /* ==========================================================================
+           5. MODAL BOTTOM SHEET (MEMBER MANAGEMENT)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 56, 42, 0.55);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--surface);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 36px 36px 0 0;
+            padding: 32px 24px 44px 24px;
+            box-shadow: var(--shadow-modal);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: slideUpSheet 0.35s var(--ease-spring);
+        }
+
+        @keyframes slideUpSheet {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header-line {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .modal-title-str {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            line-height: 1.2;
+        }
+
+        .modal-close-btn {
+            background: var(--surface-subtle);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink-secondary);
+        }
+
+        .modal-role-select {
+            width: 100%;
+            height: 48px;
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            padding: 0 14px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-title);
+            outline: none;
+        }
+
+        .modal-actions-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-modal-save {
+            height: 50px;
+            background: var(--brand-deep);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-modal-remove {
+            height: 48px;
+            background: var(--danger-bg);
+            border: none;
+            border-radius: 14px;
+            color: var(--danger-ink);
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           6. LUXURY MOBILE ISLAND DOCK
+           ========================================================================== */
+        .dock-container {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            width: 92%;
+            max-width: 440px;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            width: 100%;
+            height: 68px;
+            background: var(--surface-dock);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-dock);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 8px;
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--ink-tertiary);
+            text-decoration: none;
+            width: 54px;
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn svg {
+            width: 21px;
+            height: 21px;
+            stroke-width: 2;
+        }
+
+        .dock-btn span {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .dock-btn.active {
+            color: var(--brand-deep);
+        }
+
+        .dock-fab-wrapper {
+            position: relative;
+            top: -20px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dock-fab {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: var(--shadow-fab);
+            border: 3.5px solid var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .dock-fab:active {
+            transform: scale(0.92);
+        }
+
+        .dock-fab svg {
+            width: 26px;
+            height: 26px;
+            stroke-width: 2.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Spatial Canvas -->
+    <div class="ambient-canvas"></div>
+
+    <!-- Main Mobile Frame Viewport -->
+    <main class="mobile-viewport">
+
+        <!-- 1. Top Appbar (Exact Unified Specification) -->
+        <header class="top-appbar">
+            <!-- App Logo on Left -->
+            <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
+                <img src="assets/logo.png"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';"
+                    alt="Logo">
+            </a>
+
+            <div class="header-title-block">
+                <h1 class="header-title-str">Family Workspace</h1>
+                <span class="header-subtitle-str">
+                    <div class="status-dot" id="networkDot"></div>
+                    <span id="activeWorkspaceSubtitle">Family Ledger</span>
+                </span>
+            </div>
+
+            <div class="header-right-actions">
+                <a href="settings.html" class="btn-header-action" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Scrollable Body Stream -->
+        <div class="content-stream">
+
+            <!-- 1. Family Workspace Hero Card -->
+            <section class="family-hero-card">
+                <div class="hero-top-row">
+                    <span class="hero-tag">Shared Household Vault</span>
+                    <span class="workspace-members-pill" id="membersCountPill">1 Member</span>
+                </div>
+
+                <h1 class="workspace-name-display" id="workspaceNameTitle">Family Ledger</h1>
+
+                <!-- Passcode Interactive Box -->
+                <div class="invite-display-card">
+                    <div class="invite-label-group">
+                        <span class="invite-caption">Family Invite Passcode</span>
+                        <span class="invite-code-str" id="inviteCodeDisplay">RZH-XXXX</span>
+                    </div>
+                    <button type="button" class="btn-share-invite" id="shareInviteBtn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        <span>Share Code</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2. Join Another Family Workspace Card -->
+            <section class="join-family-card">
+                <span class="join-heading">Connect to Another Household</span>
+                <form id="joinFamilyForm" class="join-input-group">
+                    <input type="text" id="joinCodeInput" class="join-code-input" placeholder="e.g. RZH-8492" required
+                        maxlength="10">
+                    <button type="submit" class="btn-join-family" id="joinBtn">Connect</button>
+                </form>
+            </section>
+
+            <!-- 3. Active Family Members Directory -->
+            <section class="section-header-bar">
+                <h3 class="section-title">Vault Members</h3>
+                <span style="font-size:12px; color:var(--ink-tertiary); font-weight:700;" id="userRoleIndicator">Your
+                    Role: OWNER</span>
+            </section>
+
+            <section class="members-stack" id="membersStack">
+                <div
+                    style="background:var(--surface); border:1.5px dashed #CBD5E1; border-radius:20px; padding:30px 20px; text-align:center;">
+                    <span style="font-size:14px; font-weight:700; color:var(--ink-title);">Loading Household
+                        Directory...</span>
+                </div>
+            </section>
+
+            <!-- 4. Self-Leave Action (Visible if user is a member/editor/viewer) -->
+            <button type="button" class="btn-self-leave" id="btnSelfLeave">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Leave This Household</span>
+            </button>
+
+            <!-- 5. Permissions Matrix Card -->
+            <section class="permissions-matrix-card">
+                <h4 class="matrix-title">Permission Hierarchy</h4>
+                <div class="matrix-list">
+                    <div class="matrix-item">
+                        <span class="matrix-icon">👑</span>
+                        <div><strong>Owner / Moderator:</strong> Complete administrative governance, member roles,
+                            invite generation and purge permissions.</div>
+                    </div>
+                    <div class="matrix-item">
+                        <span class="matrix-icon">✍️</span>
+                        <div><strong>Editor:</strong> Add, edit and view daily transactions, grocery logs and expenses.
+                        </div>
+                    </div>
+                    <div class="matrix-item">
+                        <span class="matrix-icon">👁️</span>
+                        <div><strong>Viewer:</strong> Read-only monitoring of monthly registers, reports and budget
+                            limits.</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 3. Bottom Mobile Dock -->
+        <div class="dock-container">
+            <nav class="mobile-dock">
+                <a href="dashboard.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+
+                <a href="daily-register.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span>Register</span>
+                </a>
+
+                <!-- Central Add FAB -->
+                <div class="dock-fab-wrapper">
+                    <a href="add.html" class="dock-fab" title="Add Record">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+
+                <a href="reports.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>Reports</span>
+                </a>
+
+                <a href="settings.html" class="dock-btn active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+    </main>
+
+    <!-- 4. MANAGE MEMBER PERMISSIONS MODAL (BOTTOM SHEET) -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal-card">
+            <div class="modal-header-line">
+                <h3 class="modal-title-str" id="modalMemberName">Manage Permissions</h3>
+                <button type="button" class="modal-close-btn" id="closeMemberModalBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <p style="font-size:13px; color:var(--ink-secondary);" id="modalMemberEmail">member@family.com</p>
+
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <label style="font-size:12px; font-weight:700; color:var(--ink-headline);">Select Access Role</label>
+                <select id="modalRoleSelect" class="modal-role-select">
+                    <option value="editor">Editor (Can Add & Modify Entries)</option>
+                    <option value="viewer">Viewer (Read-Only Access)</option>
+                </select>
+            </div>
+
+            <div class="modal-actions-stack">
+                <button type="button" class="btn-modal-save" id="btnSaveMemberRole">Update Access Level</button>
+                <button type="button" class="btn-modal-remove" id="btnRemoveMember">Revoke Access & Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       6. CORE REALTIME FIREBASE FAMILY & ACCESS CONTROL ENGINE
+       ========================================================================== -->
+    <script type="module">
+        import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import {
+            collection, query, where, onSnapshot, doc, getDoc, getDocs, updateDoc, setDoc, addDoc, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // DOM Handles
+        const networkDot = document.getElementById('networkDot');
+        const activeWorkspaceSubtitle = document.getElementById('activeWorkspaceSubtitle');
+        const workspaceNameTitle = document.getElementById('workspaceNameTitle');
+        const inviteCodeDisplay = document.getElementById('inviteCodeDisplay');
+        const membersCountPill = document.getElementById('membersCountPill');
+        const userRoleIndicator = document.getElementById('userRoleIndicator');
+        const shareInviteBtn = document.getElementById('shareInviteBtn');
+        const joinFamilyForm = document.getElementById('joinFamilyForm');
+        const joinCodeInput = document.getElementById('joinCodeInput');
+        const joinBtn = document.getElementById('joinBtn');
+        const membersStack = document.getElementById('membersStack');
+        const btnSelfLeave = document.getElementById('btnSelfLeave');
+
+        // Modal Handles
+        const memberModal = document.getElementById('memberModal');
+        const closeMemberModalBtn = document.getElementById('closeMemberModalBtn');
+        const modalMemberName = document.getElementById('modalMemberName');
+        const modalMemberEmail = document.getElementById('modalMemberEmail');
+        const modalRoleSelect = document.getElementById('modalRoleSelect');
+        const btnSaveMemberRole = document.getElementById('btnSaveMemberRole');
+        const btnRemoveMember = document.getElementById('btnRemoveMember');
+
+        // Toast Container
+        const toastBox = document.createElement('div');
+        toastBox.className = 'toast-wrapper';
+        toastBox.innerHTML = `<div class="toast-capsule"><span id="toastMsg">Notification</span></div>`;
+        document.body.appendChild(toastBox);
+        const toastMsg = document.getElementById('toastMsg');
+
+        // State Machine
+        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        let currentUserId = null;
+        let currentUserRole = "owner";
+        let familyInviteCode = "RZH-CORE";
+        let activeTargetMember = null;
+
+        // Network Status
+        function updateNetwork() {
+            networkDot.style.backgroundColor = navigator.onLine ? "var(--brand-emerald)" : "var(--danger-ink)";
+        }
+        window.addEventListener('online', updateNetwork);
+        window.addEventListener('offline', updateNetwork);
+        updateNetwork();
+
+        // Toast Feedback Dispatcher
+        let toastTimer;
+        function notify(msg, isError = true) {
+            clearTimeout(toastTimer);
+            toastMsg.innerText = msg;
+            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.95)" : "rgba(4, 56, 42, 0.95)";
+            toastBox.classList.add('active');
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
+        }
+
+        // Share Invite Passcode
+        shareInviteBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Roz E Hisab Family Passcode',
+                text: `Join our family household ledger on Roz E Hisab with Invite Code: ${familyInviteCode}`,
+                url: window.location.origin
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (e) { }
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(familyInviteCode);
+                notify(`Invite Passcode ${familyInviteCode} copied to clipboard!`, false);
+            }
+        });
+
+        // Connect to Another Household via Code
+        joinFamilyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const inputCode = joinCodeInput.value.trim().toUpperCase();
+
+            if (!inputCode) {
+                notify("Please enter a valid family invite passcode.");
+                return;
+            }
+
+            joinBtn.disabled = true;
+            joinBtn.innerText = "Verifying...";
+
+            try {
+                const q = query(collection(db, "families"), where("inviteCode", "==", inputCode));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    notify("Invalid passcode. No household vault found.");
+                    joinBtn.disabled = false;
+                    joinBtn.innerText = "Connect";
+                    return;
+                }
+
+                const targetFamilyDoc = snap.docs[0];
+                const targetFamilyId = targetFamilyDoc.id;
+                const targetFamilyData = targetFamilyDoc.data();
+
+                if (targetFamilyId === activeFamilyId) {
+                    notify("You are already a member of this household.");
+                    joinBtn.disabled = false;
+                    joinBtn.innerText = "Connect";
+                    return;
+                }
+
+                // Update current user's profile to target family
+                await updateDoc(doc(db, "users", currentUserId), {
+                    familyId: targetFamilyId,
+                    role: "editor"
+                });
+
+                localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", targetFamilyId);
+                notify(`Connected to ${targetFamilyData.name || 'Household'}!`, false);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+
+            } catch (err) {
+                notify("Connection Error: " + err.message);
+                joinBtn.disabled = false;
+                joinBtn.innerText = "Connect";
+            }
+        });
+
+        // User Self-Leave Action
+        btnSelfLeave.addEventListener('click', async () => {
+            if (currentUserRole === 'owner') {
+                notify("Owners cannot leave their own vault. You can transfer ownership or rename the vault in Settings.");
+                return;
+            }
+
+            if (confirm("Are you sure you want to leave this household? You will be assigned a fresh private vault.")) {
+                try {
+                    btnSelfLeave.innerText = "Leaving...";
+                    btnSelfLeave.disabled = true;
+
+                    // Create fresh personal vault for the leaving member
+                    const userDoc = await getDoc(doc(db, "users", currentUserId));
+                    const userName = userDoc.exists() ? (userDoc.data().displayName || "Personal") : "Personal";
+
+                    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                    let newCode = 'RZH-';
+                    for (let i = 0; i < 4; i++) newCode += chars.charAt(Math.floor(Math.random() * chars.length));
+
+                    const personalFamilyRef = await addDoc(collection(db, "families"), {
+                        name: `${userName}'s Vault`,
+                        ownerUid: currentUserId,
+                        inviteCode: newCode,
+                        currency: "PKR",
+                        createdAt: serverTimestamp()
+                    });
+
+                    await updateDoc(doc(db, "users", currentUserId), {
+                        familyId: personalFamilyRef.id,
+                        role: "owner"
+                    });
+
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", personalFamilyRef.id);
+                    notify("You have left the household.", false);
+
+                    setTimeout(() => {
+                        window.location.href = "dashboard.html";
+                    }, 400);
+                } catch (e) {
+                    notify("Error leaving: " + e.message);
+                    btnSelfLeave.innerText = "Leave This Household";
+                    btnSelfLeave.disabled = false;
+                }
+            }
+        });
+
+        // Modal Controls
+        function closeMemberModal() {
+            memberModal.classList.remove('active');
+            activeTargetMember = null;
+        }
+        closeMemberModalBtn.addEventListener('click', closeMemberModal);
+        memberModal.addEventListener('click', (e) => {
+            if (e.target === memberModal) closeMemberModal();
+        });
+
+        // Save Role Changes
+        btnSaveMemberRole.addEventListener('click', async () => {
+            if (!activeTargetMember) return;
+            const newRole = modalRoleSelect.value;
+
+            try {
+                btnSaveMemberRole.innerText = "Saving...";
+                await updateDoc(doc(db, "users", activeTargetMember.uid), {
+                    role: newRole
+                });
+                notify("Member role updated successfully!", false);
+                closeMemberModal();
+            } catch (e) {
+                notify("Error updating role: " + e.message);
+            } finally {
+                btnSaveMemberRole.innerText = "Update Access Level";
+            }
+        });
+
+        // Remove / Reject Member
+        btnRemoveMember.addEventListener('click', async () => {
+            if (!activeTargetMember) return;
+
+            if (confirm(`Remove "${activeTargetMember.displayName}" from this household? They will be detached from your ledger.`)) {
+                try {
+                    btnRemoveMember.innerText = "Removing...";
+
+                    // Detach member and give them their own independent vault
+                    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                    let newCode = 'RZH-';
+                    for (let i = 0; i < 4; i++) newCode += chars.charAt(Math.floor(Math.random() * chars.length));
+
+                    const detachedRef = await addDoc(collection(db, "families"), {
+                        name: `${activeTargetMember.displayName}'s Vault`,
+                        ownerUid: activeTargetMember.uid,
+                        inviteCode: newCode,
+                        currency: "PKR",
+                        createdAt: serverTimestamp()
+                    });
+
+                    await updateDoc(doc(db, "users", activeTargetMember.uid), {
+                        familyId: detachedRef.id,
+                        role: "owner"
+                    });
+
+                    notify("Member removed from household.", false);
+                    closeMemberModal();
+                } catch (e) {
+                    notify("Error removing member: " + e.message);
+                } finally {
+                    btnRemoveMember.innerText = "Revoke Access & Remove";
+                }
+            }
+        });
+
+        // Render Members Directory
+        function renderMembers(members) {
+            membersCountPill.innerText = `${members.length} Member${members.length > 1 ? 's' : ''}`;
+
+            if (members.length === 0) {
+                membersStack.innerHTML = `<div style="text-align:center; padding:20px; color:var(--ink-tertiary);">No members registered in this workspace yet.</div>`;
+                return;
+            }
+
+            membersStack.innerHTML = members.map(m => {
+                const isMe = m.uid === currentUserId;
+                const initials = (m.displayName || 'User').substring(0, 2).toUpperCase();
+                const role = m.role || 'viewer';
+                const roleClass = role === 'owner' ? 'role-owner' : (role === 'editor' ? 'role-editor' : 'role-viewer');
+
+                return `
+                    <div class="member-card" data-uid="${m.uid}">
+                        <div class="member-left-meta">
+                            <div class="member-avatar">${initials}</div>
+                            <div class="member-info">
+                                <span class="member-name-str">${m.displayName || 'Family Member'} ${isMe ? '<span style="color:var(--brand-primary); font-size:11px;">(You)</span>' : ''}</span>
+                                <span class="member-username-str">@${m.username || (m.displayName || 'user').toLowerCase().replace(/\s+/g, '_')}</span>
+                                <span class="member-email-str">${m.email || 'Encrypted Identity'}</span>
+                            </div>
+                        </div>
+
+                        <div class="member-right-meta">
+                            <span class="role-badge ${roleClass}">${role}</span>
+                            ${currentUserRole === 'owner' && !isMe ? `
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--ink-tertiary);"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Click member to open permission drawer (Owner only)
+            if (currentUserRole === 'owner') {
+                membersStack.querySelectorAll('.member-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const uid = card.getAttribute('data-uid');
+                        const member = members.find(m => m.uid === uid);
+                        if (!member || member.uid === currentUserId) return; // Don't manage self in this modal
+
+                        activeTargetMember = member;
+                        modalMemberName.innerText = member.displayName || 'Member';
+                        modalMemberEmail.innerText = member.email || 'No email';
+                        modalRoleSelect.value = member.role || 'editor';
+                        memberModal.classList.add('active');
+                    });
+                });
+            }
+        }
+
+        // Initialize on Auth Confirmation
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            currentUserId = user.uid;
+
+            // Load Workspace and User Profile
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const uData = userDoc.data();
+                    activeFamilyId = uData.familyId || activeFamilyId;
+                    currentUserRole = uData.role || "viewer";
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
+                    userRoleIndicator.innerText = `Your Role: ${currentUserRole.toUpperCase()}`;
+
+                    // Hide Self-Leave if Owner
+                    if (currentUserRole === 'owner') {
+                        btnSelfLeave.style.display = "none";
+                    } else {
+                        btnSelfLeave.style.display = "flex";
+                    }
+                }
+
+                // Load Family Metadata
+                const familyDoc = await getDoc(doc(db, "families", activeFamilyId));
+                if (familyDoc.exists()) {
+                    const fData = familyDoc.data();
+                    workspaceNameTitle.innerText = fData.name || "Family Household Vault";
+                    activeWorkspaceSubtitle.innerText = fData.name || "Family Ledger";
+                    familyInviteCode = fData.inviteCode || "RZH-CORE";
+                    inviteCodeDisplay.innerText = familyInviteCode;
+                }
+            } catch (e) {
+                console.warn("[Family Cache Load]:", e);
+            }
+
+            // Realtime Member Directory Subscription
+            const q = query(
+                collection(db, "users"),
+                where("familyId", "==", activeFamilyId)
+            );
+
+            onSnapshot(q, (snapshot) => {
+                let members = [];
+                snapshot.forEach(doc => {
+                    members.push({ uid: doc.id, ...doc.data() });
+                });
+                renderMembers(members);
+            }, (err) => {
+                console.warn("[Members Offline Cache Read]:", err);
+            });
+        });
+    </script>
+</body>
+
+</html>
