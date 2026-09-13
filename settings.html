@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Vault Settings & Profile</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Global Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. ROZ E HISAB EMERALD LUXURY DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --canvas: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-subtle: #F1F5F9;
+            --surface-dock: rgba(255, 255, 255, 0.94);
+
+            --brand-primary: #047857;
+            --brand-deep: #064E3B;
+            --brand-mint: #ECFDF5;
+            --brand-emerald: #10B981;
+            --brand-gradient: linear-gradient(135deg, #055944 0%, #03392B 100%);
+
+            --ink-headline: #04382A;
+            --ink-title: #0F172A;
+            --ink-secondary: #475569;
+            --ink-tertiary: #94A3B8;
+
+            --status-owner: #D97706;
+            --status-owner-bg: #FEF3C7;
+            --status-editor: #047857;
+            --status-editor-bg: #ECFDF5;
+            --status-viewer: #64748B;
+            --status-viewer-bg: #F1F5F9;
+
+            --danger-ink: #EF4444;
+            --danger-bg: #FEF2F2;
+
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-card: #EDF2F7;
+            --border-focus: #059669;
+
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
+            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
+            --shadow-modal: 0 -20px 60px rgba(0, 0, 0, 0.15);
+            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--canvas);
+            color: var(--ink-title);
+            overflow-x: hidden;
+        }
+
+        .mobile-viewport {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--canvas);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. EXECUTIVE TOP APP BAR (EXACT UNIFIED SPECIFICATION)
+           ========================================================================== */
+        .top-appbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .app-logo-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(5, 89, 68, 0.25);
+        }
+
+        .app-logo-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-title-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-title-str {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header-subtitle-str {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--brand-emerald);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            transition: background-color 0.3s ease;
+        }
+
+        .header-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-header-action {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        /* ==========================================================================
+           3. TOAST NOTIFICATIONS
+           ========================================================================== */
+        .toast-wrapper {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 20px) + 65px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 800;
+            transition: all 0.4s var(--ease-spring);
+            pointer-events: none;
+            width: 90%;
+            max-width: 440px;
+        }
+
+        .toast-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-capsule {
+            background: rgba(4, 56, 42, 0.95);
+            color: white;
+            backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-toast);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           4. MAIN CONTENT STREAM & SECTIONS
+           ========================================================================== */
+        .content-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* User Identity Master Card */
+        .profile-master-card {
+            background: var(--surface);
+            border-radius: 26px;
+            padding: 22px 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-card);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-top-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .profile-left-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .profile-avatar-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            background: var(--brand-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 8px 18px rgba(6, 78, 59, 0.28);
+        }
+
+        .profile-details-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .profile-name-str {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-username-str {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        .profile-email-str {
+            font-size: 12px;
+            color: var(--ink-tertiary);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-edit-pencil {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit-pencil:hover {
+            background: #E2E8F0;
+            color: var(--brand-deep);
+        }
+
+        /* Workspace & Passcode Card */
+        .workspace-passcode-bar {
+            background: var(--surface-subtle);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid var(--border-card);
+        }
+
+        .workspace-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .workspace-name-val {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--ink-title);
+        }
+
+        .passcode-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--brand-deep);
+            background: var(--brand-mint);
+            padding: 2px 7px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .role-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .role-owner {
+            background: var(--status-owner-bg);
+            color: var(--status-owner);
+        }
+
+        .role-editor {
+            background: var(--status-editor-bg);
+            color: var(--status-editor);
+        }
+
+        .role-viewer {
+            background: var(--status-viewer-bg);
+            color: var(--status-viewer);
+        }
+
+        /* Cloud Sync & Storage Card */
+        .telemetry-sync-card {
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            border-radius: 24px;
+            padding: 22px 20px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telemetry-sync-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 130px;
+            height: 130px;
+            background: rgba(16, 185, 129, 0.22);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .sync-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sync-card-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #A7F3D0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sync-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 100px;
+            color: #D1FAE5;
+        }
+
+        .sync-figures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .sync-stat-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sync-stat-label {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #A7F3D0;
+            text-transform: uppercase;
+        }
+
+        .sync-stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .btn-force-sync {
+            width: 100%;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-force-sync:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Configuration Menu Links Stack */
+        .settings-menu-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 6px 12px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 10px;
+            text-decoration: none;
+            border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .menu-link-row:hover {
+            background: var(--surface-subtle);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .link-icon-chip {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: var(--surface-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .link-label-str {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-headline);
+        }
+
+        .link-right-chevron {
+            color: var(--ink-tertiary);
+        }
+
+        /* Security & Danger Zone */
+        .danger-zone-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid #FEE2E2;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .danger-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--danger-ink);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-reset-password {
+            height: 48px;
+            background: var(--surface);
+            border: 1.5px solid var(--border-card);
+            border-radius: 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-headline);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-reset-password:hover {
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+        }
+
+        .btn-signout {
+            height: 50px;
+            background: var(--danger-bg);
+            border: none;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--danger-ink);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-signout:hover {
+            background: #FEE2E2;
+        }
+
+        .btn-signout:active {
+            transform: scale(0.98);
+        }
+
+        /* ==========================================================================
+           5. EDIT PROFILE & WORKSPACE MODAL (BOTTOM SHEET)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 56, 42, 0.55);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--surface);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 36px 36px 0 0;
+            padding: 32px 24px 44px 24px;
+            box-shadow: var(--shadow-modal);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: slideUpSheet 0.35s var(--ease-spring);
+        }
+
+        @keyframes slideUpSheet {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+        }
+
+        .modal-close-btn {
+            background: var(--surface-subtle);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink-secondary);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink-headline);
+        }
+
+        .field-input {
+            width: 100%;
+            height: 50px;
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            padding: 0 16px;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--ink-title);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .field-input:focus {
+            background: var(--surface);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            height: 52px;
+            background: var(--brand-gradient);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow-fab);
+            margin-top: 6px;
+        }
+
+        /* ==========================================================================
+           6. LUXURY MOBILE ISLAND DOCK
+           ========================================================================== */
+        .dock-container {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            width: 92%;
+            max-width: 440px;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            width: 100%;
+            height: 68px;
+            background: var(--surface-dock);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-dock);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 8px;
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--ink-tertiary);
+            text-decoration: none;
+            width: 54px;
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn svg {
+            width: 21px;
+            height: 21px;
+            stroke-width: 2;
+        }
+
+        .dock-btn span {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .dock-btn.active {
+            color: var(--brand-deep);
+        }
+
+        .dock-fab-wrapper {
+            position: relative;
+            top: -20px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dock-fab {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: var(--shadow-fab);
+            border: 3.5px solid var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .dock-fab:active {
+            transform: scale(0.92);
+        }
+
+        .dock-fab svg {
+            width: 26px;
+            height: 26px;
+            stroke-width: 2.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Space Background -->
+    <div class="ambient-canvas"></div>
+
+    <!-- Main Mobile Frame Viewport -->
+    <main class="mobile-viewport">
+
+        <!-- 1. Top Appbar (Matching Dashboard & Daily Register Perfectly) -->
+        <header class="top-appbar">
+            <!-- App Logo on Left -->
+            <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
+                <img src="assets/logo.png"
+                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';"
+                    alt="Logo">
+            </a>
+
+            <div class="header-title-block">
+                <h1 class="header-title-str">Vault Settings</h1>
+                <span class="header-subtitle-str">
+                    <div class="status-dot" id="networkDot"></div>
+                    <span id="activeWorkspaceSubtitle">Family Ledger</span>
+                </span>
+            </div>
+
+            <div class="header-right-actions">
+                <a href="settings.html" class="btn-header-action" title="Settings"
+                    style="background: var(--brand-mint); color: var(--brand-deep);">
+                    <!-- EXACT SETTINGS SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Scrollable Body Stream -->
+        <div class="content-stream">
+
+            <!-- 1. USER IDENTITY PROFILE MASTER CARD (A to Z Details) -->
+            <section class="profile-master-card">
+                <div class="profile-top-line">
+                    <div class="profile-left-meta">
+                        <div class="profile-avatar-box" id="avatarLetter">U</div>
+                        <div class="profile-details-column">
+                            <span class="profile-name-str" id="userNameLabel">User Name</span>
+                            <span class="profile-username-str" id="userUsernameLabel">@username</span>
+                            <span class="profile-email-str" id="userEmailLabel">user@family.com</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-edit-pencil" id="openEditProfileBtn" title="Edit Profile">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Family Workspace & Passcode Row -->
+                <div class="workspace-passcode-bar">
+                    <div class="workspace-info">
+                        <span
+                            style="font-size:11px; font-weight:700; color:var(--ink-tertiary); text-transform:uppercase;">Vault
+                            Workspace</span>
+                        <span class="workspace-name-val" id="activeWorkspaceLabel">Family Household Vault</span>
+                        <span class="passcode-pill" id="invitePasscodeBadge" title="Click to copy passcode"
+                            style="cursor:pointer;">CODE: RZH-XXXX</span>
+                    </div>
+                    <span class="role-badge role-owner" id="userRolePill">OWNER</span>
+                </div>
+            </section>
+
+            <!-- 2. CLOUD SYNC & STORAGE TELEMETRY -->
+            <section class="telemetry-sync-card">
+                <div class="sync-card-header">
+                    <span class="sync-card-title">Encrypted Storage Telemetry</span>
+                    <span class="sync-status-pill" id="syncStatusBadge">
+                        <span
+                            style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#34D399;"></span>
+                        <span>Cloud Active</span>
+                    </span>
+                </div>
+
+                <div class="sync-figures-grid">
+                    <div class="sync-stat-col">
+                        <span class="sync-stat-label">Local Offline Cache</span>
+                        <span class="sync-stat-val" id="cachedRecordsCount">0 Records</span>
+                    </div>
+                    <div class="sync-stat-col" style="text-align: right;">
+                        <span class="sync-stat-label">Currency Vault</span>
+                        <span class="sync-stat-val">PKR (Rs.)</span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-force-sync" id="forceSyncBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                    <span>Force Re-sync Vault Nodes</span>
+                </button>
+            </section>
+
+            <!-- 3. CONFIGURATION MODULES DIRECTORY -->
+            <section class="settings-menu-card">
+                <a href="family.html" class="menu-link-row">
+                    <div class="link-left">
+                        <div class="link-icon-chip">👨‍👩‍👧‍👦</div>
+                        <span class="link-label-str">Family Sharing & Invite Passcode</span>
+                    </div>
+                    <svg class="link-right-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="categories.html" class="menu-link-row">
+                    <div class="link-left">
+                        <div class="link-icon-chip">🏷️</div>
+                        <span class="link-label-str">Custom Category Architecture</span>
+                    </div>
+                    <svg class="link-right-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="budget.html" class="menu-link-row">
+                    <div class="link-left">
+                        <div class="link-icon-chip">🎯</div>
+                        <span class="link-label-str">Monthly Spending Thresholds</span>
+                    </div>
+                    <svg class="link-right-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="reports.html" class="menu-link-row">
+                    <div class="link-left">
+                        <div class="link-icon-chip">📊</div>
+                        <span class="link-label-str">Audits & Statement Export (CSV / Print)</span>
+                    </div>
+                    <svg class="link-right-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </section>
+
+            <!-- 4. SECURITY & DANGER ZONE -->
+            <section class="danger-zone-card">
+                <span class="danger-title">Vault Security Controls</span>
+
+                <button type="button" class="btn-reset-password" id="sendResetPassBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Transmit Password Reset Token</span>
+                </button>
+
+                <button type="button" class="btn-signout" id="signOutBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Secure Sign Out</span>
+                </button>
+            </section>
+
+        </div>
+
+        <!-- 3. Bottom Mobile Dock -->
+        <div class="dock-container">
+            <nav class="mobile-dock">
+                <a href="dashboard.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+
+                <a href="daily-register.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span>Register</span>
+                </a>
+
+                <!-- Central Add FAB -->
+                <div class="dock-fab-wrapper">
+                    <a href="add.html" class="dock-fab" title="Quick Add Record">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+
+                <a href="reports.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>Reports</span>
+                </a>
+
+                <a href="settings.html" class="dock-btn active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+    </main>
+
+    <!-- 4. EDIT PROFILE & WORKSPACE MODAL (BOTTOM SHEET) -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-card">
+            <div class="modal-header-row">
+                <h3 class="modal-title">Edit Identity Profile</h3>
+                <button type="button" class="modal-close-btn" id="closeProfileModalBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-group">
+                    <label class="field-label" for="editDisplayNameInput">Full Name</label>
+                    <input type="text" id="editDisplayNameInput" class="field-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label" for="editUsernameInput">Username</label>
+                    <input type="text" id="editUsernameInput" class="field-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label" for="editPhoneInput">Phone Number</label>
+                    <input type="tel" id="editPhoneInput" class="field-input" placeholder="+92 300 1234567">
+                </div>
+
+                <div class="form-group" id="familyWorkspaceFieldGroup">
+                    <label class="field-label" for="editFamilyNameInput">Household Workspace Name</label>
+                    <input type="text" id="editFamilyNameInput" class="field-input">
+                </div>
+
+                <button type="submit" class="modal-submit-btn" id="saveProfileBtn">
+                    <span>Save Configuration</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       7. CORE REALTIME FIREBASE SETTINGS ENGINE
+       ========================================================================== -->
+    <script type="module">
+        import { auth, db } from './firebase/firebase-config.js';
+        import {
+            onAuthStateChanged, signOut, updateProfile, sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import {
+            doc, getDoc, updateDoc, collection, query, where, getDocs
+        } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // DOM Handles
+        const networkDot = document.getElementById('networkDot');
+        const activeWorkspaceSubtitle = document.getElementById('activeWorkspaceSubtitle');
+        const toastBox = document.getElementById('toastBox');
+        const toastMsg = document.getElementById('toastMsg');
+
+        const avatarLetter = document.getElementById('avatarLetter');
+        const userNameLabel = document.getElementById('userNameLabel');
+        const userUsernameLabel = document.getElementById('userUsernameLabel');
+        const userEmailLabel = document.getElementById('userEmailLabel');
+        const userRolePill = document.getElementById('userRolePill');
+
+        const activeWorkspaceLabel = document.getElementById('activeWorkspaceLabel');
+        const invitePasscodeBadge = document.getElementById('invitePasscodeBadge');
+        const syncStatusBadge = document.getElementById('syncStatusBadge');
+        const cachedRecordsCount = document.getElementById('cachedRecordsCount');
+
+        const forceSyncBtn = document.getElementById('forceSyncBtn');
+        const sendResetPassBtn = document.getElementById('sendResetPassBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+
+        // Modal Elements
+        const openEditProfileBtn = document.getElementById('openEditProfileBtn');
+        const closeProfileModalBtn = document.getElementById('closeProfileModalBtn');
+        const editProfileModal = document.getElementById('editProfileModal');
+        const profileForm = document.getElementById('profileForm');
+        const editDisplayNameInput = document.getElementById('editDisplayNameInput');
+        const editUsernameInput = document.getElementById('editUsernameInput');
+        const editPhoneInput = document.getElementById('editPhoneInput');
+        const editFamilyNameInput = document.getElementById('editFamilyNameInput');
+        const familyWorkspaceFieldGroup = document.getElementById('familyWorkspaceFieldGroup');
+
+        // State Machine
+        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        let currentUser = null;
+        let currentUserRole = "viewer";
+        let rawPasscode = "RZH-XXXX";
+
+        // Network Status
+        function updateNetwork() {
+            if (navigator.onLine) {
+                networkDot.style.backgroundColor = "var(--brand-emerald)";
+                syncStatusBadge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#34D399;"></span><span>Cloud Active</span>`;
+                syncStatusBadge.style.color = "#D1FAE5";
+            } else {
+                networkDot.style.backgroundColor = "var(--danger-ink)";
+                syncStatusBadge.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#FBBF24;"></span><span>Local Vault</span>`;
+                syncStatusBadge.style.color = "#FEF3C7";
+            }
+        }
+        window.addEventListener('online', updateNetwork);
+        window.addEventListener('offline', updateNetwork);
+        updateNetwork();
+
+        // Toast Feedback Dispatcher
+        let toastTimer;
+        function notify(msg, isError = true) {
+            clearTimeout(toastTimer);
+            toastMsg.innerText = msg;
+            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.95)" : "rgba(4, 56, 42, 0.95)";
+            toastBox.classList.add('active');
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
+        }
+
+        // Copy Passcode
+        invitePasscodeBadge.addEventListener('click', () => {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(rawPasscode);
+                notify(`Passcode ${rawPasscode} copied to clipboard!`, false);
+            }
+        });
+
+        // Force Re-sync Cache Button
+        forceSyncBtn.addEventListener('click', async () => {
+            notify("Pinging cloud ledger nodes...", false);
+            try {
+                const q = query(collection(db, "records"), where("familyId", "==", activeFamilyId));
+                const snap = await getDocs(q);
+                cachedRecordsCount.innerText = `${snap.size} Records`;
+                notify("Cache Synchronized with Cloud!", false);
+            } catch (e) {
+                notify("Sync Error: " + e.message);
+            }
+        });
+
+        // Transmit Password Reset Token
+        sendResetPassBtn.addEventListener('click', async () => {
+            if (!currentUser || !currentUser.email) return;
+            try {
+                await sendPasswordResetEmail(auth, currentUser.email);
+                notify("Password reset token dispatched to your email!", false);
+            } catch (e) {
+                notify("Error: " + e.message);
+            }
+        });
+
+        // Modal Controls
+        openEditProfileBtn.addEventListener('click', () => {
+            editDisplayNameInput.value = currentUser.displayName || '';
+            editProfileModal.classList.add('active');
+        });
+        closeProfileModalBtn.addEventListener('click', () => editProfileModal.classList.remove('active'));
+        editProfileModal.addEventListener('click', (e) => {
+            if (e.target === editProfileModal) editProfileModal.classList.remove('active');
+        });
+
+        // Save Profile & Workspace Form Submission
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newName = editDisplayNameInput.value.trim();
+            const newUsername = editUsernameInput.value.trim().toLowerCase().replace(/\s+/g, '_');
+            const newPhone = editPhoneInput.value.trim();
+            const newFamilyName = editFamilyNameInput.value.trim();
+
+            if (!newName) {
+                notify("Please provide your name.");
+                return;
+            }
+
+            try {
+                // 1. Update Auth Profile
+                await updateProfile(currentUser, { displayName: newName });
+
+                // 2. Update Firestore User Document
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    displayName: newName,
+                    username: newUsername || newName.toLowerCase().replace(/\s+/g, '_'),
+                    phoneNumber: newPhone || null
+                });
+
+                // 3. If owner and family name provided, update Family Document
+                if (currentUserRole === "owner" && newFamilyName) {
+                    await updateDoc(doc(db, "families", activeFamilyId), {
+                        name: newFamilyName
+                    });
+                    activeWorkspaceLabel.innerText = newFamilyName;
+                    activeWorkspaceSubtitle.innerText = newFamilyName;
+                }
+
+                userNameLabel.innerText = newName;
+                userUsernameLabel.innerText = `@${newUsername || 'user'}`;
+                avatarLetter.innerText = newName.charAt(0).toUpperCase();
+
+                notify("Profile Configuration Updated!", false);
+                editProfileModal.classList.remove('active');
+            } catch (err) {
+                notify("Update Error: " + err.message);
+            }
+        });
+
+        // Secure Sign Out
+        signOutBtn.addEventListener('click', async () => {
+            if (confirm("Sign out of this Roz E Hisab vault?")) {
+                try {
+                    await signOut(auth);
+                    localStorage.removeItem("ROZ_ACTIVE_FAMILY_ID");
+                    window.location.href = "login.html";
+                } catch (e) {
+                    notify("Sign out failed: " + e.message);
+                }
+            }
+        });
+
+        // Initialize Realtime Listeners
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            currentUser = user;
+            userEmailLabel.innerText = user.email || 'Encrypted Identity';
+            const name = user.displayName || 'Family User';
+            userNameLabel.innerText = name;
+            avatarLetter.innerText = name.charAt(0).toUpperCase();
+
+            // Load Detailed User Profile Data from Firestore
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const uData = userDoc.data();
+                    activeFamilyId = uData.familyId || activeFamilyId;
+                    currentUserRole = uData.role || "viewer";
+
+                    userRolePill.innerText = currentUserRole.toUpperCase();
+                    userRolePill.className = `role-badge role-${currentUserRole}`;
+
+                    userUsernameLabel.innerText = `@${uData.username || name.toLowerCase().replace(/\s+/g, '_')}`;
+                    editUsernameInput.value = uData.username || '';
+                    editPhoneInput.value = uData.phoneNumber || '';
+                }
+
+                // Hide workspace name change field if not owner
+                if (currentUserRole !== "owner") {
+                    familyWorkspaceFieldGroup.style.display = "none";
+                }
+
+                // Load Family Metadata
+                const familyDoc = await getDoc(doc(db, "families", activeFamilyId));
+                if (familyDoc.exists()) {
+                    const fData = familyDoc.data();
+                    const fName = fData.name || "Family Household Vault";
+                    activeWorkspaceLabel.innerText = fName;
+                    activeWorkspaceSubtitle.innerText = fName;
+                    editFamilyNameInput.value = fName;
+                    rawPasscode = fData.inviteCode || "RZH-CORE";
+                    invitePasscodeBadge.innerText = `CODE: ${rawPasscode}`;
+                }
+
+                // Load Cached Records Count
+                const q = query(collection(db, "records"), where("familyId", "==", activeFamilyId));
+                const snap = await getDocs(q);
+                cachedRecordsCount.innerText = `${snap.size} Records`;
+
+            } catch (e) {
+                console.warn("[Settings Cache Load]:", e);
+            }
+        });
+    </script>
+</body>
+
+</html>
