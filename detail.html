@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Financial Intelligence & Reports</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Global Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (EMERALD LUXURY)
+           ========================================================================== */
+        :root {
+            --canvas: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-subtle: #F1F5F9;
+            --surface-dock: rgba(255, 255, 255, 0.94);
+
+            --brand-primary: #047857;
+            --brand-deep: #064E3B;
+            --brand-mint: #ECFDF5;
+            --brand-emerald: #10B981;
+            --brand-gradient: linear-gradient(135deg, #055944 0%, #03392B 100%);
+
+            --ink-headline: #04382A;
+            --ink-title: #0F172A;
+            --ink-secondary: #475569;
+            --ink-tertiary: #94A3B8;
+
+            --danger-ink: #EF4444;
+            --danger-bg: #FEF2F2;
+            --success-ink: #10B981;
+            --success-bg: #ECFDF5;
+
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-card: #EDF2F7;
+            --border-focus: #059669;
+
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
+            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
+            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
+            --shadow-modal: 0 -20px 60px rgba(0, 0, 0, 0.15);
+
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--canvas);
+            color: var(--ink-title);
+            overflow-x: hidden;
+        }
+
+        .mobile-viewport {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--canvas);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. EXECUTIVE TOP APP BAR (EXACT AS REQUESTED)
+           ========================================================================== */
+        .top-appbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .app-logo-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(5, 89, 68, 0.25);
+        }
+
+        .app-logo-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-title-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-title-str {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header-subtitle-str {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--brand-emerald);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            transition: background-color 0.3s ease;
+        }
+
+        .header-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-header-action {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-header-action:hover {
+            color: var(--brand-deep);
+            background: #E2E8F0;
+        }
+
+        /* ==========================================================================
+           3. TOAST NOTIFICATIONS
+           ========================================================================== */
+        .toast-wrapper {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 20px) + 65px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 800;
+            transition: all 0.4s var(--ease-spring);
+            pointer-events: none;
+            width: 90%;
+            max-width: 440px;
+        }
+
+        .toast-wrapper.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-capsule {
+            background: rgba(4, 56, 42, 0.95);
+            color: white;
+            backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-toast);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           4. MAIN CONTENT STREAM & TELEMETRY
+           ========================================================================== */
+        .content-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Telemetry Master Hero Card */
+        .reports-hero-card {
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            border-radius: 26px;
+            padding: 24px 20px;
+            color: white;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reports-hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 130px;
+            height: 130px;
+            background: rgba(16, 185, 129, 0.22);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        .hero-top-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-tag {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #A7F3D0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .matches-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 9px;
+            border-radius: 100px;
+            color: #D1FAE5;
+        }
+
+        .hero-figures-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .hero-burn-figures {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .burn-currency { font-size: 20px; font-weight: 700; color: #A7F3D0; }
+        .burn-main-number { font-size: 38px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+        .hero-balance-label { font-size: 11.5px; color: #CBD5E1; font-weight: 500; }
+
+        .hero-stats-triad {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .triad-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .triad-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #A7F3D0;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .triad-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        /* ==========================================================================
+           5. FILTER CONSOLE CARD
+           ========================================================================== */
+        .filter-console-card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 18px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .console-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .console-title-str {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.01em;
+        }
+
+        .btn-reset-filters {
+            background: none;
+            border: none;
+            color: var(--brand-primary);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .btn-reset-filters:hover { background: var(--brand-mint); }
+
+        .preset-pills-row {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+        .preset-pills-row::-webkit-scrollbar { display: none; }
+
+        .preset-btn {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 13px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .preset-btn.active {
+            background: var(--brand-deep);
+            color: white;
+            border-color: var(--brand-deep);
+            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.25);
+        }
+
+        .custom-range-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .console-input, .console-select {
+            width: 100%;
+            height: 44px;
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 12px;
+            padding: 0 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-title);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .console-input:focus, .console-select:focus {
+            background: var(--surface);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.12);
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* ==========================================================================
+           6. EXPORT ACTIONS STRIP
+           ========================================================================== */
+        .export-actions-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-export {
+            height: 48px;
+            border-radius: 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .btn-csv {
+            background: var(--surface);
+            border: 1.5px solid var(--border-card);
+            color: var(--brand-deep);
+            box-shadow: var(--shadow-card);
+        }
+        .btn-csv:hover { background: #F8FAFC; border-color: #CBD5E1; }
+        .btn-csv:active { transform: scale(0.96); }
+
+        .btn-print {
+            background: var(--brand-gradient);
+            border: none;
+            color: white;
+            box-shadow: var(--shadow-fab);
+        }
+        .btn-print:hover { transform: translateY(-1.5px); }
+        .btn-print:active { transform: scale(0.96); }
+
+        /* ==========================================================================
+           7. REPORT LEDGER STACK
+           ========================================================================== */
+        .report-ledger-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .report-entry-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 16px 16px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .report-entry-card:hover {
+            border-color: rgba(4, 120, 87, 0.3);
+            transform: translateY(-1.5px);
+        }
+
+        .entry-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .entry-title-str {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-title);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .entry-sub-tags {
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cat-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: var(--surface-subtle);
+            color: var(--ink-secondary);
+        }
+
+        .entry-right-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .entry-amount-val {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .price-expense { color: var(--danger-ink); }
+        .price-income { color: var(--success-ink); }
+
+        .entry-date-str {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-tertiary);
+        }
+
+        /* Empty State */
+        .empty-report-card {
+            background: var(--surface);
+            border: 1.5px dashed #CBD5E1;
+            border-radius: 24px;
+            padding: 44px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .empty-icon-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 18px;
+            background: var(--surface-subtle);
+            color: var(--ink-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--ink-title);
+        }
+
+        .empty-sub {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            max-width: 280px;
+            line-height: 1.45;
+        }
+
+        /* ==========================================================================
+           8. INTERACTIVE DETAIL MODAL DRAWER
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 56, 42, 0.55);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: var(--surface);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 36px 36px 0 0;
+            padding: 32px 24px 44px 24px;
+            box-shadow: var(--shadow-modal);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: slideUpSheet 0.35s var(--ease-spring);
+        }
+
+        @keyframes slideUpSheet {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header-line {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .modal-title-str {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            line-height: 1.2;
+            max-width: 80%;
+        }
+
+        .modal-close-btn {
+            background: var(--surface-subtle);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .modal-invoice-grid {
+            background: var(--surface-subtle);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid var(--border-card);
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13.5px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #CBD5E1;
+        }
+
+        .invoice-row:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .invoice-row-label { color: var(--ink-secondary); font-weight: 600; }
+        .invoice-row-val { font-weight: 800; color: var(--ink-title); font-family: 'JetBrains Mono', monospace; text-align: right; }
+
+        .modal-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .btn-modal-action {
+            height: 50px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-print {
+            background: var(--surface);
+            border: 1.5px solid var(--border-subtle);
+            color: var(--brand-deep);
+        }
+        .btn-modal-print:hover { background: var(--brand-mint); border-color: var(--brand-emerald); }
+
+        .btn-modal-edit {
+            background: var(--brand-deep);
+            color: white;
+            border: none;
+            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.3);
+        }
+        .btn-modal-edit:hover { background: #04382A; }
+
+        .btn-modal-delete {
+            grid-column: span 2;
+            height: 50px;
+            background: var(--danger-bg);
+            color: var(--danger-ink);
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-modal-delete:hover { background: #FECACA; }
+
+        /* ==========================================================================
+           9. LUXURY MOBILE ISLAND DOCK
+           ========================================================================== */
+        .dock-container {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            width: 92%;
+            max-width: 440px;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            width: 100%;
+            height: 68px;
+            background: var(--surface-dock);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-dock);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 8px;
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--ink-tertiary);
+            text-decoration: none;
+            width: 54px;
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn svg { width: 21px; height: 21px; stroke-width: 2; }
+        .dock-btn span { font-size: 10px; font-weight: 700; }
+        .dock-btn.active { color: var(--brand-deep); }
+
+        .dock-fab-wrapper {
+            position: relative;
+            top: -20px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dock-fab {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: var(--shadow-fab);
+            border: 3.5px solid var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-spring);
+        }
+        .dock-fab:active { transform: scale(0.92); }
+        .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
+
+        /* ==========================================================================
+           10. PRINT OPTIMIZATION (THE "PAD" AUDIT LAYOUT)
+           ========================================================================== */
+        #printSection { display: none; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printSection, #printSection * { visibility: visible; }
+            #printSection { 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                padding: 20px; 
+                color: black; 
+                background: white; 
+                font-family: sans-serif;
+            }
+            .mobile-viewport, .dock-container, .modal-overlay, .ambient-canvas { display: none !important; }
+            
+            .print-header { text-align: center; margin-bottom: 24px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+            .print-header h2 { margin: 0; font-size: 24px; font-weight: bold; }
+            .print-header p { margin: 4px 0 0 0; font-size: 13px; color: #333; }
+            
+            .print-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 12px; }
+            .print-table th, .print-table td { border: 1px solid #000; padding: 8px; text-align: left; }
+            .print-table th { background-color: #f1f5f9 !important; font-weight: bold; -webkit-print-color-adjust: exact; }
+            
+            .print-totals { margin-top: 20px; text-align: right; font-weight: bold; font-size: 14px; border-top: 2px solid #000; padding-top: 10px; }
+            
+            /* Single Receipt Print Layout */
+            .receipt-box { border: 2px solid #000; padding: 20px; border-radius: 8px; width: 100%; max-width: 420px; margin: 0 auto; }
+            .receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ccc; font-size: 13px; }
+            .receipt-row:last-child { border-bottom: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Spatial Canvas -->
+    <div class="ambient-canvas"></div>
+
+    <!-- Hidden Print Container -->
+    <div id="printSection"></div>
+
+    <!-- Main Mobile Frame Viewport -->
+    <main class="mobile-viewport">
+
+        <!-- 1. Top Appbar -->
+        <header class="top-appbar">
+            <!-- App Logo on Left -->
+            <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
+                <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
+            </a>
+
+            <div class="header-title-block">
+                <h1 class="header-title-str">Audits & Reports</h1>
+                <span class="header-subtitle-str">
+                    <div class="status-dot" id="networkDot"></div>
+                    <span id="activeWorkspaceSubtitle">Family Ledger</span>
+                </span>
+            </div>
+
+            <div class="header-right-actions">
+                <button type="button" class="btn-header-action" id="btnMainPrint" title="Print Statement">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                </button>
+                
+                <!-- EXACT SETTINGS SVG -->
+                <a href="settings.html" class="btn-header-action" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Scrollable Body Stream -->
+        <div class="content-stream">
+
+            <!-- 1. REPORTS TELEMETRY MASTER HERO CARD -->
+            <section class="reports-hero-card">
+                <div class="hero-top-meta">
+                    <span class="hero-tag">Filtered Net Balance</span>
+                    <span class="matches-pill" id="matchesCountPill">0 Transactions</span>
+                </div>
+
+                <div class="hero-figures-group">
+                    <div class="hero-burn-figures">
+                        <span class="burn-currency">Rs.</span>
+                        <span class="burn-main-number" id="filteredNetSum">0</span>
+                    </div>
+                    <span class="hero-balance-label" id="balanceContextLabel">Net Cash Flow</span>
+                </div>
+
+                <div class="hero-stats-triad">
+                    <div class="triad-col">
+                        <span class="triad-label">Total Outflow</span>
+                        <span class="triad-val" id="filteredOutflowSum" style="color: #FECACA;">Rs. 0</span>
+                    </div>
+                    <div class="triad-col">
+                        <span class="triad-label">Total Inflow</span>
+                        <span class="triad-val" id="filteredInflowSum" style="color: #A7F3D0;">Rs. 0</span>
+                    </div>
+                    <div class="triad-col" style="text-align: right;">
+                        <span class="triad-label">Avg Ticket</span>
+                        <span class="triad-val" id="avgTicketSizeVal">Rs. 0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. FILTER CONSOLE CARD -->
+            <section class="filter-console-card">
+                <div class="console-header-row">
+                    <span class="console-title-str">Filter Audit Parameters</span>
+                    <button type="button" class="btn-reset-filters" id="resetFiltersBtn">Reset</button>
+                </div>
+
+                <!-- Date Presets -->
+                <div class="preset-pills-row" id="presetPills">
+                    <button type="button" class="preset-btn" data-preset="TODAY">Today</button>
+                    <button type="button" class="preset-btn" data-preset="7DAYS">Last 7 Days</button>
+                    <button type="button" class="preset-btn active" data-preset="MONTH">This Month</button>
+                    <button type="button" class="preset-btn" data-preset="LAST_MONTH">Last Month</button>
+                    <button type="button" class="preset-btn" data-preset="YEAR">Year 2026</button>
+                    <button type="button" class="preset-btn" data-preset="CUSTOM">Custom Range</button>
+                </div>
+
+                <!-- Custom Date Inputs -->
+                <div class="custom-range-grid" id="customRangeGrid" style="display: none;">
+                    <div>
+                        <span style="font-size:11px; font-weight:700; color:var(--ink-tertiary); display:block; margin-bottom:4px;">START DATE</span>
+                        <input type="date" class="console-input" id="startDateInput">
+                    </div>
+                    <div>
+                        <span style="font-size:11px; font-weight:700; color:var(--ink-tertiary); display:block; margin-bottom:4px;">END DATE</span>
+                        <input type="date" class="console-input" id="endDateInput">
+                    </div>
+                </div>
+
+                <!-- Type & Category Filter -->
+                <div class="form-row-2">
+                    <select id="typeFilterSelect" class="console-select">
+                        <option value="ALL">All Flows (In & Out)</option>
+                        <option value="expense">Expenses Only</option>
+                        <option value="income">Incomes Only</option>
+                    </select>
+
+                    <select id="catFilterSelect" class="console-select">
+                        <option value="ALL">All Categories</option>
+                        <option value="Grocery">🛒 Grocery</option>
+                        <option value="Food">🍱 Food / Orders</option>
+                        <option value="Household">⚡ Utilities / Home</option>
+                        <option value="School">🎓 School</option>
+                        <option value="Zameen">🚜 Agriculture</option>
+                        <option value="Shop">🏪 Shop & Business</option>
+                        <option value="Fuel">⛽ Fuel</option>
+                        <option value="Healthcare">💊 Healthcare</option>
+                        <option value="Salary">💼 Salary</option>
+                        <option value="Business">📈 Business</option>
+                        <option value="Freelance">💻 Freelance</option>
+                        <option value="Advance">💵 Advance</option>
+                        <option value="Other">📌 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-row-2">
+                    <input type="number" class="console-input" id="minPriceInput" placeholder="Min Rs.">
+                    <input type="number" class="console-input" id="maxPriceInput" placeholder="Max Rs.">
+                </div>
+
+                <input type="text" class="console-input" id="keywordSearchInput" placeholder="Search item, vendor, or notes...">
+            </section>
+
+            <!-- 3. EXPORT & PRINT ACTION STRIP -->
+            <section class="export-actions-strip">
+                <button type="button" class="btn-export btn-csv" id="exportCsvBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Export Excel CSV</span>
+                </button>
+
+                <button type="button" class="btn-export btn-print" id="printReportBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    <span>Print Statement</span>
+                </button>
+            </section>
+
+            <!-- 4. FILTERED REPORT LEDGER STACK -->
+            <section class="report-ledger-stack" id="reportLedgerStack">
+                <div class="empty-report-card">
+                    <div class="empty-icon-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <span class="empty-title">Synchronizing Vault Records...</span>
+                    <span class="empty-sub">Querying local and cloud ledger nodes matching your parameters.</span>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 3. Bottom Mobile Dock -->
+        <div class="dock-container">
+            <nav class="mobile-dock">
+                <a href="dashboard.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                </a>
+
+                <a href="daily-register.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Register</span>
+                </a>
+
+                <!-- Central Add FAB -->
+                <div class="dock-fab-wrapper">
+                    <a href="add.html" class="dock-fab" title="Add Record">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </a>
+                </div>
+
+                <a href="reports.html" class="dock-btn active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
+
+                <a href="settings.html" class="dock-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+    </main>
+
+    <!-- 4. PURE PREMIUM TRANSACTION DETAIL MODAL (BOTTOM SHEET) -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-card">
+            <div class="modal-header-line">
+                <h3 class="modal-title-str" id="modalItemTitle" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Item Specification</h3>
+                <button type="button" class="modal-close-btn" id="modalCloseBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <div class="modal-invoice-grid">
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Category Sector</span>
+                    <span class="invoice-row-val" id="modalItemCat">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Flow Type</span>
+                    <span class="invoice-row-val" id="modalItemType">Expense</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Quantity & Measure</span>
+                    <span class="invoice-row-val" id="modalItemQty">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Unit Rate</span>
+                    <span class="invoice-row-val" id="modalItemRate">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Total Amount</span>
+                    <span class="invoice-row-val" id="modalItemAmount" style="font-size:16px;">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Date & Time Logged</span>
+                    <span class="invoice-row-val" id="modalItemTime">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Payment Mode</span>
+                    <span class="invoice-row-val" id="modalItemVendor">--</span>
+                </div>
+                <div class="invoice-row" id="modalNotesRow" style="display:none; flex-direction:column; gap:6px;">
+                    <span class="invoice-row-label">Remarks / Note</span>
+                    <span class="invoice-row-val" id="modalItemNotes" style="text-align: left; font-size:12px; color:var(--ink-secondary);">--</span>
+                </div>
+            </div>
+
+            <div class="modal-actions-grid">
+                <button type="button" class="btn-modal-action btn-modal-print" id="modalPrintBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path></svg>
+                    Receipt
+                </button>
+                <button type="button" class="btn-modal-action btn-modal-edit" id="modalEditBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Edit
+                </button>
+                <button type="button" class="btn-modal-delete" id="modalDeleteBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Delete Entry
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       7. CORE REALTIME FIREBASE REPORTING, EXCEL CSV & PRINT ENGINE
+       ========================================================================== -->
+    <script type="module">
+        import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { 
+            collection, query, where, onSnapshot, doc, deleteDoc, getDoc 
+        } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // DOM Handles
+        const networkDot = document.getElementById('networkDot');
+        const activeWorkspaceSubtitle = document.getElementById('activeWorkspaceSubtitle');
+        const toastBox = document.getElementById('toastBox');
+        const toastMsg = document.getElementById('toastMsg');
+        
+        const matchesCountPill = document.getElementById('matchesCountPill');
+        const filteredNetSum = document.getElementById('filteredNetSum');
+        const filteredOutflowSum = document.getElementById('filteredOutflowSum');
+        const filteredInflowSum = document.getElementById('filteredInflowSum');
+        const avgTicketSizeVal = document.getElementById('avgTicketSizeVal');
+        
+        const presetPills = document.getElementById('presetPills');
+        const customRangeGrid = document.getElementById('customRangeGrid');
+        const startDateInput = document.getElementById('startDateInput');
+        const endDateInput = document.getElementById('endDateInput');
+        const typeFilterSelect = document.getElementById('typeFilterSelect');
+        const catFilterSelect = document.getElementById('catFilterSelect');
+        const keywordSearchInput = document.getElementById('keywordSearchInput');
+        const minPriceInput = document.getElementById('minPriceInput');
+        const maxPriceInput = document.getElementById('maxPriceInput');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        const printReportBtn = document.getElementById('printReportBtn');
+        const btnMainPrint = document.getElementById('btnMainPrint');
+        const printSection = document.getElementById('printSection');
+        const reportLedgerStack = document.getElementById('reportLedgerStack');
+
+        // Modal Handles
+        const detailModal = document.getElementById('detailModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalDeleteBtn = document.getElementById('modalDeleteBtn');
+        const modalEditBtn = document.getElementById('modalEditBtn');
+        const modalPrintBtn = document.getElementById('modalPrintBtn');
+        
+        const modalItemTitle = document.getElementById('modalItemTitle');
+        const modalItemCat = document.getElementById('modalItemCat');
+        const modalItemType = document.getElementById('modalItemType');
+        const modalItemQty = document.getElementById('modalItemQty');
+        const modalItemRate = document.getElementById('modalItemRate');
+        const modalItemAmount = document.getElementById('modalItemAmount');
+        const modalItemTime = document.getElementById('modalItemTime');
+        const modalItemVendor = document.getElementById('modalItemVendor');
+        const modalNotesRow = document.getElementById('modalNotesRow');
+        const modalItemNotes = document.getElementById('modalItemNotes');
+
+        // State Machine
+        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        let rawRecords = [];
+        let filteredDataset = [];
+        let activePreset = "MONTH";
+        let activeSelectedRecord = null;
+
+        // Date helper (YYYY-MM-DD)
+        function formatDateKey(d) {
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        const now = new Date();
+        const todayStr = formatDateKey(now);
+        startDateInput.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+        endDateInput.value = todayStr;
+
+        // Network Status
+        function updateNetwork() {
+            networkDot.style.backgroundColor = navigator.onLine ? "var(--brand-emerald)" : "var(--danger-ink)";
+        }
+        window.addEventListener('online', updateNetwork);
+        window.addEventListener('offline', updateNetwork);
+        updateNetwork();
+
+        // Toast Feedback Dispatcher
+        let toastTimer;
+        function notify(msg, isError = true) {
+            clearTimeout(toastTimer);
+            toastMsg.innerText = msg;
+            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.95)" : "rgba(4, 56, 42, 0.95)";
+            toastBox.classList.add('active');
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
+        }
+
+        // Preset Pill Controller
+        presetPills.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                presetPills.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activePreset = btn.getAttribute('data-preset');
+
+                if (activePreset === "CUSTOM") {
+                    customRangeGrid.style.display = "grid";
+                } else {
+                    customRangeGrid.style.display = "none";
+                }
+
+                executeFilterPipeline();
+            });
+        });
+
+        // Filter Event Listeners
+        [startDateInput, endDateInput, typeFilterSelect, catFilterSelect, keywordSearchInput, minPriceInput, maxPriceInput].forEach(el => {
+            el.addEventListener('input', executeFilterPipeline);
+        });
+
+        resetFiltersBtn.addEventListener('click', () => {
+            typeFilterSelect.value = "ALL";
+            catFilterSelect.value = "ALL";
+            keywordSearchInput.value = "";
+            minPriceInput.value = "";
+            maxPriceInput.value = "";
+            presetPills.querySelector('[data-preset="MONTH"]').click();
+        });
+
+        // Master Filter Pipeline (Fixed Math & Logic)
+        function executeFilterPipeline() {
+            const todayDate = new Date();
+            let start = "";
+            let end = formatDateKey(todayDate);
+
+            if (activePreset === "TODAY") {
+                start = end;
+            } else if (activePreset === "7DAYS") {
+                const past7 = new Date();
+                past7.setDate(todayDate.getDate() - 7);
+                start = formatDateKey(past7);
+            } else if (activePreset === "MONTH") {
+                start = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-01`;
+            } else if (activePreset === "LAST_MONTH") {
+                const firstDayLastMonth = new Date(todayDate.getFullYear(), todayDate.getMonth() - 1, 1);
+                const lastDayLastMonth = new Date(todayDate.getFullYear(), todayDate.getMonth(), 0);
+                start = formatDateKey(firstDayLastMonth);
+                end = formatDateKey(lastDayLastMonth);
+            } else if (activePreset === "YEAR") {
+                start = `${todayDate.getFullYear()}-01-01`;
+                end = `${todayDate.getFullYear()}-12-31`;
+            } else if (activePreset === "CUSTOM") {
+                start = startDateInput.value;
+                end = endDateInput.value;
+            }
+
+            const flowType = typeFilterSelect.value;
+            const cat = catFilterSelect.value;
+            const keyword = keywordSearchInput.value.toLowerCase().trim();
+            const minP = parseFloat(minPriceInput.value) || 0;
+            const maxP = parseFloat(maxPriceInput.value) || Infinity;
+
+            filteredDataset = rawRecords.filter(item => {
+                // Date Range Check
+                const itemDate = item.date || "";
+                if (start && itemDate < start) return false;
+                if (end && itemDate > end) return false;
+
+                // Type Check (Expense vs Income)
+                if (flowType !== "ALL") {
+                    const itemType = item.type || "expense";
+                    if (itemType !== flowType) return false;
+                }
+
+                // Category Check
+                if (cat !== "ALL" && (item.category || '').toLowerCase() !== cat.toLowerCase()) return false;
+
+                // Price Check
+                const price = parseFloat(item.totalPrice) || 0;
+                if (price < minP || price > maxP) return false;
+
+                // Keyword Search Check
+                if (keyword) {
+                    const matchItem = (item.itemName || '').toLowerCase().includes(keyword);
+                    const matchVendor = (item.vendor || '').toLowerCase().includes(keyword);
+                    const matchNotes = (item.notes || '').toLowerCase().includes(keyword);
+                    if (!matchItem && !matchVendor && !matchNotes) return false;
+                }
+
+                return true;
+            });
+
+            // Sort Descending by Date and Time
+            filteredDataset.sort((a, b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || '')));
+            renderReportsView();
+        }
+
+        // Render Reports UI View
+        function renderReportsView() {
+            let totalExpense = 0;
+            let totalIncome = 0;
+
+            filteredDataset.forEach(r => {
+                const p = parseFloat(r.totalPrice) || 0;
+                if (r.type === 'income') {
+                    totalIncome += p;
+                } else {
+                    totalExpense += p;
+                }
+            });
+
+            const netBalance = totalIncome - totalExpense;
+            filteredNetSum.innerText = netBalance.toLocaleString();
+            filteredOutflowSum.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+            filteredInflowSum.innerText = `Rs. ${totalIncome.toLocaleString()}`;
+            matchesCountPill.innerText = `${filteredDataset.length} Entries`;
+
+            const totalTransactionsAmount = totalExpense + totalIncome;
+            const avg = filteredDataset.length > 0 ? Math.round(totalTransactionsAmount / filteredDataset.length) : 0;
+            avgTicketSizeVal.innerText = `Rs. ${avg.toLocaleString()}`;
+
+            if (filteredDataset.length === 0) {
+                reportLedgerStack.innerHTML = `
+                    <div class="empty-report-card">
+                        <div class="empty-icon-circle">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <span class="empty-title">No Audit Records Found</span>
+                        <span class="empty-sub">No transactions matched your active date range, flow type, or search parameters.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            reportLedgerStack.innerHTML = filteredDataset.map(item => {
+                const isInc = item.type === 'income';
+                const sign = isInc ? '+' : '-';
+                const priceClass = isInc ? 'price-income' : 'price-expense';
+                
+                const unitRateStr = (item.quantity && item.unit !== "Amount Based" && item.unitPrice) 
+                    ? `• Rs.${parseFloat(item.unitPrice).toLocaleString()}/${item.unit}` 
+                    : '';
+
+                return `
+                    <div class="report-entry-card" data-id="${item.id}">
+                        <div class="entry-left-meta">
+                            <span class="entry-title-str">${item.itemName}</span>
+                            <div class="entry-sub-tags">
+                                <span class="cat-badge">${item.category || 'General'}</span>
+                                <span>${item.quantity ? `${item.quantity} ${item.unit || 'Unit'}` : ''} ${unitRateStr}</span>
+                                ${item.vendor ? `<span>• ${item.vendor}</span>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="entry-right-meta">
+                            <span class="entry-amount-val ${priceClass}">${sign} Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
+                            <span class="entry-date-str">${item.date}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Card Click Event -> Open Full Invoice Drawer
+            reportLedgerStack.querySelectorAll('.report-entry-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.getAttribute('data-id');
+                    const record = filteredDataset.find(r => r.id === id);
+                    if (!record) return;
+
+                    activeSelectedRecord = record;
+                    modalItemTitle.innerText = record.itemName;
+                    modalItemCat.innerText = record.category || 'General';
+                    modalItemType.innerText = record.type === 'income' ? 'Income (Inflow)' : 'Expense (Outflow)';
+                    modalItemQty.innerText = record.quantity ? `${record.quantity} ${record.unit || 'Unit'}` : 'Amount Based';
+                    modalItemRate.innerText = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : '--';
+                    
+                    const isInc = record.type === 'income';
+                    modalItemAmount.innerText = `${isInc ? '+' : '-'} Rs. ${parseFloat(record.totalPrice).toLocaleString()}`;
+                    modalItemAmount.style.color = isInc ? 'var(--success-ink)' : 'var(--danger-ink)';
+                    
+                    modalItemTime.innerText = `${record.date} • ${(record.time || '').substring(0, 5) || '12:00'}`;
+                    modalItemVendor.innerText = record.paymentMethod || record.vendor || 'Cash';
+
+                    if (record.notes) {
+                        modalItemNotes.innerText = record.notes;
+                        modalNotesRow.style.display = "flex";
+                    } else {
+                        modalNotesRow.style.display = "none";
+                    }
+
+                    detailModal.classList.add('active');
+                });
+            });
+        }
+
+        // Modal Controls
+        function closeModal() {
+            detailModal.classList.remove('active');
+            activeSelectedRecord = null;
+        }
+        modalCloseBtn.addEventListener('click', closeModal);
+        detailModal.addEventListener('click', (e) => {
+            if (e.target === detailModal) closeModal();
+        });
+
+        // Edit Navigation
+        modalEditBtn.addEventListener('click', () => {
+            if (activeSelectedRecord) {
+                window.location.href = `add.html?edit=${activeSelectedRecord.id}`;
+            }
+        });
+
+        // Delete Confirmation Action
+        modalDeleteBtn.addEventListener('click', async () => {
+            if (!activeSelectedRecord) return;
+            if (confirm(`Permanently delete "${activeSelectedRecord.itemName}" from your family ledger?`)) {
+                try {
+                    modalDeleteBtn.innerText = "Deleting...";
+                    await deleteDoc(doc(db, "records", activeSelectedRecord.id));
+                    closeModal();
+                    notify("Record deleted successfully.", false);
+                } catch(e) {
+                    notify("Error deleting: " + e.message);
+                } finally {
+                    modalDeleteBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Delete Entry`;
+                }
+            }
+        });
+
+        // ==========================================================================
+        // CLIENT-SIDE RFC 4180 EXCEL-COMPATIBLE UTF-8 BOM CSV GENERATOR
+        // ==========================================================================
+        exportCsvBtn.addEventListener('click', () => {
+            if (filteredDataset.length === 0) {
+                notify("No transactions to export. Please adjust your filters.");
+                return;
+            }
+
+            const headers = ["S_No", "Date", "Time", "Type", "Item_Description", "Category", "Quantity", "Unit", "Unit_Rate", "Total_Amount", "Payment_Mode", "Notes"];
+            const csvRows = [headers.join(",")];
+
+            filteredDataset.forEach((row, idx) => {
+                const values = [
+                    idx + 1,
+                    `"${row.date || ''}"`,
+                    `"${row.time || ''}"`,
+                    `"${row.type || 'expense'}"`,
+                    `"${(row.itemName || '').replace(/"/g, '""')}"`,
+                    `"${(row.category || '').replace(/"/g, '""')}"`,
+                    row.quantity || 1,
+                    `"${row.unit || 'Amount Based'}"`,
+                    row.unitPrice || row.totalPrice,
+                    row.totalPrice || 0,
+                    `"${(row.paymentMethod || row.vendor || 'Cash').replace(/"/g, '""')}"`,
+                    `"${(row.notes || '').replace(/"/g, '""')}"`
+                ];
+                csvRows.push(values.join(","));
+            });
+
+            // Prepend \uFEFF Byte Order Mark for proper Excel UTF-8 display
+            const csvContent = "\uFEFF" + csvRows.join("\r\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Roz_E_Hisab_Report_${todayStr}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            notify("Excel CSV File Downloaded Successfully!", false);
+        });
+
+        // ==========================================================================
+        // BILL-BOOK / PAD STYLE PRINT ENGINE
+        // ==========================================================================
+        btnMainPrint.addEventListener('click', () => {
+            generateAuditPrint();
+            window.print();
+        });
+
+        printReportBtn.addEventListener('click', () => {
+            generateAuditPrint();
+            window.print();
+        });
+
+        modalPrintBtn.addEventListener('click', () => {
+            if (!activeSelectedRecord) return;
+            generateReceiptPrint(activeSelectedRecord);
+            window.print();
+        });
+
+        function generateAuditPrint() {
+            const famName = activeWorkspaceSubtitle.innerText.replace('Family Ledger', '').trim() || 'Roz E Hisab';
+            let totalEx = 0, totalInc = 0;
+            
+            let rows = filteredDataset.map((item, index) => {
+                const amt = parseFloat(item.totalPrice) || 0;
+                let priceCol = "";
+                if (item.type === 'income') {
+                    totalInc += amt;
+                    priceCol = `<span style="color:#10B981;">+${amt.toLocaleString()}</span>`;
+                } else {
+                    totalEx += amt;
+                    priceCol = `<span style="color:#EF4444;">-${amt.toLocaleString()}</span>`;
+                }
+                
+                const unitStr = (item.quantity && item.unit !== "Amount Based") ? `${item.quantity} ${item.unit}` : '-';
+                const rateStr = item.unitPrice ? item.unitPrice.toLocaleString() : '-';
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.date}<br><small>${(item.time || '').substring(0, 5)}</small></td>
+                        <td><strong>${item.itemName}</strong><br><small>${item.category || 'General'}</small></td>
+                        <td>${item.type ? item.type.toUpperCase() : 'EXPENSE'}</td>
+                        <td>${unitStr}</td>
+                        <td>${rateStr}</td>
+                        <td>${priceCol}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            printSection.innerHTML = `
+                <div class="print-header">
+                    <h2>${famName} — Financial Audit Statement</h2>
+                    <p>Report Range: ${startDateInput.value || 'Beginning'} to ${endDateInput.value || todayStr} • Generated by Roz E Hisab</p>
+                </div>
+                <table class="print-table">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th style="width:15%">Date / Time</th>
+                            <th style="width:35%">Item & Category</th>
+                            <th style="width:10%">Flow</th>
+                            <th style="width:12%">Quantity</th>
+                            <th style="width:11%">Rate</th>
+                            <th style="width:12%">Total (Rs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+                <div class="print-totals">
+                    <p>Total Filtered Inflow: Rs. ${totalInc.toLocaleString()}</p>
+                    <p>Total Filtered Outflow: Rs. ${totalEx.toLocaleString()}</p>
+                    <p style="font-size:16px; border-top:1px solid #000; padding-top:6px; margin-top:6px;">
+                        Net Balance: Rs. ${(totalInc - totalEx).toLocaleString()}
+                    </p>
+                </div>
+            `;
+        }
+
+        function generateReceiptPrint(record) {
+            const famName = activeWorkspaceSubtitle.innerText.replace('Family Ledger', '').trim() || 'Roz E Hisab';
+            const isInc = record.type === 'income';
+            const sign = isInc ? '+' : '-';
+            const qtyStr = (record.quantity && record.unit !== "Amount Based") ? `${record.quantity} ${record.unit}` : 'Amount Based';
+            const rateStr = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : 'N/A';
+
+            printSection.innerHTML = `
+                <div class="print-header">
+                    <h2>${famName}</h2>
+                    <p>Transaction Audit Receipt</p>
+                </div>
+                <div class="receipt-box">
+                    <div class="receipt-row"><span>Receipt Date:</span> <strong>${record.date} ${record.time || ''}</strong></div>
+                    <div class="receipt-row"><span>Item Name:</span> <strong>${record.itemName}</strong></div>
+                    <div class="receipt-row"><span>Category:</span> <strong>${record.category || 'General'}</strong></div>
+                    <div class="receipt-row"><span>Flow Type:</span> <strong>${record.type ? record.type.toUpperCase() : 'EXPENSE'}</strong></div>
+                    <div class="receipt-row"><span>Quantity:</span> <strong>${qtyStr}</strong></div>
+                    <div class="receipt-row"><span>Unit Rate:</span> <strong>${rateStr}</strong></div>
+                    <div class="receipt-row"><span>Payment Method:</span> <strong>${record.paymentMethod || record.vendor || 'Cash'}</strong></div>
+                    <div class="receipt-row" style="margin-top:10px; border-top:2px solid #000; padding-top:10px;">
+                        <span>Total Amount:</span> 
+                        <strong style="font-size:18px;">${sign} Rs. ${parseFloat(record.totalPrice).toLocaleString()}</strong>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize Realtime Listeners
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    activeFamilyId = userDoc.data().familyId || activeFamilyId;
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
+                }
+
+                const familyDoc = await getDoc(doc(db, "families", activeFamilyId));
+                if (familyDoc.exists()) {
+                    activeWorkspaceSubtitle.innerText = familyDoc.data().name || "Family Ledger";
+                }
+            } catch(e) {}
+
+            const q = query(
+                collection(db, "records"),
+                where("familyId", "==", activeFamilyId)
+            );
+
+            onSnapshot(q, (snapshot) => {
+                rawRecords = [];
+                snapshot.forEach(doc => {
+                    rawRecords.push({ id: doc.id, ...doc.data() });
+                });
+                executeFilterPipeline();
+            }, (err) => {
+                console.warn("[Reports Offline Cache Read]:", err);
+                executeFilterPipeline();
+            });
+        });
+    </script>
+</body>
+</html>
