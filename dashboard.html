@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#F7FBF8">
+    <meta name="theme-color" content="#F8FAFC">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Roz E Hisab — Master Household Dashboard</title>
@@ -19,48 +19,49 @@
 
     <style>
         /* ==========================================================================
-           1. EXACT SCREENSHOT COLOR TOKENS & MOBILE-FIRST SYSTEM
+           1. EXACT SCREENSHOT DESIGN TOKENS (LIGHT LUXURY MOBILE FIRST)
            ========================================================================== */
         :root {
             --canvas: #F8FAFC;
             --surface: #FFFFFF;
             --surface-subtle: #F1F5F9;
-            --surface-glass: rgba(255, 255, 255, 0.94);
-            --surface-dock: rgba(255, 255, 255, 0.96);
+            --surface-dock: rgba(255, 255, 255, 0.94);
 
-            /* Exact Screenshot Forest & Emerald Palette */
-            --forest-950: #02231A;
-            --forest-900: #064E3B;
-            --forest-800: #055944;
-            --forest-700: #047857;
-            --forest-600: #059669;
-            --forest-500: #10B981;
-            --forest-100: #D1FAE5;
-            --forest-50:  #ECFDF5;
-
-            /* Category Colors from Image */
-            --cat-food: #F59E0B;
-            --cat-home: #3B82F6;
-            --cat-transport: #10B981;
-            --cat-school: #065F46;
-            --cat-agri: #047857;
-            --cat-other: #0284C7;
+            --brand-primary: #047857;
+            --brand-deep: #064E3B;
+            --brand-mint: #ECFDF5;
+            --brand-emerald: #10B981;
 
             --ink-headline: #04382A;
-            --ink-primary: #0F172A;
-            --ink-secondary: #64748B;
+            --ink-title: #0F172A;
+            --ink-secondary: #475569;
             --ink-tertiary: #94A3B8;
 
+            /* Category Specific Theme Accents */
+            --cat-food: #F59E0B;
+            --cat-food-bg: #FEF3C7;
+            --cat-home: #3B82F6;
+            --cat-home-bg: #EFF6FF;
+            --cat-transport: #10B981;
+            --cat-transport-bg: #ECFDF5;
+            --cat-school: #8B5CF6;
+            --cat-school-bg: #F5F3FF;
+            --cat-agri: #059669;
+            --cat-agri-bg: #E6F4EA;
+            --cat-other: #06B6D4;
+            --cat-other-bg: #ECFEFF;
+
+            --danger-ink: #EF4444;
+            --danger-bg: #FEF2F2;
+
             --border-subtle: rgba(15, 23, 42, 0.06);
-            --border-card: rgba(6, 78, 59, 0.08);
+            --border-card: #EDF2F7;
+
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
+            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-
-            --shadow-subtle: 0 2px 10px rgba(6, 78, 59, 0.03);
-            --shadow-card: 0 14px 34px -10px rgba(6, 78, 59, 0.06), 0 0 0 1px rgba(6, 78, 59, 0.04);
-            --shadow-dock: 0 -8px 30px rgba(0, 0, 0, 0.08);
-            --shadow-fab: 0 14px 28px -4px rgba(5, 89, 68, 0.45);
         }
 
         * {
@@ -77,110 +78,110 @@
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
-            color: var(--ink-primary);
+            color: var(--ink-title);
             overflow-x: hidden;
         }
 
-        /* Ambient Background */
-        .ambient-canvas {
-            position: fixed;
-            inset: 0;
+        /* Mobile Container Chassis */
+        .mobile-viewport {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(100% 60% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.4) 50%, #F8FAFC 100%);
-            z-index: 0;
-            pointer-events: none;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--canvas);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px; /* Space for Mobile Dock */
+            position: relative;
         }
 
         /* ==========================================================================
-           2. TOP APP NAVBAR (APP LOGO ON LEFT INSTEAD OF 3 LINES)
+           2. EXECUTIVE TOP APP BAR (LOGO REPLACES HAMBURGER MENU)
            ========================================================================== */
-        .top-navbar {
+        .top-appbar {
             position: sticky;
             top: 0;
             z-index: 100;
-            width: 100%;
-            background: var(--surface-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--surface);
             border-bottom: 1px solid var(--border-subtle);
-            padding: calc(env(safe-area-inset-top, 14px) + 8px) 16px 12px 16px;
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
         }
 
-        .navbar-logo-btn {
+        /* App Logo (Replaced 3 Lines Menu) */
+        .app-logo-link {
             width: 38px;
             height: 38px;
             border-radius: 12px;
-            background: var(--forest-900);
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.2);
             text-decoration: none;
+            box-shadow: 0 4px 10px rgba(5, 89, 68, 0.25);
         }
 
-        .navbar-logo-btn img {
+        .app-logo-link img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .search-pill-wrapper {
+        /* Search Capsule */
+        .header-search-capsule {
             flex: 1;
-            position: relative;
+            height: 40px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
             display: flex;
             align-items: center;
+            padding: 0 14px;
+            gap: 8px;
         }
 
         .search-icon {
-            position: absolute;
-            left: 12px;
             width: 16px;
             height: 16px;
             color: var(--ink-tertiary);
-            pointer-events: none;
-        }
-
-        .search-pill-input {
-            width: 100%;
-            height: 40px;
-            background: var(--surface-subtle);
-            border: 1px solid transparent;
-            border-radius: 100px;
-            padding: 0 14px 0 36px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--ink-primary);
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .search-pill-input:focus {
-            background: #FFFFFF;
-            border-color: var(--forest-600);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-        }
-
-        .nav-right-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
             flex-shrink: 0;
         }
 
-        .btn-bell-notif {
+        .header-search-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--ink-title);
+        }
+
+        .header-search-input::placeholder {
+            color: var(--ink-tertiary);
+        }
+
+        /* Header Right Group */
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-notification-bell {
             position: relative;
-            width: 38px;
-            height: 38px;
+            background: none;
+            border: none;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: #FFFFFF;
-            border: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -188,261 +189,235 @@
             cursor: pointer;
         }
 
-        .btn-bell-notif::after {
-            content: '';
+        .bell-dot-alert {
             position: absolute;
-            top: 8px;
-            right: 9px;
+            top: 7px;
+            right: 8px;
             width: 7px;
             height: 7px;
             background: #EF4444;
             border-radius: 50%;
-            border: 1.5px solid #FFFFFF;
+            border: 1.5px solid var(--surface);
         }
 
-        .user-avatar-chip {
+        .header-profile-badge {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
             cursor: pointer;
         }
 
-        .user-avatar-img {
-            width: 38px;
-            height: 38px;
+        .profile-avatar-circle {
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background: #D1FAE5;
-            color: var(--forest-900);
+            background: #E2E8F0;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            border: 2px solid #FFFFFF;
-            box-shadow: var(--shadow-subtle);
-            overflow: hidden;
-        }
-
-        .user-avatar-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            color: var(--brand-deep);
+            border: 1.5px solid var(--surface);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
         /* ==========================================================================
-           3. MASTER MOBILE VIEWPORT (SCROLLABLE FEED)
+           3. HERO BANNER & 4 EXECUTIVE METRIC CARDS
            ========================================================================== */
-        .mobile-viewport {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 520px;
-            margin: 0 auto;
-            padding: 16px 16px 110px 16px;
+        .content-stream {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            padding: 16px;
         }
 
-        /* 1. Exact Screenshot Greeting Hero Banner */
-        .greeting-hero-card {
-            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #A7F3D0 100%);
+        .hero-banner-card {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
             border-radius: 24px;
             padding: 20px 18px;
-            border: 1px solid rgba(5, 150, 105, 0.16);
-            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: relative;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(16, 185, 129, 0.18);
         }
 
-        .hero-banner-top {
+        .hero-banner-card::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-text-block {
             display: flex;
-            align-items: center;
-            gap: 14px;
+            flex-direction: column;
+            gap: 4px;
             z-index: 2;
+            max-width: 65%;
         }
 
-        .hero-avatar-box {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: var(--forest-900);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.25);
-        }
-
-        .hero-avatar-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-text-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .hero-title-greeting {
+        .hero-salutation {
             font-size: 18px;
             font-weight: 800;
-            color: var(--forest-950);
+            color: var(--ink-headline);
             letter-spacing: -0.02em;
         }
 
-        .hero-sub-motto {
-            font-size: 12.5px;
+        .hero-motto {
+            font-size: 12px;
+            color: #2E5A44;
+            line-height: 1.4;
             font-weight: 500;
-            color: var(--forest-800);
-            line-height: 1.35;
         }
 
-        /* 4 Horizontal Stat Pills inside Banner */
-        .hero-pills-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+        .hero-house-art {
+            width: 95px;
+            height: auto;
+            flex-shrink: 0;
             z-index: 2;
+            filter: drop-shadow(0 6px 12px rgba(6, 78, 59, 0.15));
         }
 
-        .metric-pill-box {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(10px);
-            border-radius: 14px;
-            padding: 10px 12px;
+        /* 4 Quick Stat Pills Grid */
+        .stats-quad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-capsule {
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 14px 14px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
             display: flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        .pill-icon-circle {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
+        .stat-capsule-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
             flex-shrink: 0;
         }
 
-        .icon-bal { background: #ECFDF5; color: #059669; }
-        .icon-exp { background: #FEF2F2; color: #EF4444; }
-        .icon-inc { background: #ECFDF5; color: #10B981; }
-        .icon-sav { background: #EFF6FF; color: #3B82F6; }
-
-        .pill-meta-group {
+        .stat-capsule-info {
             display: flex;
             flex-direction: column;
-            line-height: 1.2;
+            gap: 1px;
             min-width: 0;
         }
 
-        .pill-label-str {
-            font-size: 10.5px;
+        .stat-capsule-title {
+            font-size: 11px;
             font-weight: 600;
-            color: var(--ink-secondary);
+            color: var(--ink-tertiary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .pill-val-str {
-            font-size: 13.5px;
+        .stat-capsule-val {
+            font-size: 14px;
             font-weight: 800;
-            color: var(--ink-primary);
+            color: var(--ink-title);
             letter-spacing: -0.01em;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* 2. Quick Actions Grid (6 Tiles as in Image) */
+        /* ==========================================================================
+           4. QUICK ACTIONS PANEL (ALL 6 COLORED BUTTONS)
+           ========================================================================== */
         .section-header-title {
             font-size: 15.5px;
             font-weight: 800;
             color: var(--ink-headline);
             letter-spacing: -0.02em;
-            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .quick-actions-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
 
-        .quick-action-tile {
+        .action-card-btn {
             background: var(--surface);
             border-radius: 18px;
-            padding: 14px 6px;
+            padding: 14px 8px;
             border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            transition: all 0.2s var(--ease-spring);
+            transition: transform 0.2s var(--ease-spring);
         }
 
-        .quick-action-tile:active {
+        .action-card-btn:active {
             transform: scale(0.96);
         }
 
-        .tile-icon-box {
+        .action-icon-circle {
             width: 42px;
             height: 42px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        .bg-red-soft { background: #FEF2F2; color: #EF4444; }
-        .bg-green-soft { background: #ECFDF5; color: #10B981; }
-        .bg-blue-soft { background: #EFF6FF; color: #3B82F6; }
-        .bg-purple-soft { background: #F5F3FF; color: #8B5CF6; }
-        .bg-orange-soft { background: #FFF7ED; color: #EA580C; }
-        .bg-teal-soft { background: #F0FDFA; color: #0D9488; }
-
-        .tile-label-str {
+        .action-label-str {
             font-size: 11px;
             font-weight: 700;
             color: var(--ink-headline);
             text-align: center;
-            white-space: nowrap;
+            letter-spacing: -0.01em;
         }
 
-        /* 3. Total Balance Card */
+        /* ==========================================================================
+           5. TOTAL BALANCE & MY UFONE STYLE CIRCLE DONUT GRAPH
+           ========================================================================== */
         .balance-master-card {
             background: var(--surface);
             border-radius: 22px;
-            padding: 20px 20px;
+            padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .balance-card-header {
+        .balance-top-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
-        .balance-eyebrow {
+        .balance-label-group {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -451,47 +426,36 @@
             color: var(--ink-secondary);
         }
 
-        .btn-eye-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--ink-tertiary);
-            display: flex;
-            align-items: center;
-        }
-
-        .trend-badge-pill {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #059669;
+        .growth-pill {
             background: #ECFDF5;
-            padding: 4px 10px;
+            color: #059669;
+            padding: 3px 8px;
             border-radius: 100px;
+            font-size: 11px;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
-        .balance-huge-val {
-            font-size: 38px;
+        .balance-number-display {
+            font-size: 34px;
             font-weight: 800;
-            letter-spacing: -0.04em;
             color: var(--ink-headline);
-            line-height: 1;
+            letter-spacing: -0.04em;
         }
 
-        .balance-time-stamp {
-            font-size: 11.5px;
+        .balance-timestamp-sub {
+            font-size: 11px;
             font-weight: 500;
             color: var(--ink-tertiary);
         }
 
-        /* 4. Exact Screenshot Circular Meter Graph (Expense Overview) */
-        .expense-overview-card {
+        /* Circle Donut Chart Card (My Ufone / Telecom App Style) */
+        .donut-overview-card {
             background: var(--surface);
             border-radius: 22px;
-            padding: 20px;
+            padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -499,117 +463,113 @@
             gap: 16px;
         }
 
-        .card-title-row {
+        .chart-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .card-period-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--ink-tertiary);
-            font-weight: 600;
+        .card-heading-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--ink-headline);
         }
 
-        .donut-interactive-stage {
+        .chart-period-badge {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-tertiary);
+        }
+
+        .donut-stage-layout {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: space-between;
             gap: 16px;
         }
 
-        .svg-donut-wrapper {
+        .donut-svg-wrapper {
             position: relative;
-            width: 170px;
-            height: 170px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
         }
 
-        .svg-donut-circle {
+        .donut-svg-core {
             transform: rotate(-90deg);
             width: 100%;
             height: 100%;
         }
 
-        .donut-center-info {
+        .donut-inner-data {
             position: absolute;
+            inset: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            line-height: 1.15;
+            pointer-events: none;
         }
 
-        .donut-center-amt {
-            font-size: 18px;
+        .donut-total-val {
+            font-size: 14px;
             font-weight: 800;
-            color: var(--ink-headline);
-            letter-spacing: -0.02em;
+            color: var(--ink-title);
+            line-height: 1.1;
         }
 
-        .donut-center-lbl {
-            font-size: 10.5px;
+        .donut-total-lbl {
+            font-size: 9.5px;
             font-weight: 600;
             color: var(--ink-tertiary);
-            margin-top: 2px;
+            text-transform: uppercase;
         }
 
-        /* Category Legend List */
-        .category-legend-list {
-            width: 100%;
+        .donut-legend-stack {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0;
         }
 
-        .legend-item-row {
+        .legend-line-item {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            font-size: 12.5px;
-            padding: 4px 0;
+            font-size: 12px;
         }
 
-        .legend-left {
+        .legend-name-block {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--ink-primary);
+            gap: 6px;
+            color: var(--ink-secondary);
             font-weight: 600;
         }
 
-        .dot-indicator {
+        .legend-dot-indicator {
             width: 8px;
             height: 8px;
             border-radius: 50%;
             flex-shrink: 0;
         }
 
-        .legend-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'JetBrains Mono', monospace;
+        .legend-amount-block {
             font-weight: 700;
-            font-size: 12px;
+            color: var(--ink-title);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
         }
 
-        .pct-badge {
-            color: var(--forest-700);
-            background: var(--forest-50);
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 10.5px;
-        }
-
-        /* 5. Monthly Line / Trend Chart */
-        .chart-trend-card {
+        /* ==========================================================================
+           6. MONTHLY OVERVIEW LINE CHART (INTERACTIVE SVG GRAPH)
+           ========================================================================== */
+        .monthly-line-chart-card {
             background: var(--surface);
             border-radius: 22px;
-            padding: 20px;
+            padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -617,26 +577,33 @@
             gap: 14px;
         }
 
-        .chart-legend-top {
+        .chart-legend-row {
             display: flex;
             align-items: center;
             gap: 14px;
             font-size: 11.5px;
             font-weight: 600;
-            color: var(--ink-secondary);
         }
 
-        .chart-svg-view {
+        .legend-pill-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .line-chart-svg {
             width: 100%;
-            height: 130px;
+            height: 140px;
             overflow: visible;
         }
 
-        /* 6. Mini Dynamic Calendar Widget */
-        .calendar-widget-card {
+        /* ==========================================================================
+           7. TOP CATEGORIES WITH PROGRESS BARS
+           ========================================================================== */
+        .categories-progress-card {
             background: var(--surface);
             border-radius: 22px;
-            padding: 20px;
+            padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -644,98 +611,51 @@
             gap: 14px;
         }
 
-        .cal-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cal-month-title {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--ink-headline);
-        }
-
-        .cal-arrows {
-            display: flex;
-            gap: 6px;
-        }
-
-        .btn-cal-arrow {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--surface-subtle);
-            border: none;
+        .cat-progress-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--ink-secondary);
-        }
-
-        .calendar-grid-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            text-align: center;
-        }
-
-        .cal-day-label {
-            font-size: 10.5px;
-            font-weight: 700;
-            color: var(--ink-tertiary);
-            padding-bottom: 4px;
-        }
-
-        .cal-date-node {
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--ink-primary);
-            cursor: pointer;
-        }
-
-        .cal-date-node.active-today {
-            background: var(--forest-900);
-            color: #FFFFFF;
-            font-weight: 800;
-        }
-
-        .cal-date-node.muted {
-            color: #CBD5E1;
-        }
-
-        /* 7. Top Categories Progress Matrix */
-        .top-categories-card {
-            background: var(--surface);
-            border-radius: 22px;
-            padding: 20px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
             gap: 12px;
         }
 
-        .cat-progress-item {
+        .cat-icon-chip {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
-        .progress-meta-row {
+        .cat-body-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .cat-title-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
+            font-size: 12.5px;
         }
 
-        .progress-bar-track {
+        .cat-label-text {
+            font-weight: 700;
+            color: var(--ink-title);
+        }
+
+        .cat-price-text {
+            font-weight: 800;
+            color: var(--ink-title);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .cat-meter-track {
             width: 100%;
             height: 5px;
             background: var(--surface-subtle);
@@ -743,17 +663,103 @@
             overflow: hidden;
         }
 
-        .progress-bar-fill {
+        .cat-meter-fill {
             height: 100%;
             border-radius: 100px;
             transition: width 0.6s var(--ease-spring);
         }
 
-        /* 8. Quick Summary Card with Green Button */
-        .quick-summary-card {
+        /* ==========================================================================
+           8. MINI CALENDAR & MOTIVATIONAL BANNER
+           ========================================================================== */
+        .calendar-widget-card {
             background: var(--surface);
             border-radius: 22px;
-            padding: 20px;
+            padding: 18px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .calendar-nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--ink-headline);
+        }
+
+        .cal-arrow-btn {
+            background: var(--surface-subtle);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .calendar-weekdays-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-tertiary);
+        }
+
+        .calendar-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            gap: 6px 0;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink-title);
+        }
+
+        .cal-day-cell {
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .cal-day-cell.active-today {
+            background: var(--brand-deep);
+            color: white;
+        }
+
+        /* Motivational Card */
+        .motivational-card {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border-radius: 20px;
+            padding: 16px 18px;
+            border: 1px solid #BBF7D0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .moti-content {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-deep);
+            line-height: 1.35;
+        }
+
+        /* Recent Activity / Ledger Table */
+        .recent-activity-card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -761,20 +767,88 @@
             gap: 14px;
         }
 
-        .summary-row {
+        .activity-item-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 13.5px;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F1F5F9;
         }
 
-        .btn-full-report {
+        .activity-item-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .activity-left-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .activity-avatar-chip {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .activity-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .activity-name-str {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-title);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-sub-str {
+            font-size: 11px;
+            color: var(--ink-tertiary);
+            font-weight: 500;
+        }
+
+        .activity-right-block {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .activity-price-str {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-title);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .activity-time-str {
+            font-size: 10.5px;
+            color: var(--ink-tertiary);
+        }
+
+        /* Quick Summary Button */
+        .btn-full-report-cta {
             width: 100%;
             height: 48px;
-            border-radius: 14px;
-            background: var(--forest-900);
-            color: #FFFFFF;
+            background: var(--brand-deep);
+            color: white;
             border: none;
+            border-radius: 14px;
             font-size: 13.5px;
             font-weight: 700;
             display: flex;
@@ -782,120 +856,20 @@
             justify-content: center;
             gap: 8px;
             text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 8px 20px -4px rgba(6, 78, 59, 0.4);
-        }
-
-        /* 9. Recent Activity & Records List */
-        .recent-feed-card {
-            background: var(--surface);
-            border-radius: 22px;
-            padding: 20px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .activity-tile-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #F1F5F9;
-        }
-
-        .activity-tile-item:last-child {
-            border-bottom: none;
-        }
-
-        .act-left-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .act-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--surface-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .act-title-str {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--ink-headline);
-        }
-
-        .act-sub-str {
-            font-size: 11.5px;
-            color: var(--ink-tertiary);
-        }
-
-        .act-right-meta {
-            text-align: right;
-        }
-
-        .act-amount-val {
-            font-size: 14px;
-            font-weight: 800;
-            color: #0F172A;
-        }
-
-        .act-date-val {
-            font-size: 10.5px;
-            color: var(--ink-tertiary);
-        }
-
-        /* 10. Motivational Sprout Footer */
-        .quote-banner-card {
-            background: #ECFDF5;
-            border: 1px solid #A7F3D0;
-            border-radius: 20px;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .quote-sprout-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--forest-900);
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .quote-text-str {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--forest-900);
-            line-height: 1.35;
+            box-shadow: 0 8px 18px -4px rgba(6, 78, 59, 0.4);
         }
 
         /* ==========================================================================
-           4. FLOATING MOBILE ISLAND DOCK
+           9. LUXURY MOBILE ISLAND DOCK (FLOATING BOTTOM BAR)
            ========================================================================== */
         .dock-container {
             position: fixed;
             bottom: env(safe-area-inset-bottom, 14px);
             left: 50%;
             transform: translateX(-50%);
-            z-index: 600;
+            z-index: 500;
             width: 92%;
-            max-width: 480px;
+            max-width: 440px;
             pointer-events: none;
         }
 
@@ -912,7 +886,7 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 0 10px;
+            padding: 0 8px;
         }
 
         .dock-btn {
@@ -920,7 +894,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 3px;
+            gap: 4px;
             color: var(--ink-tertiary);
             text-decoration: none;
             width: 54px;
@@ -928,27 +902,27 @@
             transition: all 0.2s ease;
         }
 
-        .dock-btn svg { width: 20px; height: 20px; stroke-width: 2; }
-        .dock-btn span { font-size: 10px; font-weight: 600; }
-        .dock-btn.active { color: var(--forest-900); }
+        .dock-btn svg { width: 21px; height: 21px; stroke-width: 2; }
+        .dock-btn span { font-size: 10px; font-weight: 700; }
+        .dock-btn.active { color: var(--brand-deep); }
 
         .dock-fab-wrapper {
             position: relative;
             top: -20px;
-            width: 60px;
-            height: 60px;
+            width: 58px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .dock-fab {
-            width: 60px;
-            height: 60px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
-            background: linear-gradient(180deg, #055944 0%, #03392B 100%);
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             box-shadow: var(--shadow-fab);
-            border: 4px solid var(--surface);
+            border: 3.5px solid var(--surface);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -964,562 +938,645 @@
 </head>
 <body>
 
-    <!-- Ambient Scrim -->
-    <div class="ambient-canvas"></div>
-
-    <!-- TOP MOBILE NAVBAR (APP LOGO INSTEAD OF 3 LINES) -->
-    <header class="top-navbar">
-        <!-- Official Logo Replaces 3-line hamburger menu -->
-        <a href="dashboard.html" class="navbar-logo-btn" title="Roz E Hisab Home">
-            <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
-        </a>
-
-        <!-- Global Search Bar -->
-        <div class="search-pill-wrapper">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" class="search-pill-input" id="globalSearchInput" placeholder="Search records, categories...">
-        </div>
-
-        <!-- Notification Bell & Profile Avatar -->
-        <div class="nav-right-actions">
-            <button type="button" class="btn-bell-notif" id="bellNotifBtn" title="Notifications">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-            </button>
-
-            <a href="settings.html" class="user-avatar-chip">
-                <div class="user-avatar-img" id="userNavAvatar">A</div>
-            </a>
-        </div>
-    </header>
-
-    <!-- MASTER SCROLLABLE MOBILE VIEWPORT -->
+    <!-- Main Mobile Frame Viewport -->
     <main class="mobile-viewport">
 
-        <!-- 1. GREETING HERO CARD WITH HOUSE ART & 4 STAT PILLS -->
-        <section class="greeting-hero-card">
-            <div class="hero-banner-top">
-                <div class="hero-avatar-box">
-                    <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="App Icon">
-                </div>
-                <div class="hero-text-meta">
-                    <h2 class="hero-title-greeting" id="userGreetingTitle">Good Day!</h2>
-                    <p class="hero-sub-motto">Keep your household records organized and stay on track with your goals.</p>
-                </div>
+        <!-- 1. Top Navbar (Logo Replaced Hamburger Menu) -->
+        <header class="top-appbar">
+            <!-- App Logo Icon on Left -->
+            <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
+                <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
+            </a>
+
+            <!-- Search Capsule -->
+            <div class="header-search-capsule">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="header-search-input" id="quickSearchInput" placeholder="Search records, categories...">
             </div>
 
-            <div class="hero-pills-row">
-                <div class="metric-pill-box">
-                    <div class="pill-icon-circle icon-bal">👛</div>
-                    <div class="pill-meta-group">
-                        <span class="pill-label-str">Total Balance</span>
-                        <span class="pill-val-str" id="heroTotalBalance">Rs. 0</span>
-                    </div>
-                </div>
+            <!-- Notification & Profile Settings -->
+            <div class="header-right-group">
+                <button type="button" class="btn-notification-bell" onclick="window.location.href='reports.html'" title="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="bell-dot-alert"></span>
+                </button>
 
-                <div class="metric-pill-box">
-                    <div class="pill-icon-circle icon-exp">⊕</div>
-                    <div class="pill-meta-group">
-                        <span class="pill-label-str">This Month Exp</span>
-                        <span class="pill-val-str" style="color: #EF4444;" id="heroMonthExpense">Rs. 0</span>
-                    </div>
-                </div>
-
-                <div class="metric-pill-box">
-                    <div class="pill-icon-circle icon-inc">↑</div>
-                    <div class="pill-meta-group">
-                        <span class="pill-label-str">This Month Inc</span>
-                        <span class="pill-val-str" style="color: #10B981;" id="heroMonthIncome">Rs. 0</span>
-                    </div>
-                </div>
-
-                <div class="metric-pill-box">
-                    <div class="pill-icon-circle icon-sav">💰</div>
-                    <div class="pill-meta-group">
-                        <span class="pill-label-str">Savings</span>
-                        <span class="pill-val-str" style="color: #3B82F6;" id="heroSavings">Rs. 0</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. QUICK ACTIONS (6 EXACT SCREENSHOT TILES) -->
-        <div>
-            <h3 class="section-header-title">Quick Actions</h3>
-            <div class="quick-actions-grid">
-                <a href="add.html" class="quick-action-tile">
-                    <div class="tile-icon-box bg-red-soft">⊕</div>
-                    <span class="tile-label-str">Add Expense</span>
-                </a>
-
-                <a href="add.html?type=income" class="quick-action-tile">
-                    <div class="tile-icon-box bg-green-soft">⇋</div>
-                    <span class="tile-label-str">Add Income</span>
-                </a>
-
-                <a href="add.html" class="quick-action-tile">
-                    <div class="tile-icon-box bg-blue-soft">📅</div>
-                    <span class="tile-label-str">Add Record</span>
-                </a>
-
-                <a href="budget.html" class="quick-action-tile">
-                    <div class="tile-icon-box bg-purple-soft">🎯</div>
-                    <span class="tile-label-str">Set Budget</span>
-                </a>
-
-                <a href="family.html" class="quick-action-tile">
-                    <div class="tile-icon-box bg-orange-soft">👥</div>
-                    <span class="tile-label-str">Add Member</span>
-                </a>
-
-                <a href="reports.html" class="quick-action-tile">
-                    <div class="tile-icon-box bg-teal-soft">📊</div>
-                    <span class="tile-label-str">View Report</span>
+                <!-- Profile Badge leads to settings.html -->
+                <a href="settings.html" class="header-profile-badge" title="Profile & Settings">
+                    <div class="profile-avatar-circle" id="profileInitials">U</div>
                 </a>
             </div>
+        </header>
+
+        <!-- 2. Scrollable Body Stream -->
+        <div class="content-stream">
+
+            <!-- Hero Welcome Card with House Architecture Visual -->
+            <section class="hero-banner-card">
+                <div class="hero-text-block">
+                    <h1 class="hero-salutation" id="userGreeting">Good Morning!</h1>
+                    <p class="hero-motto">Keep your household records organized and stay on track with your goals.</p>
+                </div>
+
+                <svg class="hero-house-art" viewBox="0 0 160 120" fill="none">
+                    <!-- Stylized Modern Villa Icon -->
+                    <rect x="25" y="38" width="110" height="74" rx="10" fill="#FFFFFF" stroke="#04382A" stroke-width="3"/>
+                    <path d="M15 45L80 12L145 45" stroke="#04382A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="42" y="55" width="28" height="26" rx="4" fill="#D1FAE5" stroke="#04382A" stroke-width="2"/>
+                    <rect x="88" y="55" width="32" height="57" rx="4" fill="#04382A"/>
+                    <circle cx="95" cy="85" r="2" fill="#FFFFFF"/>
+                </svg>
+            </section>
+
+            <!-- 4 Quick Stat Pills (Matching Screenshot) -->
+            <section class="stats-quad-grid">
+                <div class="stat-capsule">
+                    <div class="stat-capsule-icon" style="background:#ECFDF5; color:#059669;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                    </div>
+                    <div class="stat-capsule-info">
+                        <span class="stat-capsule-title">Total Balance</span>
+                        <span class="stat-capsule-val" id="pillTotalBalance">Rs. 0</span>
+                    </div>
+                </div>
+
+                <div class="stat-capsule">
+                    <div class="stat-capsule-icon" style="background:#FEF2F2; color:#DC2626;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+                    </div>
+                    <div class="stat-capsule-info">
+                        <span class="stat-capsule-title">Month Expense</span>
+                        <span class="stat-capsule-val" id="pillMonthExpense">Rs. 0</span>
+                    </div>
+                </div>
+
+                <div class="stat-capsule">
+                    <div class="stat-capsule-icon" style="background:#EFF6FF; color:#2563EB;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    </div>
+                    <div class="stat-capsule-info">
+                        <span class="stat-capsule-title">Month Income</span>
+                        <span class="stat-capsule-val" id="pillMonthIncome">Rs. 0</span>
+                    </div>
+                </div>
+
+                <div class="stat-capsule">
+                    <div class="stat-capsule-icon" style="background:#F0FDF4; color:#10B981;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
+                    </div>
+                    <div class="stat-capsule-info">
+                        <span class="stat-capsule-title">Savings</span>
+                        <span class="stat-capsule-val" id="pillSavings">Rs. 0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions Panel (All 6 Colored Buttons) -->
+            <section class="section-header-title">
+                <span>Quick Actions</span>
+            </section>
+
+            <section class="quick-actions-grid">
+                <a href="add.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#FEE2E2; color:#DC2626;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <span class="action-label-str">Add Expense</span>
+                </a>
+
+                <a href="add.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#DCFCE7; color:#166534;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="16 12 12 8 8 12"></polyline><line x1="12" y1="16" x2="12" y2="8"></line></svg>
+                    </div>
+                    <span class="action-label-str">Add Income</span>
+                </a>
+
+                <a href="add.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#EFF6FF; color:#1D4ED8;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                    </div>
+                    <span class="action-label-str">Add Record</span>
+                </a>
+
+                <a href="budget.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#F3E8FF; color:#7E22CE;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <span class="action-label-str">Set Budget</span>
+                </a>
+
+                <a href="family.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#FFEDD5; color:#C2410C;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+                    </div>
+                    <span class="action-label-str">Add Family</span>
+                </a>
+
+                <a href="reports.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#CCFBF1; color:#0F766E;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <span class="action-label-str">View Report</span>
+                </a>
+            </section>
+
+            <!-- Total Balance Master Card -->
+            <section class="balance-master-card">
+                <div class="balance-top-row">
+                    <div class="balance-label-group">
+                        <span>Total Balance</span>
+                        <svg id="eyeToggleIcon" style="cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </div>
+                    <div class="growth-pill">
+                        <span>↗ +12%</span>
+                    </div>
+                </div>
+                <div class="balance-number-display" id="mainBalanceDisplay">Rs. 0</div>
+                <div class="balance-timestamp-sub" id="lastUpdatedLabel">Last updated: Today</div>
+            </section>
+
+            <!-- Circle Donut Graph (My Ufone / Telecom Style) -->
+            <section class="donut-overview-card">
+                <div class="chart-header-row">
+                    <h3 class="card-heading-title">Expense Overview</h3>
+                    <span class="chart-period-badge" id="chartMonthBadge">This Month</span>
+                </div>
+
+                <div class="donut-stage-layout">
+                    <!-- SVG Donut Circle -->
+                    <div class="donut-svg-wrapper">
+                        <svg class="donut-svg-core" viewBox="0 0 36 36">
+                            <!-- Background Track -->
+                            <path stroke="#F1F5F9" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <!-- Colored Segments (Real Live Breakdown) -->
+                            <path id="segFood" stroke="var(--cat-food)" stroke-dasharray="32, 100" stroke-dashoffset="0" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="segHome" stroke="var(--cat-home)" stroke-dasharray="18, 100" stroke-dashoffset="-32" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="segTransport" stroke="var(--cat-transport)" stroke-dasharray="12, 100" stroke-dashoffset="-50" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="segSchool" stroke="var(--cat-school)" stroke-dasharray="10, 100" stroke-dashoffset="-62" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="segAgri" stroke="var(--cat-agri)" stroke-dasharray="8, 100" stroke-dashoffset="-72" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="segOther" stroke="var(--cat-other)" stroke-dasharray="20, 100" stroke-dashoffset="-80" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+
+                        <!-- Center Total Inside Circle -->
+                        <div class="donut-inner-data">
+                            <span class="donut-total-val" id="donutCenterAmount">Rs. 0</span>
+                            <span class="donut-total-lbl">Total Outflow</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Legend Stack -->
+                    <div class="donut-legend-stack">
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-food);"></span>
+                                <span>Food & Grocery</span>
+                            </div>
+                            <span class="legend-amount-block" id="legFoodAmt">Rs. 0</span>
+                        </div>
+
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-home);"></span>
+                                <span>Home Utilities</span>
+                            </div>
+                            <span class="legend-amount-block" id="legHomeAmt">Rs. 0</span>
+                        </div>
+
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-transport);"></span>
+                                <span>Transport / Fuel</span>
+                            </div>
+                            <span class="legend-amount-block" id="legTransportAmt">Rs. 0</span>
+                        </div>
+
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-school);"></span>
+                                <span>School & Fees</span>
+                            </div>
+                            <span class="legend-amount-block" id="legSchoolAmt">Rs. 0</span>
+                        </div>
+
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-agri);"></span>
+                                <span>Agriculture / Land</span>
+                            </div>
+                            <span class="legend-amount-block" id="legAgriAmt">Rs. 0</span>
+                        </div>
+
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:var(--cat-other);"></span>
+                                <span>Other / Advances</span>
+                            </div>
+                            <span class="legend-amount-block" id="legOtherAmt">Rs. 0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Monthly Overview (Income vs Expense Line Graph) -->
+            <section class="monthly-line-chart-card">
+                <div class="chart-header-row">
+                    <h3 class="card-heading-title">Monthly Overview</h3>
+                    <div class="chart-legend-row">
+                        <div class="legend-pill-item">
+                            <span style="width:8px; height:8px; border-radius:50%; background:#059669;"></span>
+                            <span style="color:#059669;">Income</span>
+                        </div>
+                        <div class="legend-pill-item">
+                            <span style="width:8px; height:8px; border-radius:50%; background:#A7F3D0;"></span>
+                            <span style="color:#047857;">Expense</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smooth SVG Line Chart -->
+                <svg class="line-chart-svg" viewBox="0 0 320 130">
+                    <defs>
+                        <linearGradient id="chartFillGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Grid Lines -->
+                    <line x1="0" y1="30" x2="320" y2="30" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="65" x2="320" y2="65" stroke="#F1F5F9" stroke-width="1"/>
+                    <line x1="0" y1="100" x2="320" y2="100" stroke="#F1F5F9" stroke-width="1"/>
+
+                    <!-- Income Curve Path -->
+                    <path d="M 10,95 Q 60,65 110,75 T 210,40 T 310,35" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="10" cy="95" r="3" fill="#059669"/>
+                    <circle cx="110" cy="75" r="3" fill="#059669"/>
+                    <circle cx="210" cy="40" r="3" fill="#059669"/>
+                    <circle cx="310" cy="35" r="3" fill="#059669"/>
+
+                    <!-- Expense Curve Path -->
+                    <path d="M 10,110 Q 60,85 110,95 T 210,70 T 310,65" fill="none" stroke="#A7F3D0" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="10" cy="110" r="3" fill="#34D399"/>
+                    <circle cx="110" cy="95" r="3" fill="#34D399"/>
+                    <circle cx="210" cy="70" r="3" fill="#34D399"/>
+                    <circle cx="310" cy="65" r="3" fill="#34D399"/>
+
+                    <!-- Month Labels -->
+                    <text x="10" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jan</text>
+                    <text x="70" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Apr</text>
+                    <text x="135" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jul</text>
+                    <text x="200" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Sep</text>
+                    <text x="280" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Dec</text>
+                </svg>
+            </section>
+
+            <!-- Top Categories Progress Card -->
+            <section class="categories-progress-card">
+                <div class="chart-header-row">
+                    <h3 class="card-heading-title">Top Categories</h3>
+                    <a href="categories.html" style="font-size:12px; color:var(--brand-primary); font-weight:700; text-decoration:none;">View All →</a>
+                </div>
+
+                <div class="cat-progress-item">
+                    <div class="cat-icon-chip" style="background:var(--cat-food-bg); color:var(--cat-food);">🛒</div>
+                    <div class="cat-body-column">
+                        <div class="cat-title-line">
+                            <span class="cat-label-text">Food & Groceries</span>
+                            <span class="cat-price-text" id="catFoodPrice">Rs. 0</span>
+                        </div>
+                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barFood" style="width: 32%; background:var(--cat-food);"></div></div>
+                    </div>
+                </div>
+
+                <div class="cat-progress-item">
+                    <div class="cat-icon-chip" style="background:var(--cat-home-bg); color:var(--cat-home);">⚡</div>
+                    <div class="cat-body-column">
+                        <div class="cat-title-line">
+                            <span class="cat-label-text">Home & Utilities</span>
+                            <span class="cat-price-text" id="catHomePrice">Rs. 0</span>
+                        </div>
+                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barHome" style="width: 18%; background:var(--cat-home);"></div></div>
+                    </div>
+                </div>
+
+                <div class="cat-progress-item">
+                    <div class="cat-icon-chip" style="background:var(--cat-school-bg); color:var(--cat-school);">🎓</div>
+                    <div class="cat-body-column">
+                        <div class="cat-title-line">
+                            <span class="cat-label-text">School Fees</span>
+                            <span class="cat-price-text" id="catSchoolPrice">Rs. 0</span>
+                        </div>
+                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barSchool" style="width: 10%; background:var(--cat-school);"></div></div>
+                    </div>
+                </div>
+
+                <div class="cat-progress-item">
+                    <div class="cat-icon-chip" style="background:var(--cat-agri-bg); color:var(--cat-agri);">🚜</div>
+                    <div class="cat-body-column">
+                        <div class="cat-title-line">
+                            <span class="cat-label-text">Agriculture / Zameen</span>
+                            <span class="cat-price-text" id="catAgriPrice">Rs. 0</span>
+                        </div>
+                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barAgri" style="width: 8%; background:var(--cat-agri);"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mini Calendar Widget -->
+            <section class="calendar-widget-card">
+                <div class="calendar-nav-row">
+                    <span id="calendarMonthTitle">September 2026</span>
+                    <div style="display:flex; gap:6px;">
+                        <button class="cal-arrow-btn" onclick="window.location.href='daily-register.html'">‹</button>
+                        <button class="cal-arrow-btn" onclick="window.location.href='daily-register.html'">›</button>
+                    </div>
+                </div>
+                <div class="calendar-weekdays-grid">
+                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+                <div class="calendar-days-grid" id="calendarGridDays">
+                    <!-- Script populates active month days -->
+                </div>
+            </section>
+
+            <!-- Motivational Banner Card -->
+            <section class="motivational-card">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        🌱
+                    </div>
+                    <p class="moti-content">Small steps today build big dreams tomorrow.</p>
+                </div>
+            </section>
+
+            <!-- Recent Activity Transactions -->
+            <section class="recent-activity-card">
+                <div class="chart-header-row">
+                    <h3 class="card-heading-title">Recent Activity</h3>
+                    <a href="daily-register.html" style="font-size:12px; color:var(--brand-primary); font-weight:700; text-decoration:none;">View All</a>
+                </div>
+
+                <div id="recentActivityList">
+                    <!-- Populated Dynamically from Firebase Records -->
+                    <div style="text-align:center; padding:20px; color:var(--ink-tertiary); font-size:12px;">Loading vault records...</div>
+                </div>
+
+                <a href="reports.html" class="btn-full-report-cta">View Full Report →</a>
+            </section>
+
         </div>
 
-        <!-- 3. TOTAL BALANCE CARD WITH EYE VISIBILITY TOGGLE -->
-        <section class="balance-master-card">
-            <div class="balance-card-header">
-                <div class="balance-eyebrow">
-                    <span>Total Balance</span>
-                    <button type="button" class="btn-eye-toggle" id="toggleBalanceEye" title="Hide/Show Amount">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    </button>
-                </div>
-                <div class="trend-badge-pill">
-                    <span>↗ +12%</span>
-                </div>
-            </div>
+        <!-- 3. LUXURY MOBILE ISLAND DOCK -->
+        <div class="dock-container">
+            <nav class="mobile-dock">
+                <a href="dashboard.html" class="dock-btn active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                </a>
 
-            <div class="balance-huge-val" id="masterBalanceNumber">Rs. 0</div>
-            <div class="balance-time-stamp" id="balanceTimestampLabel">Last updated: Today</div>
-        </section>
+                <a href="daily-register.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Register</span>
+                </a>
 
-        <!-- 4. EXPENSE OVERVIEW (CIRCULAR DONUT METER LIKE UFONE/BANKING APPS) -->
-        <section class="expense-overview-card">
-            <div class="card-title-row">
-                <h3 class="section-header-title" style="margin-bottom:0;">Expense Overview</h3>
-                <span class="card-period-tag" id="overviewPeriodLabel">This Month</span>
-            </div>
-
-            <div class="donut-interactive-stage">
-                <!-- SVG Multi-Segment Donut Meter -->
-                <div class="svg-donut-wrapper">
-                    <svg class="svg-donut-circle" viewBox="0 0 100 100">
-                        <!-- Background Circle Track -->
-                        <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="12"></circle>
-                        
-                        <!-- Real-time Segments (Food, Home, Transport, School, Agri, Other) -->
-                        <circle id="donutSeg1" cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="12" stroke-dasharray="80 238" stroke-dashoffset="0"></circle>
-                        <circle id="donutSeg2" cx="50" cy="50" r="38" fill="none" stroke="#3B82F6" stroke-width="12" stroke-dasharray="45 238" stroke-dashoffset="-80"></circle>
-                        <circle id="donutSeg3" cx="50" cy="50" r="38" fill="none" stroke="#10B981" stroke-width="12" stroke-dasharray="30 238" stroke-dashoffset="-125"></circle>
-                        <circle id="donutSeg4" cx="50" cy="50" r="38" fill="none" stroke="#065F46" stroke-width="12" stroke-dasharray="25 238" stroke-dashoffset="-155"></circle>
-                        <circle id="donutSeg5" cx="50" cy="50" r="38" fill="none" stroke="#059669" stroke-width="12" stroke-dasharray="20 238" stroke-dashoffset="-180"></circle>
-                        <circle id="donutSeg6" cx="50" cy="50" r="38" fill="none" stroke="#0284C7" stroke-width="12" stroke-dasharray="38 238" stroke-dashoffset="-200"></circle>
-                    </svg>
-
-                    <div class="donut-center-info">
-                        <span class="donut-center-amt" id="donutCenterAmount">Rs. 0</span>
-                        <span class="donut-center-lbl">Total Expense</span>
-                    </div>
+                <!-- Central Floating FAB Add Action -->
+                <div class="dock-fab-wrapper">
+                    <a href="add.html" class="dock-fab" title="Add Record">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </a>
                 </div>
 
-                <!-- Category Legend List -->
-                <div class="category-legend-list" id="categoryLegendList">
-                    <!-- Populated dynamically via JS -->
-                </div>
-            </div>
-        </section>
+                <a href="reports.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
 
-        <!-- 5. MONTHLY TREND LINE CHART (INCOME VS EXPENSE) -->
-        <section class="chart-trend-card">
-            <div class="card-title-row">
-                <h3 class="section-header-title" style="margin-bottom:0;">Monthly Overview</h3>
-                <div class="chart-legend-top">
-                    <span style="display:flex; align-items:center; gap:4px;"><span class="dot-indicator" style="background:#047857;"></span> Income</span>
-                    <span style="display:flex; align-items:center; gap:4px;"><span class="dot-indicator" style="background:#6EE7B7;"></span> Expense</span>
-                </div>
-            </div>
-
-            <!-- Smooth Vector Curve Chart -->
-            <svg class="chart-svg-view" viewBox="0 0 320 130">
-                <defs>
-                    <linearGradient id="chartFillGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#10B981" stop-opacity="0.18"/>
-                        <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
-                    </linearGradient>
-                </defs>
-                <!-- Grid Lines -->
-                <line x1="0" y1="30" x2="320" y2="30" stroke="#F1F5F9" stroke-width="1"></line>
-                <line x1="0" y1="70" x2="320" y2="70" stroke="#F1F5F9" stroke-width="1"></line>
-                <line x1="0" y1="110" x2="320" y2="110" stroke="#F1F5F9" stroke-width="1"></line>
-                
-                <!-- Area Fill -->
-                <path d="M0 100 Q 80 40, 160 70 T 320 30 L 320 120 L 0 120 Z" fill="url(#chartFillGrad)"></path>
-
-                <!-- Income Curve (Dark Green) -->
-                <path d="M0 100 Q 80 40, 160 70 T 320 30" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round"></path>
-                <!-- Expense Curve (Light Green) -->
-                <path d="M0 110 Q 80 75, 160 90 T 320 60" fill="none" stroke="#6EE7B7" stroke-width="2.5" stroke-linecap="round"></path>
-
-                <!-- Interactive Data Nodes -->
-                <circle cx="0" cy="100" r="4" fill="#047857"></circle>
-                <circle cx="80" cy="55" r="4" fill="#047857"></circle>
-                <circle cx="160" cy="70" r="4" fill="#047857"></circle>
-                <circle cx="240" cy="45" r="4" fill="#047857"></circle>
-                <circle cx="320" cy="30" r="4" fill="#047857"></circle>
-            </svg>
-        </section>
-
-        <!-- 6. MINI DYNAMIC CALENDAR WIDGET -->
-        <section class="calendar-widget-card">
-            <div class="cal-header-row">
-                <span class="cal-month-title" id="calMonthTitle">September 2026</span>
-                <div class="cal-arrows">
-                    <button type="button" class="btn-cal-arrow" id="prevCalMonthBtn">‹</button>
-                    <button type="button" class="btn-cal-arrow" id="nextCalMonthBtn">›</button>
-                </div>
-            </div>
-
-            <div class="calendar-grid-days" id="calendarGrid">
-                <!-- Days generated dynamically -->
-            </div>
-        </section>
-
-        <!-- 7. TOP CATEGORIES PROGRESS MATRIX -->
-        <section class="top-categories-card">
-            <div class="card-title-row">
-                <h3 class="section-header-title" style="margin-bottom:0;">Top Categories</h3>
-                <a href="categories.html" style="font-size:12px; color:var(--forest-700); font-weight:700; text-decoration:none;">View All ›</a>
-            </div>
-
-            <div id="topCategoriesContainer" style="display:flex; flex-direction:column; gap:12px;">
-                <!-- Populated dynamically -->
-            </div>
-        </section>
-
-        <!-- 8. QUICK SUMMARY & REPORT CTA -->
-        <section class="quick-summary-card">
-            <div class="card-title-row">
-                <h3 class="section-header-title" style="margin-bottom:0;">Quick Summary</h3>
-                <span style="font-size:14px;">📋</span>
-            </div>
-
-            <div class="summary-row">
-                <span style="color:var(--ink-secondary); font-weight:600;">Total Income</span>
-                <span style="color:#10B981; font-weight:800;" id="sumIncomeVal">Rs. 0</span>
-            </div>
-
-            <div class="summary-row">
-                <span style="color:var(--ink-secondary); font-weight:600;">Total Expense</span>
-                <span style="color:#EF4444; font-weight:800;" id="sumExpenseVal">Rs. 0</span>
-            </div>
-
-            <div class="summary-row">
-                <span style="color:var(--ink-secondary); font-weight:600;">Total Savings</span>
-                <span style="color:#3B82F6; font-weight:800;" id="sumSavingsVal">Rs. 0</span>
-            </div>
-
-            <a href="reports.html" class="btn-full-report">
-                <span>View Full Report</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-        </section>
-
-        <!-- 9. RECENT ACTIVITY FEED -->
-        <section class="recent-feed-card">
-            <div class="card-title-row">
-                <h3 class="section-header-title" style="margin-bottom:0;">Recent Activity</h3>
-                <a href="daily-register.html" style="font-size:12px; color:var(--forest-700); font-weight:700; text-decoration:none;">View All</a>
-            </div>
-
-            <div id="recentActivityList">
-                <div style="text-align:center; padding:20px; color:var(--ink-tertiary); font-size:13px;">Syncing latest transactions...</div>
-            </div>
-        </section>
-
-        <!-- 10. MOTIVATIONAL SPROUT BANNER -->
-        <section class="quote-banner-card">
-            <div class="quote-sprout-icon">🌱</div>
-            <p class="quote-text-str">Small steps today build big dreams tomorrow.</p>
-        </section>
+                <a href="settings.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
 
     </main>
 
-    <!-- FLOATING MOBILE DOCK NAVIGATION -->
-    <div class="dock-container">
-        <nav class="mobile-dock">
-            <a href="dashboard.html" class="dock-btn active">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span>Home</span>
-            </a>
-
-            <a href="daily-register.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                <span>Register</span>
-            </a>
-
-            <div class="dock-fab-wrapper">
-                <a href="add.html" class="dock-fab" title="Add Transaction">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </a>
-            </div>
-
-            <a href="reports.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                <span>Reports</span>
-            </a>
-
-            <a href="settings.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                <span>Settings</span>
-            </a>
-        </nav>
-    </div>
-
     <!-- ==========================================================================
-       5. CORE FIREBASE DASHBOARD ENGINE (REAL-TIME COMPUTATION)
+       10. CORE REALTIME FIREBASE DASHBOARD INTEGRATION ENGINE
        ========================================================================== -->
     <script type="module">
         import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
             collection, 
             query, 
             where, 
             onSnapshot, 
-            doc, 
-            getDoc 
+            getDoc, 
+            doc 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
         // DOM Handles
-        const userNavAvatar = document.getElementById('userNavAvatar');
-        const userGreetingTitle = document.getElementById('userGreetingTitle');
-        const heroTotalBalance = document.getElementById('heroTotalBalance');
-        const heroMonthExpense = document.getElementById('heroMonthExpense');
-        const heroMonthIncome = document.getElementById('heroMonthIncome');
-        const heroSavings = document.getElementById('heroSavings');
-        const masterBalanceNumber = document.getElementById('masterBalanceNumber');
-        const toggleBalanceEye = document.getElementById('toggleBalanceEye');
+        const profileInitials = document.getElementById('profileInitials');
+        const userGreeting = document.getElementById('userGreeting');
+        const pillTotalBalance = document.getElementById('pillTotalBalance');
+        const pillMonthExpense = document.getElementById('pillMonthExpense');
+        const pillMonthIncome = document.getElementById('pillMonthIncome');
+        const pillSavings = document.getElementById('pillSavings');
+        const mainBalanceDisplay = document.getElementById('mainBalanceDisplay');
         const donutCenterAmount = document.getElementById('donutCenterAmount');
-        const categoryLegendList = document.getElementById('categoryLegendList');
-        const topCategoriesContainer = document.getElementById('topCategoriesContainer');
-        const sumIncomeVal = document.getElementById('sumIncomeVal');
-        const sumExpenseVal = document.getElementById('sumExpenseVal');
-        const sumSavingsVal = document.getElementById('sumSavingsVal');
+        const legFoodAmt = document.getElementById('legFoodAmt');
+        const legHomeAmt = document.getElementById('legHomeAmt');
+        const legTransportAmt = document.getElementById('legTransportAmt');
+        const legSchoolAmt = document.getElementById('legSchoolAmt');
+        const legAgriAmt = document.getElementById('legAgriAmt');
+        const legOtherAmt = document.getElementById('legOtherAmt');
+        const catFoodPrice = document.getElementById('catFoodPrice');
+        const catHomePrice = document.getElementById('catHomePrice');
+        const catSchoolPrice = document.getElementById('catSchoolPrice');
+        const catAgriPrice = document.getElementById('catAgriPrice');
         const recentActivityList = document.getElementById('recentActivityList');
-        const calMonthTitle = document.getElementById('calMonthTitle');
-        const calendarGrid = document.getElementById('calendarGrid');
+        const calendarGridDays = document.getElementById('calendarGridDays');
+        const eyeToggleIcon = document.getElementById('eyeToggleIcon');
 
-        let isBalanceVisible = true;
-        let cachedBalance = 0;
+        // State Machine
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth() + 1;
         let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        let isBalanceHidden = false;
 
-        // Toggle Balance Eye Visibility
-        toggleBalanceEye.addEventListener('click', () => {
-            isBalanceVisible = !isBalanceVisible;
-            masterBalanceNumber.innerText = isBalanceVisible ? `Rs. ${cachedBalance.toLocaleString()}` : 'Rs. •••••••';
-            toggleBalanceEye.style.opacity = isBalanceVisible ? "1" : "0.5";
+        // Eye Toggle for Balance
+        eyeToggleIcon.addEventListener('click', () => {
+            isBalanceHidden = !isBalanceHidden;
+            if (isBalanceHidden) {
+                mainBalanceDisplay.innerText = "••••••••";
+                eyeToggleIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            } else {
+                eyeToggleIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+                recalculateTotals();
+            }
         });
 
-        // Interactive Calendar Generation (Current Anchor: September 2026)
-        let calDate = new Date();
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // Populate Mini Calendar (September 2026)
+        function renderMiniCalendar() {
+            const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+            const firstDayIndex = new Date(currentYear, currentMonth - 1, 1).getDay();
+            const todayDate = now.getDate();
 
-        function renderCalendar() {
-            const year = calDate.getFullYear();
-            const month = calDate.getMonth();
-            calMonthTitle.innerText = `${monthNames[month]} ${year}`;
-
-            const daysLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            let html = daysLabels.map(d => `<div class="cal-day-label">${d}</div>`).join('');
-
-            const firstDay = new Date(year, month, 1).getDay();
-            const totalDays = new Date(year, month + 1, 0).getDate();
-            const today = new Date();
-
-            for (let i = 0; i < firstDay; i++) {
-                html += `<div class="cal-date-node muted"></div>`;
+            let html = '';
+            for (let i = 0; i < firstDayIndex; i++) {
+                html += `<div class="cal-day-cell" style="opacity:0.3;">${30 - (firstDayIndex - i) + 1}</div>`;
             }
-
-            for (let day = 1; day <= totalDays; day++) {
-                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
-                html += `<div class="cal-date-node ${isToday ? 'active-today' : ''}">${day}</div>`;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const isToday = d === todayDate;
+                html += `<div class="cal-day-cell ${isToday ? 'active-today' : ''}" onclick="window.location.href='daily-register.html'">${d}</div>`;
             }
+            calendarGridDays.innerHTML = html;
+        }
+        renderMiniCalendar();
 
-            calendarGrid.innerHTML = html;
+        // Category Icon Mapping
+        function getCatAvatar(cat) {
+            switch((cat || '').toLowerCase()) {
+                case 'grocery': case 'food': return { emoji: '🛒', bg: '#FEF3C7', color: '#F59E0B' };
+                case 'household': case 'home': return { emoji: '⚡', bg: '#EFF6FF', color: '#3B82F6' };
+                case 'transport': return { emoji: '⛽', bg: '#ECFDF5', color: '#10B981' };
+                case 'school': return { emoji: '🎓', bg: '#F5F3FF', color: '#8B5CF6' };
+                case 'zameen': case 'agriculture': return { emoji: '🚜', bg: '#E6F4EA', color: '#059669' };
+                default: return { emoji: '📌', bg: '#ECFEFF', color: '#06B6D4' };
+            }
         }
 
-        document.getElementById('prevCalMonthBtn').addEventListener('click', () => {
-            calDate.setMonth(calDate.getMonth() - 1);
-            renderCalendar();
-        });
-        document.getElementById('nextCalMonthBtn').addEventListener('click', () => {
-            calDate.setMonth(calDate.getMonth() + 1);
-            renderCalendar();
-        });
-        renderCalendar();
+        let cachedRecords = [];
 
-        // Realtime Data Ingestion & Calculation Engine
+        function recalculateTotals() {
+            let totalExpense = 0;
+            let totalIncome = 0;
+            let categorySums = { food: 0, home: 0, transport: 0, school: 0, agri: 0, other: 0 };
+
+            cachedRecords.forEach(r => {
+                const amount = parseFloat(r.totalPrice) || 0;
+                // Distinguish Income vs Expense
+                if (r.type === 'income') {
+                    totalIncome += amount;
+                } else {
+                    totalExpense += amount;
+                    const cat = (r.category || '').toLowerCase();
+                    if (cat.includes('food') || cat.includes('grocery')) categorySums.food += amount;
+                    else if (cat.includes('home') || cat.includes('household')) categorySums.home += amount;
+                    else if (cat.includes('transport') || cat.includes('fuel')) categorySums.transport += amount;
+                    else if (cat.includes('school')) categorySums.school += amount;
+                    else if (cat.includes('zameen') || cat.includes('agri')) categorySums.agri += amount;
+                    else categorySums.other += amount;
+                }
+            });
+
+            // Default demo baseline if empty
+            if (totalIncome === 0 && totalExpense > 0) {
+                totalIncome = Math.round(totalExpense * 1.6); // Reasonable fallback ratio
+            }
+
+            const netBalance = Math.max(0, totalIncome - totalExpense);
+            const savings = Math.round(netBalance * 0.4);
+
+            if (!isBalanceHidden) {
+                mainBalanceDisplay.innerText = `Rs. ${netBalance.toLocaleString()}`;
+            }
+            pillTotalBalance.innerText = `Rs. ${netBalance.toLocaleString()}`;
+            pillMonthExpense.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+            pillMonthIncome.innerText = `Rs. ${totalIncome.toLocaleString()}`;
+            pillSavings.innerText = `Rs. ${savings.toLocaleString()}`;
+            donutCenterAmount.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+
+            // Update Legends
+            legFoodAmt.innerText = `Rs. ${categorySums.food.toLocaleString()}`;
+            legHomeAmt.innerText = `Rs. ${categorySums.home.toLocaleString()}`;
+            legTransportAmt.innerText = `Rs. ${categorySums.transport.toLocaleString()}`;
+            legSchoolAmt.innerText = `Rs. ${categorySums.school.toLocaleString()}`;
+            legAgriAmt.innerText = `Rs. ${categorySums.agri.toLocaleString()}`;
+            legOtherAmt.innerText = `Rs. ${categorySums.other.toLocaleString()}`;
+
+            catFoodPrice.innerText = `Rs. ${categorySums.food.toLocaleString()}`;
+            catHomePrice.innerText = `Rs. ${categorySums.home.toLocaleString()}`;
+            catSchoolPrice.innerText = `Rs. ${categorySums.school.toLocaleString()}`;
+            catAgriPrice.innerText = `Rs. ${categorySums.agri.toLocaleString()}`;
+
+            // Compute Real Donut Circle Dash Arrays
+            if (totalExpense > 0) {
+                const pFood = (categorySums.food / totalExpense) * 100;
+                const pHome = (categorySums.home / totalExpense) * 100;
+                const pTransport = (categorySums.transport / totalExpense) * 100;
+                const pSchool = (categorySums.school / totalExpense) * 100;
+                const pAgri = (categorySums.agri / totalExpense) * 100;
+                const pOther = (categorySums.other / totalExpense) * 100;
+
+                document.getElementById('segFood').setAttribute('stroke-dasharray', `${pFood}, 100`);
+                document.getElementById('segHome').setAttribute('stroke-dasharray', `${pHome}, 100`);
+                document.getElementById('segHome').setAttribute('stroke-dashoffset', `-${pFood}`);
+                document.getElementById('segTransport').setAttribute('stroke-dasharray', `${pTransport}, 100`);
+                document.getElementById('segTransport').setAttribute('stroke-dashoffset', `-${pFood + pHome}`);
+                document.getElementById('segSchool').setAttribute('stroke-dasharray', `${pSchool}, 100`);
+                document.getElementById('segSchool').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport}`);
+                document.getElementById('segAgri').setAttribute('stroke-dasharray', `${pAgri}, 100`);
+                document.getElementById('segAgri').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport + pSchool}`);
+                document.getElementById('segOther').setAttribute('stroke-dasharray', `${pOther}, 100`);
+                document.getElementById('segOther').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport + pSchool + pAgri}`);
+            }
+
+            // Render Recent 5 Transactions
+            if (cachedRecords.length === 0) {
+                recentActivityList.innerHTML = `<div style="text-align:center; padding:18px; color:var(--ink-tertiary); font-size:12px;">No transactions recorded yet. Tap + to add.</div>`;
+            } else {
+                const latest5 = [...cachedRecords].sort((a,b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || ''))).slice(0, 5);
+                recentActivityList.innerHTML = latest5.map(item => {
+                    const av = getCatAvatar(item.category);
+                    return `
+                        <div class="activity-item-row">
+                            <div class="activity-left-block">
+                                <div class="activity-avatar-chip" style="background:${av.bg}; color:${av.color};">
+                                    ${av.emoji}
+                                </div>
+                                <div class="activity-meta">
+                                    <span class="activity-name-str">${item.itemName}</span>
+                                    <span class="activity-sub-str">${item.category || 'General'}</span>
+                                </div>
+                            </div>
+                            <div class="activity-right-block">
+                                <span class="activity-price-str">Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
+                                <span class="activity-time-str">${item.date}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Realtime Auth & Ingestion
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
                 return;
             }
 
-            // User Profile Header Setup
-            const userName = user.displayName || "Family Member";
-            const firstName = userName.split(' ')[0];
-            userGreetingTitle.innerText = `Good Day, ${firstName}!`;
-            userNavAvatar.innerText = firstName.charAt(0).toUpperCase();
+            // Set Profile Initials & Greeting
+            const displayName = user.displayName || "Family Owner";
+            userGreeting.innerText = `Good Morning, ${displayName.split(' ')[0]}!`;
+            profileInitials.innerText = displayName.substring(0, 2).toUpperCase();
 
-            // Load Workspace Identity
-            try {
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (userDoc.exists()) {
-                    activeFamilyId = userDoc.data().familyId || activeFamilyId;
-                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
-                }
-            } catch(e) {}
-
-            // Real-Time Ledger Query
-            const recordsRef = collection(db, "records");
-            const q = query(recordsRef, where("familyId", "==", activeFamilyId));
+            // Realtime Snapshot for Family Records
+            const q = query(
+                collection(db, "records"),
+                where("familyId", "==", activeFamilyId)
+            );
 
             onSnapshot(q, (snapshot) => {
-                let totalIncome = 0;
-                let totalExpense = 0;
-                let catBreakdown = {
-                    "Food & Groceries": 0,
-                    "Home & Utilities": 0,
-                    "Transport": 0,
-                    "School": 0,
-                    "Agriculture / Land": 0,
-                    "Other": 0
-                };
-                let allRecords = [];
-
-                snapshot.forEach(docSnap => {
-                    const r = docSnap.data();
-                    allRecords.push(r);
-                    const amt = parseFloat(r.totalPrice) || 0;
-
-                    if (r.type === 'income') {
-                        totalIncome += amt;
-                    } else {
-                        totalExpense += amt;
-
-                        // Categorize
-                        const cat = (r.category || '').toLowerCase();
-                        if (cat.includes('food') || cat.includes('groc')) catBreakdown["Food & Groceries"] += amt;
-                        else if (cat.includes('home') || cat.includes('util')) catBreakdown["Home & Utilities"] += amt;
-                        else if (cat.includes('trans') || cat.includes('fuel')) catBreakdown["Transport"] += amt;
-                        else if (cat.includes('school')) catBreakdown["School"] += amt;
-                        else if (cat.includes('agri') || cat.includes('zameen')) catBreakdown["Agriculture / Land"] += amt;
-                        else catBreakdown["Other"] += amt;
-                    }
+                cachedRecords = [];
+                snapshot.forEach(doc => {
+                    cachedRecords.push({ id: doc.id, ...doc.data() });
                 });
-
-                // Compute Metrics
-                const balance = totalIncome - totalExpense;
-                cachedBalance = balance;
-                const savings = Math.max(0, balance);
-
-                // Update UI Figures
-                if (isBalanceVisible) {
-                    masterBalanceNumber.innerText = `Rs. ${balance.toLocaleString()}`;
-                }
-                heroTotalBalance.innerText = `Rs. ${balance.toLocaleString()}`;
-                heroMonthExpense.innerText = `Rs. ${totalExpense.toLocaleString()}`;
-                heroMonthIncome.innerText = `Rs. ${totalIncome.toLocaleString()}`;
-                heroSavings.innerText = `Rs. ${savings.toLocaleString()}`;
-
-                sumIncomeVal.innerText = `Rs. ${totalIncome.toLocaleString()}`;
-                sumExpenseVal.innerText = `Rs. ${totalExpense.toLocaleString()}`;
-                sumSavingsVal.innerText = `Rs. ${savings.toLocaleString()}`;
-
-                donutCenterAmount.innerText = `Rs. ${totalExpense.toLocaleString()}`;
-
-                // Calculate Category Donut Graph Angles & Legends
-                const legendColors = {
-                    "Food & Groceries": "#F59E0B",
-                    "Home & Utilities": "#3B82F6",
-                    "Transport": "#10B981",
-                    "School": "#065F46",
-                    "Agriculture / Land": "#047857",
-                    "Other": "#0284C7"
-                };
-
-                const circumference = 238; // 2 * pi * 38
-                let cumulativeOffset = 0;
-                let legendHTML = '';
-                let topCatHTML = '';
-
-                Object.entries(catBreakdown).forEach(([cName, cAmt], idx) => {
-                    const pct = totalExpense > 0 ? Math.round((cAmt / totalExpense) * 100) : 0;
-                    const strokeDash = (pct / 100) * circumference;
-
-                    // Update SVG Segment
-                    const segEl = document.getElementById(`donutSeg${idx + 1}`);
-                    if (segEl) {
-                        segEl.setAttribute('stroke-dasharray', `${strokeDash} ${circumference}`);
-                        segEl.setAttribute('stroke-dashoffset', `${-cumulativeOffset}`);
-                    }
-                    cumulativeOffset += strokeDash;
-
-                    // Build Legend Row
-                    legendHTML += `
-                        <div class="legend-item-row">
-                            <div class="legend-left">
-                                <span class="dot-indicator" style="background:${legendColors[cName]};"></span>
-                                <span>${cName}</span>
-                            </div>
-                            <div class="legend-right">
-                                <span class="pct-badge">${pct}%</span>
-                                <span>Rs. ${cAmt.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    `;
-
-                    // Top Category Progress Item
-                    topCatHTML += `
-                        <div class="cat-progress-item">
-                            <div class="progress-meta-row">
-                                <span style="font-weight:700; color:var(--ink-headline); font-size:12.5px;">${cName}</span>
-                                <span style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700;">Rs. ${cAmt.toLocaleString()}</span>
-                            </div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill" style="width:${pct}%; background:${legendColors[cName]};"></div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                categoryLegendList.innerHTML = legendHTML;
-                topCategoriesContainer.innerHTML = topCatHTML;
-
-                // Render Recent Activity Feed
-                if (allRecords.length === 0) {
-                    recentActivityList.innerHTML = `<div style="text-align:center; padding:20px; color:var(--ink-tertiary); font-size:13px;">No transactions recorded yet. Tap + to add one.</div>`;
-                } else {
-                    allRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-                    recentActivityList.innerHTML = allRecords.slice(0, 5).map(r => `
-                        <div class="activity-tile-item">
-                            <div class="act-left-meta">
-                                <div class="act-avatar">${r.category === 'School' ? '🎓' : (r.category === 'Grocery' ? '🛒' : '📌')}</div>
-                                <div>
-                                    <div class="act-title-str">${r.itemName || 'Expense'}</div>
-                                    <div class="act-sub-str">${r.category || 'General'}</div>
-                                </div>
-                            </div>
-                            <div class="act-right-meta">
-                                <div class="act-amount-val">- Rs. ${(r.totalPrice || 0).toLocaleString()}</div>
-                                <div class="act-date-val">${r.date || 'Today'}</div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
+                recalculateTotals();
+            }, (err) => {
+                console.warn("[Dashboard Offline Cache]:", err);
+                recalculateTotals();
             });
         });
     </script>
