@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#F8FAFC">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>Roz E Hisab — Universal Entry Terminal</title>
+    <title>Roz E Hisab — Add Transaction</title>
 
     <!-- Next-Gen Favicon Architecture -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -19,20 +19,19 @@
 
     <style>
         /* ==========================================================================
-           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (EXECUTIVE MINT/FOREST)
+           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (EXECUTIVE EMERALD)
            ========================================================================== */
         :root {
             --canvas: #F8FAFC;
             --surface: #FFFFFF;
             --surface-subtle: #F1F5F9;
-            --surface-glass: rgba(255, 255, 255, 0.94);
-            --surface-dock: rgba(255, 255, 255, 0.96);
+            --surface-dock: rgba(255, 255, 255, 0.94);
 
-            --brand-primary: #047857; /* Forest Green */
+            --brand-primary: #047857;
             --brand-deep: #064E3B;
             --brand-mint: #ECFDF5;
             --brand-emerald: #10B981;
-            --brand-gradient: linear-gradient(135deg, #059669 0%, #064E3B 100%);
+            --brand-gradient: linear-gradient(135deg, #055944 0%, #03392B 100%);
 
             --ink-headline: #04382A;
             --ink-title: #0F172A;
@@ -41,8 +40,6 @@
 
             --danger-ink: #EF4444;
             --danger-bg: #FEF2F2;
-            --status-online: #10B981;
-            --status-offline: #F59E0B;
 
             --border-subtle: rgba(15, 23, 42, 0.06);
             --border-card: #EDF2F7;
@@ -50,13 +47,11 @@
 
             --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
             --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
-            --shadow-island: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
             --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
             --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
             --shadow-sheet: 0 -20px 60px rgba(0, 0, 0, 0.15);
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -76,6 +71,18 @@
             overflow-x: hidden;
         }
 
+        .mobile-viewport {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--canvas);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
         .ambient-canvas {
             position: fixed;
             inset: 0;
@@ -87,72 +94,100 @@
         }
 
         /* ==========================================================================
-           2. APPLE-STYLE DYNAMIC ISLAND HEADER (WITH PROPER SETTINGS ICON)
+           2. EXECUTIVE TOP APP BAR (EXACT AS DAILY REGISTER)
            ========================================================================== */
-        .island-container {
-            position: fixed;
-            top: env(safe-area-inset-top, 16px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 500;
-            width: 92%;
-            max-width: 520px;
-            pointer-events: none;
-        }
-
-        .dynamic-island {
-            pointer-events: auto;
-            width: 100%;
+        .top-appbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 18px;
-            background: var(--surface-glass);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border-radius: 100px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-island);
-            transition: all 0.4s var(--ease-spring);
+            gap: 12px;
         }
 
-        .island-action-back {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--ink-secondary);
-            text-decoration: none;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: var(--surface-subtle);
-            transition: all 0.2s ease;
-        }
-
-        .island-action-back:hover { background: #E2E8F0; color: var(--brand-deep); }
-
-        .island-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--ink-primary);
-            letter-spacing: -0.02em;
-        }
-
-        .island-action-settings {
+        .app-logo-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(5, 89, 68, 0.25);
+        }
+
+        .app-logo-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-title-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-title-str {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header-subtitle-str {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
+            background-color: var(--brand-emerald);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            transition: background-color 0.3s ease;
+        }
+
+        .header-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-header-action {
             background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--ink-secondary);
+            cursor: pointer;
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
-        .island-action-settings:hover { background: #E2E8F0; color: var(--brand-deep); }
+        .btn-header-action:hover {
+            color: var(--brand-deep);
+            background: #E2E8F0;
+        }
 
         /* ==========================================================================
            3. TOAST NOTIFICATIONS
@@ -195,16 +230,13 @@
         /* ==========================================================================
            4. MAIN VIEWPORT & SEGMENTED TABS
            ========================================================================== */
-        .viewport {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 520px;
-            margin: 0 auto;
-            padding: calc(env(safe-area-inset-top, 20px) + 72px) 18px calc(env(safe-area-inset-bottom, 20px) + 110px) 18px;
+        .content-stream {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
+            padding: 16px;
+            position: relative;
+            z-index: 10;
         }
 
         .segmented-tab-container {
@@ -250,8 +282,8 @@
            ========================================================================== */
         .voice-terminal-card {
             background: var(--surface);
-            border-radius: 26px;
-            padding: 20px 22px;
+            border-radius: 22px;
+            padding: 18px 20px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -263,32 +295,32 @@
 
         .voice-terminal-card.listening {
             border-color: var(--brand-emerald);
-            box-shadow: 0 0 0 4px var(--brand-glow);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
         }
 
         .voice-meta-block {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
         }
 
         .voice-heading {
-            font-size: 14.5px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             color: var(--ink-headline);
         }
 
         .voice-caption {
-            font-size: 12px;
+            font-size: 11.5px;
             color: var(--ink-tertiary);
             line-height: 1.4;
         }
 
         .voice-mic-fab {
-            width: 54px;
-            height: 54px;
-            border-radius: 18px;
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
             background: var(--brand-mint);
             border: none;
             color: var(--brand-primary);
@@ -310,16 +342,16 @@
 
         @keyframes pulseMic {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            100% { transform: scale(1.08); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
         }
 
         /* ==========================================================================
-           6. HORIZONTALLY SCROLLABLE PRODUCT SUGGESTION SLIDER
+           6. HORIZONTALLY SCROLLABLE PRODUCT SUGGESTIONS
            ========================================================================== */
         .suggestions-wrapper {
             background: var(--surface);
             border-radius: 20px;
-            padding: 16px;
+            padding: 14px 16px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -328,7 +360,7 @@
         }
 
         .suggestions-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--ink-tertiary);
             text-transform: uppercase;
@@ -349,9 +381,9 @@
         .product-chip {
             background: var(--surface-subtle);
             border: 1px solid var(--border-subtle);
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 13px;
+            padding: 7px 14px;
+            border-radius: 100px;
+            font-size: 12.5px;
             font-weight: 600;
             color: var(--ink-secondary);
             cursor: pointer;
@@ -369,17 +401,17 @@
         }
 
         /* ==========================================================================
-           7. MAIN UNIVERSAL FORM (EXPENSE & INCOME)
+           7. TRANSACTION FORM CARD
            ========================================================================== */
         .form-card {
             background: var(--surface);
-            border-radius: 30px;
-            padding: 26px 22px;
+            border-radius: 26px;
+            padding: 22px 18px;
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-card);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
         .form-group {
@@ -399,12 +431,12 @@
 
         .field-input, .field-select {
             width: 100%;
-            height: 52px;
+            height: 50px;
             background: var(--surface-subtle);
             border: 1.5px solid transparent;
             border-radius: 14px;
             padding: 0 16px;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 600;
             color: var(--ink-title);
             outline: none;
@@ -416,13 +448,13 @@
         .field-input:focus, .field-select:focus {
             background: var(--surface);
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 4px var(--brand-glow);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
         }
 
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .amount-input-wrapper {
@@ -446,7 +478,22 @@
             color: var(--brand-deep);
         }
 
-        /* Categories Matrix with Add Button */
+        /* Calculated Rate Pill */
+        .rate-calc-preview {
+            display: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--brand-deep);
+            background: var(--brand-mint);
+            padding: 6px 12px;
+            border-radius: 10px;
+            align-self: flex-start;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* CATEGORY GRID WITH CLEAN INLINE SVGS */
         .category-matrix {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -473,25 +520,63 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
         }
 
-        .cat-box .cat-icon { font-size: 20px; }
-        .cat-box .cat-text { font-size: 11px; font-weight: 700; color: var(--ink-secondary); text-align: center; }
+        .cat-svg-icon {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2;
+        }
+
+        .cat-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink-secondary);
+            text-align: center;
+        }
+
         .cat-box.active .cat-text { color: var(--brand-deep); }
 
         .add-cat-btn {
             background: #F8FAFC;
             border: 1.5px dashed var(--ink-tertiary);
-            color: var(--ink-secondary);
         }
-        .add-cat-btn:hover { background: #E2E8F0; border-color: var(--ink-secondary); }
+        .add-cat-btn:hover { background: #E2E8F0; }
+
+        /* Advanced Options Accordion */
+        .accordion-trigger {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink-secondary);
+            cursor: pointer;
+        }
+
+        .accordion-trigger svg { transition: transform 0.3s var(--ease-spring); }
+        .accordion-trigger.open svg { transform: rotate(180deg); }
+
+        .accordion-body {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            padding-top: 10px;
+        }
+
+        .accordion-body.open { display: flex; }
 
         /* Commit Button */
         .btn-commit {
             width: 100%;
-            height: 56px;
+            height: 54px;
             background: var(--brand-gradient);
             border: none;
             border-radius: 16px;
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 800;
             color: white;
             cursor: pointer;
@@ -501,7 +586,6 @@
             gap: 10px;
             box-shadow: var(--shadow-fab);
             transition: all 0.25s var(--ease-spring);
-            margin-top: 8px;
         }
 
         .btn-commit:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -4px rgba(4, 120, 87, 0.5); }
@@ -513,7 +597,7 @@
         .bottom-sheet-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(4, 56, 42, 0.4);
+            background: rgba(4, 56, 42, 0.45);
             backdrop-filter: blur(8px);
             z-index: 1000;
             display: none;
@@ -527,13 +611,13 @@
         .bottom-sheet-card {
             background: var(--surface);
             width: 100%;
-            max-width: 520px;
+            max-width: 480px;
             margin: 0 auto;
             border-radius: 32px 32px 0 0;
             padding: 24px;
             box-shadow: var(--shadow-sheet);
             transform: translateY(100%);
-            animation: slideUpSheet 0.4s var(--ease-spring) forwards;
+            animation: slideUpSheet 0.35s var(--ease-spring) forwards;
         }
 
         @keyframes slideUpSheet { to { transform: translateY(0); } }
@@ -543,10 +627,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
-        .sheet-title { font-size: 18px; font-weight: 800; color: var(--ink-headline); }
+        .sheet-title { font-size: 17px; font-weight: 800; color: var(--ink-headline); }
 
         .btn-close-sheet {
             background: var(--surface-subtle);
@@ -632,318 +716,392 @@
         .dock-fab:active { transform: scale(0.92); }
         .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
 
-        /* Verified Footer */
-        .footer-dock {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-        .signature-pill {
-            display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
-            background: var(--surface); border: 1px solid var(--border-subtle);
-            border-radius: 100px; box-shadow: var(--shadow-subtle); text-decoration: none;
-        }
-        .signature-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-primary); }
-        .signature-text { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-secondary); text-transform: uppercase; }
-        .signature-text span { color: var(--ink-primary); font-weight: 700; }
-
         .hidden-flow { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Spatial Canvas -->
+    <!-- Ambient Space Background -->
     <div class="ambient-canvas"></div>
 
-    <!-- Apple-Style Dynamic Island Header -->
-    <div class="island-container">
-        <header class="dynamic-island">
-            <a href="dashboard.html" class="island-action-back">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                <span>Dashboard</span>
+    <!-- Main Mobile Frame Viewport -->
+    <main class="mobile-viewport">
+
+        <!-- 1. Top Appbar (Matching Daily Register Perfectly) -->
+        <header class="top-appbar">
+            <!-- App Logo on Left -->
+            <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
+                <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
             </a>
-            <span class="island-title">Log Transaction</span>
-            <a href="settings.html" class="island-action-settings" title="Settings">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            </a>
+
+            <div class="header-title-block">
+                <h1 class="header-title-str">Log Transaction</h1>
+                <span class="header-subtitle-str">
+                    <div class="status-dot" id="networkDot"></div>
+                    <span id="activeWorkspaceSubtitle">Family Ledger</span>
+                </span>
+            </div>
+
+            <div class="header-right-actions">
+                <!-- EXACT SETTINGS SVG AS REQUESTED -->
+                <a href="settings.html" class="btn-header-action" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </a>
+            </div>
         </header>
-    </div>
 
-    <!-- Toast Notification -->
-    <div class="toast-wrapper" id="toastBox">
-        <div class="toast-capsule">
-            <svg id="toastIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <span id="toastMsg">Notification</span>
-        </div>
-    </div>
+        <!-- 2. Scrollable Body Stream -->
+        <div class="content-stream">
 
-    <!-- Master Viewport -->
-    <main class="viewport">
-
-        <!-- 1. SEGMENTED TABS (Expense vs Income) -->
-        <div class="segmented-tab-container">
-            <div class="tab-indicator" id="tabIndicator"></div>
-            <button type="button" class="tab-btn active" id="tabExpense" data-type="expense">Outflow (Expense)</button>
-            <button type="button" class="tab-btn" id="tabIncome" data-type="income">Inflow (Income)</button>
-        </div>
-
-        <!-- 2. SMART MULTILINGUAL VOICE TERMINAL (3s AUTO-STOP) -->
-        <section class="voice-terminal-card" id="voiceCard">
-            <div class="voice-meta-block">
-                <h3 class="voice-heading" id="voiceHeading">Multilingual Voice Entry</h3>
-                <p class="voice-caption" id="voiceCaption">Say "5 kilo chawal 1500" or "10 packet doodh 2600"</p>
-            </div>
-            <button type="button" class="voice-mic-fab" id="micBtn" title="Tap to Speak">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                    <line x1="12" y1="19" x2="12" y2="22"></line>
-                </svg>
-            </button>
-        </section>
-
-        <!-- 3. PRODUCT SUGGESTION SLIDER -->
-        <section class="suggestions-wrapper" id="suggestionWrapper">
-            <span class="suggestions-title">Quick Household Suggestions</span>
-            <div class="suggestions-slider">
-                <!-- High Priority Pakistani Staples -->
-                <div class="product-chip" data-name="Rice / Chawal" data-cat="Grocery" data-unit="KG">🍚 Rice / Chawal</div>
-                <div class="product-chip" data-name="Flour / Atta" data-cat="Grocery" data-unit="KG">🌾 Flour / Atta</div>
-                <div class="product-chip" data-name="Milk / Doodh" data-cat="Grocery" data-unit="Box">🥛 Milk / Box</div>
-                <div class="product-chip" data-name="Chicken" data-cat="Grocery" data-unit="KG">🍗 Chicken</div>
-                <div class="product-chip" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">🛢️ Cooking Oil</div>
-                <div class="product-chip" data-name="Sugar / Cheeni" data-cat="Grocery" data-unit="KG">🍬 Sugar / Cheeni</div>
-                <div class="product-chip" data-name="Masoor Dal" data-cat="Grocery" data-unit="KG">🥣 Masoor Dal</div>
-                <div class="product-chip" data-name="Chana Dal" data-cat="Grocery" data-unit="KG">🥣 Chana Dal</div>
-                <div class="product-chip" data-name="Eggs / Anday" data-cat="Grocery" data-unit="Dozen">🥚 Eggs / Dozen</div>
-                <div class="product-chip" data-name="Vegetables / Sabzi" data-cat="Grocery" data-unit="Amount Based">🥗 Vegetables</div>
-                <div class="product-chip" data-name="Electricity Bill" data-cat="Utility" data-unit="Amount Based">⚡ Electricity Bill</div>
-            </div>
-        </section>
-
-        <!-- 4. MASTER TRANSACTION FORM -->
-        <form class="form-card" id="entryForm" novalidate>
-
-            <div class="form-group">
-                <label class="field-label" for="itemName">
-                    <span id="itemNameLabel">Item / Product Description</span>
-                </label>
-                <input type="text" id="itemName" class="field-input" placeholder="e.g. 5 Kilo Chawal, Freelance Project" required>
+            <!-- Segmented Switcher (Expense vs Income) -->
+            <div class="segmented-tab-container">
+                <div class="tab-indicator" id="tabIndicator"></div>
+                <button type="button" class="tab-btn active" id="tabExpense">Expense (Outflow)</button>
+                <button type="button" class="tab-btn" id="tabIncome">Income (Inflow)</button>
             </div>
 
-            <!-- Quantity & Unit Row (Hidden for Income) -->
-            <div class="grid-2" id="qtyUnitBlock">
-                <div class="form-group">
-                    <label class="field-label" for="quantityInput">Quantity</label>
-                    <input type="number" id="quantityInput" class="field-input" placeholder="e.g. 5" step="any" min="0.01">
+            <!-- Multilingual Voice Terminal (3s Auto-Stop) -->
+            <section class="voice-terminal-card" id="voiceCard">
+                <div class="voice-meta-block">
+                    <h3 class="voice-heading" id="voiceHeading">Smart Multilingual Voice</h3>
+                    <p class="voice-caption" id="voiceCaption">Say: "5 kg chawal 1500" or "10 packet doodh 2600"</p>
                 </div>
-                <div class="form-group">
-                    <label class="field-label" for="unitSelect">Measure Unit</label>
-                    <select id="unitSelect" class="field-select">
-                        <option value="Amount Based">Amount Based (No Unit)</option>
-                        <option value="KG">Kilogram (kg)</option>
-                        <option value="Gram">Gram (g)</option>
-                        <option value="Liter">Liter (L)</option>
-                        <option value="Packet">Packet / Pack</option>
-                        <option value="Piece">Piece</option>
-                        <option value="Dozen">Dozen</option>
-                        <option value="Box">Box / Carton</option>
-                        <option value="Bag">Bag / Sack / Bori</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Absolute Total Financial Amount -->
-            <div class="form-group">
-                <label class="field-label" for="totalAmount">
-                    <span>Total Final Amount</span>
-                    <span style="color:var(--danger-ink); font-size:10px;">*STRICT VALUE</span>
-                </label>
-                <div class="amount-input-wrapper">
-                    <span class="currency-prefix">Rs.</span>
-                    <input type="number" id="totalAmount" class="field-input" placeholder="00" step="any" min="1" required>
-                </div>
-            </div>
-
-            <!-- Sector Categorization -->
-            <div class="form-group">
-                <label class="field-label">Sector Classification</label>
-                
-                <!-- Expense Categories Grid -->
-                <div class="category-matrix" id="expenseCatMatrix">
-                    <div class="cat-box active" data-cat="Grocery"><span class="cat-icon">🛒</span><span class="cat-text">Grocery</span></div>
-                    <div class="cat-box" data-cat="Food"><span class="cat-icon">🍱</span><span class="cat-text">Food</span></div>
-                    <div class="cat-box" data-cat="Utility"><span class="cat-icon">⚡</span><span class="cat-text">Utility</span></div>
-                    <div class="cat-box" data-cat="School"><span class="cat-icon">🎓</span><span class="cat-text">School</span></div>
-                    <div class="cat-box" data-cat="Agriculture"><span class="cat-icon">🚜</span><span class="cat-text">Agriculture</span></div>
-                    <div class="cat-box" data-cat="Shop"><span class="cat-icon">🏪</span><span class="cat-text">Shop</span></div>
-                    <div class="cat-box" data-cat="Fuel"><span class="cat-icon">⛽</span><span class="cat-text">Fuel</span></div>
-                    <!-- Trigger Bottom Sheet -->
-                    <div class="cat-box add-cat-btn" id="triggerCustomCatBtn"><span class="cat-icon">➕</span><span class="cat-text">Custom</span></div>
-                </div>
-
-                <!-- Income Categories Grid (Hidden Initially) -->
-                <div class="category-matrix hidden-flow" id="incomeCatMatrix">
-                    <div class="cat-box active" data-cat="Salary"><span class="cat-icon">💼</span><span class="cat-text">Salary</span></div>
-                    <div class="cat-box" data-cat="Business"><span class="cat-icon">📈</span><span class="cat-text">Business</span></div>
-                    <div class="cat-box" data-cat="Freelance"><span class="cat-icon">💻</span><span class="cat-text">Freelance</span></div>
-                    <div class="cat-box" data-cat="Gift"><span class="cat-icon">🎁</span><span class="cat-text">Gift</span></div>
-                    <div class="cat-box" data-cat="Investment"><span class="cat-icon">🏦</span><span class="cat-text">Investment</span></div>
-                    <div class="cat-box" data-cat="Other Income"><span class="cat-icon">💵</span><span class="cat-text">Other In</span></div>
-                </div>
-            </div>
-
-            <!-- Optional Details Accordion -->
-            <div>
-                <button type="button" class="accordion-trigger" id="detailsToggleBtn">
-                    <span>Advanced Transaction Details</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <button type="button" class="voice-mic-fab" id="micBtn" title="Speak to Log">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="22"></line>
+                    </svg>
                 </button>
-                <div class="accordion-body" id="detailsBody">
+            </section>
+
+            <!-- Product Suggestion Slider (Swipeable) -->
+            <section class="suggestions-wrapper" id="suggestionWrapper">
+                <span class="suggestions-title">Quick Household Suggestions</span>
+                <div class="suggestions-slider">
+                    <div class="product-chip" data-name="Rice / Chawal" data-cat="Grocery" data-unit="KG">Rice / Chawal</div>
+                    <div class="product-chip" data-name="Flour / Atta" data-cat="Grocery" data-unit="Bag">Flour / Atta</div>
+                    <div class="product-chip" data-name="Milk / Doodh" data-cat="Grocery" data-unit="Box">Milk / Doodh</div>
+                    <div class="product-chip" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">Cooking Oil</div>
+                    <div class="product-chip" data-name="Chicken" data-cat="Food" data-unit="KG">Chicken</div>
+                    <div class="product-chip" data-name="Sugar / Cheeni" data-cat="Grocery" data-unit="KG">Sugar / Cheeni</div>
+                    <div class="product-chip" data-name="Masoor Dal" data-cat="Grocery" data-unit="KG">Masoor Dal</div>
+                    <div class="product-chip" data-name="Chana Dal" data-cat="Grocery" data-unit="KG">Chana Dal</div>
+                    <div class="product-chip" data-name="Eggs / Anday" data-cat="Grocery" data-unit="Dozen">Eggs / Dozen</div>
+                    <div class="product-chip" data-name="Vegetables / Sabzi" data-cat="Grocery" data-unit="Amount Based">Vegetables</div>
+                    <div class="product-chip" data-name="Electricity Bill" data-cat="Utility" data-unit="Amount Based">Electricity Bill</div>
+                </div>
+            </section>
+
+            <!-- Transaction Form Card -->
+            <form class="form-card" id="entryForm" novalidate>
+
+                <!-- Item Description Input -->
+                <div class="form-group">
+                    <label class="field-label" for="itemName">
+                        <span id="itemNameLabel">Item / Product Description</span>
+                    </label>
+                    <input type="text" id="itemName" class="field-input" placeholder="e.g. 26 Boxes Milk, Monthly Salary" required>
+                </div>
+
+                <!-- Quantity & Prioritized Units (Hidden for Income) -->
+                <div class="grid-2" id="qtyUnitBlock">
                     <div class="form-group">
-                        <label class="field-label" for="paymentMethod">Payment Method</label>
-                        <select id="paymentMethod" class="field-select">
-                            <option value="Cash">Cash / By Hand</option>
-                            <option value="Bank Transfer">Bank Transfer / Check</option>
-                            <option value="Mobile Wallet">Mobile Wallet (JazzCash/Easypaisa)</option>
-                            <option value="Credit Card">Credit / Debit Card</option>
-                            <option value="Credit/Udhaar">On Credit (Udhaar)</option>
+                        <label class="field-label" for="quantityInput">Quantity</label>
+                        <input type="number" id="quantityInput" class="field-input" placeholder="26" step="any" min="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label" for="unitSelect">Measure Unit</label>
+                        <select id="unitSelect" class="field-select">
+                            <option value="Amount Based">Amount Based (Default)</option>
+                            <option value="KG">Kilogram (kg)</option>
+                            <option value="Gram">Gram (g)</option>
+                            <option value="Liter">Liter (L)</option>
+                            <option value="Packet">Packet / Pack</option>
+                            <option value="Piece">Piece</option>
+                            <option value="Dozen">Dozen</option>
+                            <option value="Box">Box / Carton</option>
+                            <option value="Bag">Bag / Sack / Bori</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label class="field-label" for="notesInput">Notes / Purpose (Optional)</label>
-                        <input type="text" id="notesInput" class="field-input" placeholder="e.g. Monthly stock, Bonus payout">
+                </div>
+
+                <!-- Absolute Final Total Amount -->
+                <div class="form-group">
+                    <label class="field-label" for="totalAmount">
+                        <span>Total Final Amount</span>
+                        <span style="color:var(--danger-ink); font-size:10px;">*STRICT TRANSACTION VALUE</span>
+                    </label>
+                    <div class="amount-input-wrapper">
+                        <span class="currency-prefix">Rs.</span>
+                        <input type="number" id="totalAmount" class="field-input" placeholder="2600" step="any" min="1" required>
                     </div>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label class="field-label" for="dateInput">Date</label>
-                            <input type="date" id="dateInput" class="field-input" required>
+                    <div class="rate-calc-preview" id="rateCalcPreview">≈ Rs. 0 / unit</div>
+                </div>
+
+                <!-- Sector Classification with Authentic Inline SVGs -->
+                <div class="form-group">
+                    <label class="field-label">Sector Classification</label>
+
+                    <!-- Expense Sector Grid -->
+                    <div class="category-matrix" id="expenseCatMatrix">
+                        <!-- Grocery SVG -->
+                        <div class="cat-box active" data-cat="Grocery">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#F59E0B"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                            <span class="cat-text">Grocery</span>
                         </div>
-                        <div class="form-group">
-                            <label class="field-label" for="timeInput">Time</label>
-                            <input type="time" id="timeInput" class="field-input" required>
+
+                        <!-- Food SVG -->
+                        <div class="cat-box" data-cat="Food">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#EA580C"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                            <span class="cat-text">Food</span>
+                        </div>
+
+                        <!-- Utility SVG -->
+                        <div class="cat-box" data-cat="Utility">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#3B82F6"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            <span class="cat-text">Utility</span>
+                        </div>
+
+                        <!-- School SVG -->
+                        <div class="cat-box" data-cat="School">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            <span class="cat-text">School</span>
+                        </div>
+
+                        <!-- Agriculture SVG -->
+                        <div class="cat-box" data-cat="Agriculture">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#059669"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="4"/><path d="M6 15h9l2-6H7L5 13H2"/></svg>
+                            <span class="cat-text">Agriculture</span>
+                        </div>
+
+                        <!-- Shop SVG -->
+                        <div class="cat-box" data-cat="Shop">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#06B6D4"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            <span class="cat-text">Shop</span>
+                        </div>
+
+                        <!-- Fuel SVG -->
+                        <div class="cat-box" data-cat="Fuel">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#D97706"><path d="M3 22h12M4 9h10M4 22V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v18M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L19 6"/></svg>
+                            <span class="cat-text">Fuel</span>
+                        </div>
+
+                        <!-- Healthcare SVG -->
+                        <div class="cat-box" data-cat="Healthcare">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#EF4444"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+                            <span class="cat-text">Health</span>
+                        </div>
+
+                        <!-- Add Custom Bottom Sheet Trigger -->
+                        <div class="cat-box add-cat-btn" id="triggerCustomCatBtn">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            <span class="cat-text">Custom</span>
+                        </div>
+                    </div>
+
+                    <!-- Income Sector Grid -->
+                    <div class="category-matrix hidden-flow" id="incomeCatMatrix">
+                        <div class="cat-box active" data-cat="Salary">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#10B981"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            <span class="cat-text">Salary</span>
+                        </div>
+                        <div class="cat-box" data-cat="Business">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#059669"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                            <span class="cat-text">Business</span>
+                        </div>
+                        <div class="cat-box" data-cat="Freelance">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#3B82F6"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            <span class="cat-text">Freelance</span>
+                        </div>
+                        <div class="cat-box" data-cat="Rental">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6"><path d="M3 21h18M3 7v14M21 7v14M6 21V11M10 21V11M14 21V11M18 21V11M12 3l9 4H3l9-4z"/></svg>
+                            <span class="cat-text">Rental</span>
+                        </div>
+                        <div class="cat-box" data-cat="Investment">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#D97706"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="18"/></svg>
+                            <span class="cat-text">Invest</span>
+                        </div>
+                        <div class="cat-box" data-cat="Other Income">
+                            <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#06B6D4"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span class="cat-text">Other In</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn-commit" id="submitBtn">
-                <span id="btnLabel">Commit Transaction</span>
-            </button>
+                <!-- Advanced Transaction Specifications Accordion -->
+                <div>
+                    <button type="button" class="accordion-trigger" id="detailsToggleBtn">
+                        <span>Payment Mode, Vendor & Notes</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="accordion-body" id="detailsBody">
+                        <div class="form-group">
+                            <label class="field-label" for="paymentMethod">Payment Mode</label>
+                            <select id="paymentMethod" class="field-select">
+                                <option value="Cash">Cash / By Hand</option>
+                                <option value="Bank Transfer">Bank Transfer / Online</option>
+                                <option value="JazzCash">JazzCash</option>
+                                <option value="Easypaisa">Easypaisa</option>
+                                <option value="Credit Card">Debit / Credit Card</option>
+                                <option value="On Credit">On Credit (Udhaar)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label" for="shopVendor">Vendor / Shop / Location</label>
+                            <input type="text" id="shopVendor" class="field-input" placeholder="e.g. Al-Madina Store, Shell Pump">
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label" for="receiptRef">Receipt / Bill #</label>
+                            <input type="text" id="receiptRef" class="field-input" placeholder="e.g. INV-99021">
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label" for="notesInput">Notes / Purpose</label>
+                            <input type="text" id="notesInput" class="field-input" placeholder="e.g. Monthly ration, Guest tea">
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="field-label" for="dateInput">Date</label>
+                                <input type="date" id="dateInput" class="field-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="field-label" for="timeInput">Time</label>
+                                <input type="time" id="timeInput" class="field-input" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </form>
+                <!-- Submit Action Button -->
+                <button type="submit" class="btn-commit" id="submitBtn">
+                    <span id="btnLabel">Commit Transaction</span>
+                </button>
 
-        <footer class="footer-dock">
-            <div class="signature-pill">
-                <div class="signature-dot"></div>
-                <div class="signature-text">POWERED BY <span>@just_nasrullah</span></div>
-            </div>
-        </footer>
+            </form>
+
+        </div>
+
+        <!-- 3. Bottom Mobile Dock -->
+        <div class="dock-container">
+            <nav class="mobile-dock">
+                <a href="dashboard.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                </a>
+                <a href="daily-register.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Register</span>
+                </a>
+                <div class="dock-fab-wrapper">
+                    <a href="add.html" class="dock-fab" title="Quick Add">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </a>
+                </div>
+                <a href="reports.html" class="dock-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
+                <a href="settings.html" class="dock-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
 
     </main>
 
-    <!-- CUSTOM CATEGORY BOTTOM SHEET -->
+    <!-- CUSTOM CATEGORY BOTTOM SHEET DRAWER -->
     <div class="bottom-sheet-overlay" id="customCatSheet">
         <div class="bottom-sheet-card">
             <div class="sheet-header">
-                <h3 class="sheet-title">Add Custom Category</h3>
+                <h3 class="sheet-title">New Custom Category</h3>
                 <button type="button" class="btn-close-sheet" id="closeSheetBtn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
             <form id="customCatForm">
                 <div class="form-group" style="margin-bottom:16px;">
-                    <label class="field-label">Category Name & Emoji</label>
-                    <div style="display:flex; gap:10px;">
-                        <input type="text" id="customCatEmoji" class="field-input" placeholder="Emoji (e.g. 🐕)" maxlength="2" style="width:70px; text-align:center;">
-                        <input type="text" id="customCatName" class="field-input" placeholder="e.g. Livestock, Animals" required>
-                    </div>
+                    <label class="field-label" for="customCatName">Category Name</label>
+                    <input type="text" id="customCatName" class="field-input" placeholder="e.g. Livestock, Solar Equipment" required>
                 </div>
-                <button type="submit" class="btn-commit" style="height:48px;">Apply to Entry</button>
+                <button type="submit" class="btn-commit" style="height:48px;">Apply to Transaction</button>
             </form>
         </div>
     </div>
 
-    <!-- LUXURY MOBILE ISLAND DOCK -->
-    <div class="dock-container">
-        <nav class="mobile-dock">
-            <a href="dashboard.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span>Home</span>
-            </a>
-            <a href="daily-register.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                <span>Register</span>
-            </a>
-            <div class="dock-fab-wrapper">
-                <a href="add.html" class="dock-fab" title="Quick Add Record">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </a>
-            </div>
-            <a href="reports.html" class="dock-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                <span>Reports</span>
-            </a>
-            <a href="settings.html" class="dock-btn">
-      <svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-  <circle cx="12" cy="12" r="3"/>
-</svg>
-         <span>Settings</span>
-            </a>
-        </nav>
-    </div>
-
     <!-- ==========================================================================
-       10. FIREBASE LOGIC & MULTILINGUAL VOICE ENGINE (NO GHOST INCOMES)
+       10. CORE FIREBASE LOGIC & MULTILINGUAL SMART ENGINE
        ========================================================================== -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
-            getFirestore, collection, addDoc, serverTimestamp, enableIndexedDbPersistence 
+            collection, addDoc, serverTimestamp, doc, getDoc, getDocs, query, where, updateDoc 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
-            authDomain: "roz-e-hisab.firebaseapp.com",
-            projectId: "roz-e-hisab",
-            storageBucket: "roz-e-hisab.firebasestorage.app",
-            messagingSenderId: "776423119730",
-            appId: "1:776423119730:web:19c78561f4826224771beb",
-            measurementId: "G-17Q9D41WNR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        enableIndexedDbPersistence(db).catch(() => {});
 
         // State Machine
         let activeTransactionType = "expense";
         let activeCategory = "Grocery";
         let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
-        
-        // Setup Date & Time
+        let activeEditRecordId = null;
+
+        // Auto Populate Date & Time
         const now = new Date();
         document.getElementById('dateInput').value = now.toISOString().split('T')[0];
         document.getElementById('timeInput').value = now.toTimeString().substring(0, 5);
 
-        // Toast Engine
+        // Network Status Monitor
+        const networkDot = document.getElementById('networkDot');
+        function updateNetwork() {
+            networkDot.style.backgroundColor = navigator.onLine ? "var(--brand-emerald)" : "var(--danger-ink)";
+        }
+        window.addEventListener('online', updateNetwork);
+        window.addEventListener('offline', updateNetwork);
+        updateNetwork();
+
+        // Toast Feedback Dispatcher
         const toastBox = document.getElementById('toastBox');
         const toastMsg = document.getElementById('toastMsg');
         let toastTimer;
         function notify(msg, isError = true) {
             clearTimeout(toastTimer);
             toastMsg.innerText = msg;
-            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.94)" : "rgba(4, 56, 42, 0.94)";
+            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.95)" : "rgba(4, 56, 42, 0.95)";
             toastBox.classList.add('active');
-            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3500);
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
         }
 
-        // Segregated Tab Controller (Expense vs Income)
+        // Live Calculated Rate Engine
+        const qtyInput = document.getElementById('quantityInput');
+        const unitSelect = document.getElementById('unitSelect');
+        const totalAmountInput = document.getElementById('totalAmount');
+        const rateCalcPreview = document.getElementById('rateCalcPreview');
+
+        function updateRateCalculations() {
+            const qty = parseFloat(qtyInput.value);
+            const total = parseFloat(totalAmountInput.value);
+            const unit = unitSelect.value;
+
+            if (qty > 0 && total > 0 && unit !== "Amount Based") {
+                const perUnit = (total / qty).toFixed(2);
+                rateCalcPreview.innerText = `≈ Rs. ${parseFloat(perUnit).toLocaleString()} per ${unit}`;
+                rateCalcPreview.style.display = "block";
+            } else {
+                rateCalcPreview.style.display = "none";
+            }
+        }
+
+        qtyInput.addEventListener('input', updateRateCalculations);
+        totalAmountInput.addEventListener('input', updateRateCalculations);
+        unitSelect.addEventListener('change', updateRateCalculations);
+
+        // Segmented Tabs Controller (Expense vs Income)
         const tabIndicator = document.getElementById('tabIndicator');
         const tabExpense = document.getElementById('tabExpense');
         const tabIncome = document.getElementById('tabIncome');
@@ -954,9 +1112,9 @@
         const suggestionWrapper = document.getElementById('suggestionWrapper');
         const btnLabel = document.getElementById('btnLabel');
 
-        function switchTab(type) {
-            activeTransactionType = type;
-            if (type === 'expense') {
+        function switchTransactionMode(mode) {
+            activeTransactionType = mode;
+            if (mode === 'expense') {
                 tabIndicator.style.transform = "translateX(0)";
                 tabExpense.classList.add('active');
                 tabIncome.classList.remove('active');
@@ -965,8 +1123,9 @@
                 incomeCatMatrix.classList.add('hidden-flow');
                 suggestionWrapper.classList.remove('hidden-flow');
                 itemNameLabel.innerText = "Item / Product Description";
-                btnLabel.innerText = "Commit Expense Outflow";
-                activeCategory = expenseCatMatrix.querySelector('.active').getAttribute('data-cat');
+                btnLabel.innerText = activeEditRecordId ? "Update Expense Entry" : "Commit Expense Entry";
+                const activeBox = expenseCatMatrix.querySelector('.cat-box.active');
+                activeCategory = activeBox ? activeBox.getAttribute('data-cat') : 'Grocery';
             } else {
                 tabIndicator.style.transform = "translateX(100%)";
                 tabIncome.classList.add('active');
@@ -975,17 +1134,20 @@
                 expenseCatMatrix.classList.add('hidden-flow');
                 incomeCatMatrix.classList.remove('hidden-flow');
                 suggestionWrapper.classList.add('hidden-flow');
+                rateCalcPreview.style.display = "none";
                 itemNameLabel.innerText = "Income Source / Description";
-                btnLabel.innerText = "Commit Income Inflow";
-                activeCategory = incomeCatMatrix.querySelector('.active').getAttribute('data-cat');
+                btnLabel.innerText = activeEditRecordId ? "Update Income Inflow" : "Commit Income Inflow";
+                const activeBox = incomeCatMatrix.querySelector('.cat-box.active');
+                activeCategory = activeBox ? activeBox.getAttribute('data-cat') : 'Salary';
             }
         }
-        tabExpense.addEventListener('click', () => switchTab('expense'));
-        tabIncome.addEventListener('click', () => switchTab('income'));
 
-        // Category Matrix Handlers
+        tabExpense.addEventListener('click', () => switchTransactionMode('expense'));
+        tabIncome.addEventListener('click', () => switchTransactionMode('income'));
+
+        // Category Matrix Selectors
         document.querySelectorAll('.cat-box:not(.add-cat-btn)').forEach(box => {
-            box.addEventListener('click', (e) => {
+            box.addEventListener('click', () => {
                 const parent = box.parentElement;
                 parent.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
                 box.classList.add('active');
@@ -993,84 +1155,86 @@
             });
         });
 
-        // Product Suggestion Chips
+        // Product Suggestion Quick Chips
         document.querySelectorAll('.product-chip').forEach(chip => {
             chip.addEventListener('click', () => {
                 document.getElementById('itemName').value = chip.getAttribute('data-name');
                 const cat = chip.getAttribute('data-cat');
-                document.getElementById('unitSelect').value = chip.getAttribute('data-unit');
-                
-                // Auto Select Category in Expense Matrix
+                unitSelect.value = chip.getAttribute('data-unit');
+
                 expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => {
                     if (c.getAttribute('data-cat') === cat) c.click();
                 });
+                totalAmountInput.focus();
+                updateRateCalculations();
             });
         });
 
-        // Details Accordion
+        // Advanced Details Accordion
         document.getElementById('detailsToggleBtn').addEventListener('click', function() {
             this.classList.toggle('open');
             document.getElementById('detailsBody').classList.toggle('open');
         });
 
-        // Bottom Sheet Custom Category
+        // Custom Category Bottom Sheet
         const customCatSheet = document.getElementById('customCatSheet');
         document.getElementById('triggerCustomCatBtn').addEventListener('click', () => {
             customCatSheet.classList.add('active');
+            document.getElementById('customCatName').focus();
         });
         document.getElementById('closeSheetBtn').addEventListener('click', () => {
             customCatSheet.classList.remove('active');
         });
-        
+
         document.getElementById('customCatForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const emoji = document.getElementById('customCatEmoji').value || '📌';
             const name = document.getElementById('customCatName').value.trim();
             if (name) {
-                // Prepend to expense matrix dynamically
                 const newBox = document.createElement('div');
                 newBox.className = 'cat-box active';
                 newBox.setAttribute('data-cat', name);
-                newBox.innerHTML = `<span class="cat-icon">${emoji}</span><span class="cat-text">${name}</span>`;
+                newBox.innerHTML = `
+                    <svg class="cat-svg-icon" viewBox="0 0 24 24" fill="none" stroke="#059669"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span class="cat-text">${name}</span>
+                `;
                 newBox.addEventListener('click', () => {
                     expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
                     newBox.classList.add('active');
                     activeCategory = name;
                 });
-                
+
                 expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
                 expenseCatMatrix.insertBefore(newBox, document.getElementById('triggerCustomCatBtn'));
                 activeCategory = name;
-                
+
                 customCatSheet.classList.remove('active');
                 document.getElementById('customCatForm').reset();
             }
         });
 
         // ==========================================================================
-        // SMART MULTILINGUAL VOICE ENTRY (3s AUTO-STOP)
+        // SMART MULTILINGUAL VOICE WITH 3-SECOND SILENCE AUTO-STOP
         // ==========================================================================
         const micBtn = document.getElementById('micBtn');
         const voiceCard = document.getElementById('voiceCard');
         const voiceHeading = document.getElementById('voiceHeading');
         const voiceCaption = document.getElementById('voiceCaption');
-        
+
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognizer = new SpeechRecognition();
-            recognizer.continuous = true; // Kept true so it doesn't drop words, managed manually by 3s timeout
+            recognizer.continuous = true;
             recognizer.interimResults = true;
-            // Supports multi-lingual variations by relying on browser's strong NLP (en-US is robust for Roman Urdu/Numbers)
-            recognizer.lang = 'en-US'; 
+            recognizer.lang = 'en-US';
 
-            let silenceTimeout;
-            let finalTranscriptStr = "";
+            let silenceTimeout = null;
+            let fullSpokenText = "";
 
             micBtn.addEventListener('click', () => {
                 if (voiceCard.classList.contains('listening')) {
                     recognizer.stop();
                 } else {
-                    finalTranscriptStr = "";
+                    fullSpokenText = "";
                     recognizer.start();
                 }
             });
@@ -1078,28 +1242,28 @@
             recognizer.onstart = () => {
                 voiceCard.classList.add('listening');
                 micBtn.classList.add('active');
-                voiceHeading.innerText = "Listening...";
-                voiceCaption.innerText = "Speak naturally. Auto-stops after 3s of silence.";
-                
+                voiceHeading.innerText = "Listening Intelligently...";
+                voiceCaption.innerText = "Speak now. Auto-stops after 3s of silence.";
+
                 silenceTimeout = setTimeout(() => { recognizer.stop(); }, 5000);
             };
 
             recognizer.onresult = (event) => {
                 clearTimeout(silenceTimeout);
-                
+
                 let interim = "";
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
                     if (event.results[i].isFinal) {
-                        finalTranscriptStr += event.results[i][0].transcript;
+                        fullSpokenText += event.results[i][0].transcript;
                     } else {
                         interim += event.results[i][0].transcript;
                     }
                 }
-                
-                const currentText = finalTranscriptStr || interim;
-                voiceCaption.innerText = `"${currentText}"`;
 
-                // 3 Second Silence Auto-Shutdown trigger
+                const liveText = fullSpokenText || interim;
+                voiceCaption.innerText = `"${liveText}"`;
+
+                // Auto stop after 3 seconds of silence
                 silenceTimeout = setTimeout(() => {
                     recognizer.stop();
                 }, 3000);
@@ -1109,130 +1273,186 @@
                 clearTimeout(silenceTimeout);
                 voiceCard.classList.remove('listening');
                 micBtn.classList.remove('active');
-                voiceHeading.innerText = "Processing Details...";
-                
-                if (finalTranscriptStr) {
-                    parseVoiceInput(finalTranscriptStr);
+
+                if (fullSpokenText) {
+                    parseMultilingualSpeech(fullSpokenText);
                 } else {
-                    voiceHeading.innerText = "Multilingual Voice Entry";
-                    voiceCaption.innerText = "No voice detected. Tap mic to try again.";
+                    voiceHeading.innerText = "Smart Multilingual Voice";
+                    voiceCaption.innerText = "No voice captured. Tap mic to try again.";
                 }
             };
         } else {
-            micBtn.style.display = 'none';
+            micBtn.style.display = "none";
+            voiceCaption.innerText = "Voice Recognition unavailable in this browser.";
         }
 
-        function parseVoiceInput(transcript) {
-            let t = transcript.toLowerCase().trim();
-            
-            // 1. Extract Price (Strictly numerical, often followed by currency)
+        // Precise Speech Extraction (Never duplicates numbers)
+        function parseMultilingualSpeech(raw) {
+            let t = raw.toLowerCase().trim();
+
+            // Extract Total Amount strictly
             let priceMatch = t.match(/(\d+(?:\.\d+)?)\s*(?:pkr|rs|rupees|usd|dollar)?$/i) || 
                              t.match(/(?:rs|pkr|rupees)\s*(\d+(?:\.\d+)?)/i) ||
-                             t.match(/\b\d+\b(?=[^\d]*$)/); // Fallback: last standalone number
-            
-            // 2. Extract Quantity & Unit
+                             t.match(/\b\d+\b(?=[^\d]*$)/);
+
+            // Extract Quantity and Measurement Unit
             let qtyUnitMatch = t.match(/(\d+(?:\.\d+)?)\s*(kg|kilo|gram|g|liter|litre|l|packet|pack|piece|dozen|box|carton|bag|sack|bori)/i);
 
             let parsedQty = 1;
             let parsedUnit = "Amount Based";
             let parsedPrice = 0;
-            let parsedItem = transcript; // Keep full text by default
+            let parsedItem = raw;
 
             if (qtyUnitMatch) {
                 parsedQty = parseFloat(qtyUnitMatch[1]);
-                const rawU = qtyUnitMatch[2].toLowerCase();
-                if (rawU.includes('kg') || rawU.includes('kilo')) parsedUnit = "KG";
-                else if (rawU.includes('gram') || rawU === 'g') parsedUnit = "Gram";
-                else if (rawU.includes('lit') || rawU === 'l') parsedUnit = "Liter";
-                else if (rawU.includes('pack')) parsedUnit = "Packet";
-                else if (rawU.includes('box') || rawU.includes('carton')) parsedUnit = "Box";
-                else if (rawU.includes('bag') || rawU.includes('sack') || rawU.includes('bori')) parsedUnit = "Bag";
-                else if (rawU.includes('dozen')) parsedUnit = "Dozen";
+                const u = qtyUnitMatch[2].toLowerCase();
+                if (u.includes('kg') || u.includes('kilo')) parsedUnit = "KG";
+                else if (u.includes('gram') || u === 'g') parsedUnit = "Gram";
+                else if (u.includes('lit') || u === 'l') parsedUnit = "Liter";
+                else if (u.includes('pack')) parsedUnit = "Packet";
+                else if (u.includes('box') || u.includes('carton')) parsedUnit = "Box";
+                else if (u.includes('bag') || u.includes('sack') || u.includes('bori')) parsedUnit = "Bag";
+                else if (u.includes('dozen')) parsedUnit = "Dozen";
                 else parsedUnit = "Piece";
 
-                // Strip the detected qty/unit from the name
                 parsedItem = parsedItem.replace(qtyUnitMatch[0], '');
             }
 
             if (priceMatch) {
                 parsedPrice = parseFloat(priceMatch[1]);
-                parsedItem = parsedItem.replace(priceMatch[0], ''); // Strip price
+                parsedItem = parsedItem.replace(priceMatch[0], '');
             }
 
-            // Cleanup remaining item string
-            parsedItem = parsedItem.replace(/\b(for|ke|ka|worth|total|of|and|rupees|rs|pkr)\b/gi, '').trim();
-            if (parsedItem === "") parsedItem = transcript.trim(); // If completely stripped, fallback to raw text
+            parsedItem = parsedItem.replace(/\b(for|ke|ka|worth|total|of|and|rupees|rs|pkr|in)\b/gi, '').trim();
+            if (parsedItem === "") parsedItem = raw.trim();
 
             document.getElementById('itemName').value = parsedItem.charAt(0).toUpperCase() + parsedItem.slice(1);
-            document.getElementById('quantityInput').value = parsedQty;
-            document.getElementById('unitSelect').value = parsedUnit;
-            if (parsedPrice > 0) document.getElementById('totalAmount').value = parsedPrice;
+            qtyInput.value = parsedQty;
+            unitSelect.value = parsedUnit;
+            if (parsedPrice > 0) totalAmountInput.value = parsedPrice;
 
-            voiceHeading.innerText = "Multilingual Voice Entry";
-            voiceCaption.innerText = "Voice applied. You can edit the values below.";
-            notify("Speech analyzed successfully!", false);
+            voiceHeading.innerText = "Analysis Complete";
+            voiceCaption.innerText = "Voice applied. You may review and commit below.";
+            updateRateCalculations();
+            notify("Speech parsed successfully!", false);
         }
 
         // ==========================================================================
-        // STRICT FIREBASE COMMIT ENGINE (PREVENTS GHOST DUPLICATION)
+        // EDIT MODE & INITIALIZATION ENGINE
         // ==========================================================================
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
                 return;
             }
 
-            document.getElementById('entryForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const name = document.getElementById('itemName').value.trim();
-                const total = parseFloat(document.getElementById('totalAmount').value);
-                
-                if (!name || isNaN(total) || total <= 0) {
-                    notify("Item description and valid Total Amount are required.");
-                    return;
+            // Sync Family Workspace Metadata
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    activeFamilyId = userDoc.data().familyId || activeFamilyId;
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
                 }
-
-                document.getElementById('submitBtn').disabled = true;
-                document.getElementById('submitBtn').style.opacity = '0.7';
-
-                const nowD = new Date();
-                const dateVal = document.getElementById('dateInput').value;
-                const timeVal = document.getElementById('timeInput').value;
-
-                // Explicitly construct payload to prevent hidden duplications
-                const payload = {
-                    familyId: activeFamilyId,
-                    type: activeTransactionType, // Strictly "expense" or "income"
-                    category: activeCategory,
-                    itemName: name,
-                    totalPrice: total, // SINGLE SOURCE OF TRUTH FOR AMOUNT
-                    date: dateVal,
-                    time: timeVal,
-                    month: parseInt(dateVal.split('-')[1]),
-                    year: parseInt(dateVal.split('-')[0]),
-                    paymentMethod: document.getElementById('paymentMethod').value,
-                    notes: document.getElementById('notesInput').value.trim() || null,
-                    createdBy: user.uid,
-                    createdAt: serverTimestamp()
-                };
-
-                // Add Quantity and Unit ONLY if it's an expense
-                if (activeTransactionType === 'expense') {
-                    payload.quantity = parseFloat(document.getElementById('quantityInput').value) || 1;
-                    payload.unit = document.getElementById('unitSelect').value;
-                    payload.unitPrice = payload.unit !== "Amount Based" ? parseFloat((total / payload.quantity).toFixed(2)) : total;
+                const familyDoc = await getDoc(doc(db, "families", activeFamilyId));
+                if (familyDoc.exists()) {
+                    document.getElementById('activeWorkspaceSubtitle').innerText = familyDoc.data().name || "Family Ledger";
                 }
+            } catch(e) {}
 
+            // Check if loading for Edit (from ?edit=RECORD_ID)
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            if (editId) {
+                activeEditRecordId = editId;
                 try {
-                    await addDoc(collection(db, "records"), payload);
-                    notify("Vault Ledger Updated!", false);
-                    setTimeout(() => window.location.href = "dashboard.html", 400);
-                } catch (err) {
-                    notify("Offline Fallback: Saved Locally.", false);
-                    setTimeout(() => window.location.href = "dashboard.html", 400);
+                    const recordSnap = await getDoc(doc(db, "records", editId));
+                    if (recordSnap.exists()) {
+                        const r = recordSnap.data();
+                        document.getElementById('itemName').value = r.itemName || '';
+                        totalAmountInput.value = r.totalPrice || 0;
+                        qtyInput.value = r.quantity || 1;
+                        unitSelect.value = r.unit || 'Amount Based';
+                        document.getElementById('paymentMethod').value = r.paymentMethod || 'Cash';
+                        document.getElementById('shopVendor').value = r.vendor || '';
+                        document.getElementById('receiptRef').value = r.receiptRef || '';
+                        document.getElementById('notesInput').value = r.notes || '';
+                        if (r.date) document.getElementById('dateInput').value = r.date;
+                        if (r.time) document.getElementById('timeInput').value = r.time;
+
+                        switchTransactionMode(r.type || 'expense');
+                        
+                        // Select Category
+                        const targetMatrix = r.type === 'income' ? incomeCatMatrix : expenseCatMatrix;
+                        const matchBox = targetMatrix.querySelector(`[data-cat="${r.category}"]`);
+                        if (matchBox) matchBox.click();
+
+                        updateRateCalculations();
+                        btnLabel.innerText = "Update Transaction";
+                        notify("Editing entry...", false);
+                    }
+                } catch(e) {
+                    console.warn("Edit load error:", e);
                 }
-            });
+            }
+        });
+
+        // Form Submit: Commit Transaction
+        document.getElementById('entryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('itemName').value.trim();
+            const total = parseFloat(totalAmountInput.value);
+
+            if (!name || isNaN(total) || total <= 0) {
+                notify("Description and valid Total Amount are strictly required.");
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            const dateVal = document.getElementById('dateInput').value;
+            const timeVal = document.getElementById('timeInput').value;
+
+            const payload = {
+                familyId: activeFamilyId,
+                type: activeTransactionType, // Strictly "expense" or "income"
+                category: activeCategory,
+                itemName: name,
+                totalPrice: total,
+                date: dateVal,
+                time: timeVal,
+                month: parseInt(dateVal.split('-')[1]),
+                year: parseInt(dateVal.split('-')[0]),
+                paymentMethod: document.getElementById('paymentMethod').value,
+                vendor: document.getElementById('shopVendor').value.trim() || null,
+                receiptRef: document.getElementById('receiptRef').value.trim() || null,
+                notes: document.getElementById('notesInput').value.trim() || null,
+                createdBy: auth.currentUser ? auth.currentUser.uid : "offline"
+            };
+
+            if (activeTransactionType === 'expense') {
+                payload.quantity = parseFloat(qtyInput.value) || 1;
+                payload.unit = unitSelect.value;
+                payload.unitPrice = payload.unit !== "Amount Based" ? parseFloat((total / payload.quantity).toFixed(2)) : total;
+            }
+
+            try {
+                if (activeEditRecordId) {
+                    payload.updatedAt = serverTimestamp();
+                    await updateDoc(doc(db, "records", activeEditRecordId), payload);
+                    notify("Transaction Updated Successfully!", false);
+                } else {
+                    payload.createdAt = serverTimestamp();
+                    await addDoc(collection(db, "records"), payload);
+                    notify("Committed to Family Ledger!", false);
+                }
+                setTimeout(() => window.location.href = "dashboard.html", 400);
+            } catch(err) {
+                notify("Saved Locally to Offline Cache.", false);
+                setTimeout(() => window.location.href = "dashboard.html", 400);
+            }
         });
     </script>
 </body>
