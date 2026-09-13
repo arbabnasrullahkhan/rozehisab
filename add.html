@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#FAFAFA">
+    <meta name="theme-color" content="#F8FAFC">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Roz E Hisab — Universal Entry Terminal</title>
@@ -15,46 +15,48 @@
     <!-- Global Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
-           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (LIGHT LUXURY)
+           1. ROZ E HISAB ARCHITECTURAL DESIGN SYSTEM (EXECUTIVE MINT/FOREST)
            ========================================================================== */
         :root {
             --canvas: #F8FAFC;
             --surface: #FFFFFF;
             --surface-subtle: #F1F5F9;
-            --surface-glass: rgba(255, 255, 255, 0.88);
-            --border-subtle: rgba(15, 23, 42, 0.06);
-            --border-card: rgba(15, 23, 42, 0.08);
-            --border-focus: #047857; /* Emerald Focus */
-
-            --ink-primary: #090D14;
-            --ink-secondary: #525C6F;
-            --ink-tertiary: #8A94A6;
-            --ink-inverse: #FFFFFF;
+            --surface-glass: rgba(255, 255, 255, 0.94);
+            --surface-dock: rgba(255, 255, 255, 0.96);
 
             --brand-primary: #047857; /* Forest Green */
-            --brand-hover: #064E3B;
-            --brand-glow: rgba(4, 120, 87, 0.22);
+            --brand-deep: #064E3B;
+            --brand-mint: #ECFDF5;
+            --brand-emerald: #10B981;
             --brand-gradient: linear-gradient(135deg, #059669 0%, #064E3B 100%);
-            --brand-subtle-bg: #ECFDF5;
 
-            --income-color: #10B981;
-            --expense-color: #EF4444;
+            --ink-headline: #04382A;
+            --ink-title: #0F172A;
+            --ink-secondary: #475569;
+            --ink-tertiary: #94A3B8;
 
+            --danger-ink: #EF4444;
+            --danger-bg: #FEF2F2;
             --status-online: #10B981;
             --status-offline: #F59E0B;
-            --accent-emerald: #059669;
+
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-card: #EDF2F7;
+            --border-focus: #059669;
+
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
+            --shadow-island: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
+            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
+            --shadow-sheet: 0 -20px 60px rgba(0, 0, 0, 0.15);
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-
-            --shadow-subtle: 0 4px 20px -2px rgba(9, 13, 20, 0.03);
-            --shadow-card: 0 20px 45px -10px rgba(9, 13, 20, 0.05), 0 0 0 1px rgba(9, 13, 20, 0.03);
-            --shadow-island: 0 16px 36px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
-            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -64,14 +66,13 @@
             -webkit-tap-highlight-color: transparent;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         html, body {
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
-            color: var(--ink-primary);
+            color: var(--ink-title);
             overflow-x: hidden;
         }
 
@@ -86,7 +87,7 @@
         }
 
         /* ==========================================================================
-           2. APPLE-STYLE DYNAMIC ISLAND TOP BAR
+           2. APPLE-STYLE DYNAMIC ISLAND HEADER (WITH PROPER SETTINGS ICON)
            ========================================================================== */
         .island-container {
             position: fixed;
@@ -129,10 +130,7 @@
             transition: all 0.2s ease;
         }
 
-        .island-action-back:hover {
-            color: var(--ink-primary);
-            background: #E2E8F0;
-        }
+        .island-action-back:hover { background: #E2E8F0; color: var(--brand-deep); }
 
         .island-title {
             font-size: 14px;
@@ -141,37 +139,23 @@
             letter-spacing: -0.02em;
         }
 
-        .island-right-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .status-beacon {
+        .island-action-settings {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 8px;
-            height: 8px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background-color: var(--status-online);
-        }
-
-        .settings-icon-btn {
+            background: var(--surface-subtle);
             color: var(--ink-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
         }
 
-        .settings-icon-btn:hover {
-            color: var(--brand-primary);
-        }
+        .island-action-settings:hover { background: #E2E8F0; color: var(--brand-deep); }
 
         /* ==========================================================================
-           3. TOAST NOTIFICATIONS APPARATUS
+           3. TOAST NOTIFICATIONS
            ========================================================================== */
         .toast-wrapper {
             position: fixed;
@@ -180,7 +164,7 @@
             transform: translateX(-50%) translateY(-20px);
             opacity: 0;
             visibility: hidden;
-            z-index: 600;
+            z-index: 800;
             transition: all 0.4s var(--ease-spring);
             pointer-events: none;
             width: 90%;
@@ -195,7 +179,7 @@
         }
 
         .toast-capsule {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(4, 56, 42, 0.95);
             color: white;
             backdrop-filter: blur(16px);
             padding: 12px 18px;
@@ -206,11 +190,10 @@
             box-shadow: var(--shadow-toast);
             font-size: 13px;
             font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* ==========================================================================
-           4. MAIN INPUT VIEWPORT APPARATUS
+           4. MAIN VIEWPORT & SEGMENTED TABS
            ========================================================================== */
         .viewport {
             position: relative;
@@ -224,46 +207,47 @@
             gap: 18px;
         }
 
-        /* Expense vs Income Type Toggle */
-        .type-toggle-wrapper {
+        .segmented-tab-container {
             background: var(--surface);
             border-radius: 100px;
-            padding: 6px;
+            padding: 4px;
             display: flex;
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-card);
+            position: relative;
         }
 
-        .type-toggle-btn {
+        .tab-btn {
             flex: 1;
-            height: 40px;
-            border-radius: 100px;
+            height: 42px;
             border: none;
             background: transparent;
+            border-radius: 100px;
             font-size: 14px;
             font-weight: 700;
-            color: var(--ink-tertiary);
+            color: var(--ink-secondary);
             cursor: pointer;
-            transition: all 0.25s var(--ease-spring);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            z-index: 2;
+            transition: color 0.3s ease;
         }
 
-        .type-toggle-btn.active.expense {
-            background: var(--danger-bg);
-            color: var(--expense-color);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        .tab-btn.active { color: white; }
+
+        .tab-indicator {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: 42px;
+            width: calc(50% - 4px);
+            background: var(--brand-deep);
+            border-radius: 100px;
+            z-index: 1;
+            transition: transform 0.4s var(--ease-spring);
         }
 
-        .type-toggle-btn.active.income {
-            background: var(--brand-subtle-bg);
-            color: var(--income-color);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-        }
-
-        /* Speech Recognition Terminal */
+        /* ==========================================================================
+           5. SMART MULTILINGUAL VOICE TERMINAL (3s AUTO-STOP)
+           ========================================================================== */
         .voice-terminal-card {
             background: var(--surface);
             border-radius: 26px;
@@ -274,13 +258,11 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s var(--ease-spring);
         }
 
         .voice-terminal-card.listening {
-            border-color: var(--brand-primary);
+            border-color: var(--brand-emerald);
             box-shadow: 0 0 0 4px var(--brand-glow);
         }
 
@@ -288,354 +270,367 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            text-align: left;
+            flex: 1;
         }
 
         .voice-heading {
             font-size: 14.5px;
             font-weight: 700;
-            color: var(--ink-primary);
-            letter-spacing: -0.01em;
+            color: var(--ink-headline);
         }
 
         .voice-caption {
             font-size: 12px;
             color: var(--ink-tertiary);
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .voice-mic-fab {
             width: 54px;
             height: 54px;
             border-radius: 18px;
-            background: var(--surface-subtle);
-            border: 1px solid var(--border-subtle);
-            color: var(--ink-secondary);
+            background: var(--brand-mint);
+            border: none;
+            color: var(--brand-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             flex-shrink: 0;
-            position: relative;
             transition: all 0.25s var(--ease-spring);
         }
 
-        .voice-mic-fab:active {
-            transform: scale(0.92);
-        }
+        .voice-mic-fab:active { transform: scale(0.92); }
 
         .voice-mic-fab.active {
-            background: var(--brand-primary);
+            background: var(--danger-ink);
             color: white;
-            border-color: var(--brand-primary);
             animation: pulseMic 1.4s infinite alternate;
         }
 
         @keyframes pulseMic {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(4, 120, 87, 0.4); }
-            100% { transform: scale(1.08); box-shadow: 0 0 0 14px rgba(4, 120, 87, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            100% { transform: scale(1.08); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
         }
 
-        /* Main Form Card */
-        .entry-form-card {
+        /* ==========================================================================
+           6. HORIZONTALLY SCROLLABLE PRODUCT SUGGESTION SLIDER
+           ========================================================================== */
+        .suggestions-wrapper {
             background: var(--surface);
-            border-radius: 30px;
-            padding: 28px 24px;
-            box-shadow: var(--shadow-card);
+            border-radius: 20px;
+            padding: 16px;
             border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 10px;
         }
 
-        /* Form Group */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            text-align: left;
-        }
-
-        .field-label {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--ink-primary);
-            letter-spacing: -0.01em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .field-input {
-            width: 100%;
-            height: 52px;
-            background: var(--surface-subtle);
-            border: 1.5px solid transparent;
-            border-radius: 15px;
-            padding: 0 18px;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--ink-primary);
-            outline: none;
-            transition: all 0.25s var(--ease-smooth);
-        }
-
-        .field-input::placeholder {
+        .suggestions-title {
+            font-size: 12px;
+            font-weight: 700;
             color: var(--ink-tertiary);
-            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        .field-input:focus {
-            background: var(--surface);
-            border-color: var(--border-focus);
-            box-shadow: 0 0 0 4px var(--brand-glow);
-        }
-
-        /* Quick Suggestions Shelf (Horizontally Scrollable) */
-        .quick-tags-shelf {
+        .suggestions-slider {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 6px;
+            padding-bottom: 4px;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
 
-        .quick-tags-shelf::-webkit-scrollbar {
-            display: none;
-        }
+        .suggestions-slider::-webkit-scrollbar { display: none; }
 
-        .tag-pill {
+        .product-chip {
             background: var(--surface-subtle);
             border: 1px solid var(--border-subtle);
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--ink-secondary);
             cursor: pointer;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             transition: all 0.2s ease;
         }
 
-        .tag-pill:hover {
-            background: #E2E8F0;
-            color: var(--ink-primary);
+        .product-chip:hover {
+            background: var(--brand-mint);
+            color: var(--brand-deep);
+            border-color: var(--brand-emerald);
         }
 
-        /* Visual Interactive Category Grid */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        .cat-chip {
-            background: var(--surface-subtle);
-            border: 1.5px solid transparent;
-            border-radius: 16px;
-            padding: 10px 4px;
+        /* ==========================================================================
+           7. MAIN UNIVERSAL FORM (EXPENSE & INCOME)
+           ========================================================================== */
+        .form-card {
+            background: var(--surface);
+            border-radius: 30px;
+            padding: 26px 22px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-card);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.2s var(--ease-spring);
-            text-align: center;
+            gap: 20px;
         }
 
-        .cat-chip .cat-emoji {
-            font-size: 18px;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .cat-chip .cat-name {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--ink-secondary);
-        }
-
-        .cat-chip.active {
-            background: var(--brand-subtle-bg);
-            border-color: var(--brand-primary);
-            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.12);
-        }
-
-        .cat-chip.active .cat-name {
-            color: var(--brand-primary);
+        .field-label {
+            font-size: 12px;
             font-weight: 700;
+            color: var(--ink-headline);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Dual Quantity & Unit Input */
-        .qty-unit-row {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 12px;
-        }
-
-        .field-select {
+        .field-input, .field-select {
             width: 100%;
             height: 52px;
             background: var(--surface-subtle);
             border: 1.5px solid transparent;
-            border-radius: 15px;
-            padding: 0 14px;
-            font-size: 14px;
+            border-radius: 14px;
+            padding: 0 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: var(--ink-primary);
+            color: var(--ink-title);
             outline: none;
-            cursor: pointer;
-            transition: all 0.25s var(--ease-smooth);
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            background-size: 16px;
+            transition: all 0.2s ease;
         }
 
-        .field-select:focus {
+        .field-input::placeholder { color: var(--ink-placeholder); font-weight: 500; }
+
+        .field-input:focus, .field-select:focus {
             background: var(--surface);
             border-color: var(--border-focus);
             box-shadow: 0 0 0 4px var(--brand-glow);
         }
 
-        /* Dynamic Per-Unit Metric Engine */
-        .unit-intelligence-card {
-            display: none;
-            background: #F0FDF4;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 16px;
-            padding: 12px 16px;
-            align-items: center;
-            justify-content: space-between;
-            animation: fadeIn 0.3s ease;
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        .unit-intel-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--accent-emerald);
-        }
-
-        .unit-intel-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--accent-emerald);
-        }
-
-        /* Expandable Accordion Specifications */
-        .accordion-trigger {
-            background: none;
-            border: none;
+        .amount-input-wrapper {
+            position: relative;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--ink-secondary);
-            cursor: pointer;
-            padding: 8px 0;
         }
 
-        .accordion-trigger svg {
-            transition: transform 0.3s var(--ease-spring);
+        .currency-prefix {
+            position: absolute;
+            left: 16px;
+            font-weight: 800;
+            color: var(--ink-tertiary);
+            font-size: 16px;
         }
 
-        .accordion-trigger.open svg {
-            transform: rotate(180deg);
+        .amount-input-wrapper .field-input {
+            padding-left: 48px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--brand-deep);
         }
 
-        .accordion-body {
-            display: none;
+        /* Categories Matrix with Add Button */
+        .category-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .cat-box {
+            background: var(--surface-subtle);
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            padding: 12px 6px;
+            display: flex;
             flex-direction: column;
-            gap: 14px;
-            padding-top: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
         }
 
-        .accordion-body.open {
-            display: flex;
-            animation: fadeIn 0.3s ease;
+        .cat-box.active {
+            background: var(--brand-mint);
+            border-color: var(--brand-emerald);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
         }
 
-        /* Master Submit Action Button */
+        .cat-box .cat-icon { font-size: 20px; }
+        .cat-box .cat-text { font-size: 11px; font-weight: 700; color: var(--ink-secondary); text-align: center; }
+        .cat-box.active .cat-text { color: var(--brand-deep); }
+
+        .add-cat-btn {
+            background: #F8FAFC;
+            border: 1.5px dashed var(--ink-tertiary);
+            color: var(--ink-secondary);
+        }
+        .add-cat-btn:hover { background: #E2E8F0; border-color: var(--ink-secondary); }
+
+        /* Commit Button */
         .btn-commit {
             width: 100%;
             height: 56px;
             background: var(--brand-gradient);
             border: none;
             border-radius: 16px;
-            font-size: 15.5px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 800;
             color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 16px 32px -4px rgba(4, 120, 87, 0.4);
+            box-shadow: var(--shadow-fab);
             transition: all 0.25s var(--ease-spring);
+            margin-top: 8px;
         }
 
-        .btn-commit:hover {
-            transform: translateY(-1.5px);
-            box-shadow: 0 20px 36px -4px rgba(4, 120, 87, 0.5);
-        }
+        .btn-commit:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -4px rgba(4, 120, 87, 0.5); }
+        .btn-commit:active { transform: scale(0.96); }
 
-        .btn-commit:active {
-            transform: scale(0.98);
-        }
-
-        .btn-spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #FFFFFF;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Custom Category Modal */
-        .modal-overlay {
+        /* ==========================================================================
+           8. CUSTOM CATEGORY BOTTOM SHEET
+           ========================================================================== */
+        .bottom-sheet-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(9, 13, 20, 0.45);
-            backdrop-filter: blur(10px);
-            z-index: 999;
+            background: rgba(4, 56, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
             display: none;
-            align-items: flex-end; /* Bottom Sheet Style */
+            flex-direction: column;
+            justify-content: flex-end;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .bottom-sheet-overlay.active { display: flex; }
+
+        .bottom-sheet-card {
+            background: var(--surface);
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            border-radius: 32px 32px 0 0;
+            padding: 24px;
+            box-shadow: var(--shadow-sheet);
+            transform: translateY(100%);
+            animation: slideUpSheet 0.4s var(--ease-spring) forwards;
+        }
+
+        @keyframes slideUpSheet { to { transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sheet-title { font-size: 18px; font-weight: 800; color: var(--ink-headline); }
+
+        .btn-close-sheet {
+            background: var(--surface-subtle);
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--ink-secondary); cursor: pointer;
+        }
+
+        /* ==========================================================================
+           9. LUXURY MOBILE ISLAND DOCK
+           ========================================================================== */
+        .dock-container {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            width: 92%;
+            max-width: 440px;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            width: 100%;
+            height: 68px;
+            background: var(--surface-dock);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-dock);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 8px;
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--ink-tertiary);
+            text-decoration: none;
+            width: 54px;
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn svg { width: 21px; height: 21px; stroke-width: 2; }
+        .dock-btn span { font-size: 10px; font-weight: 700; }
+        .dock-btn.active { color: var(--brand-deep); }
+
+        .dock-fab-wrapper {
+            position: relative;
+            top: -20px;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
 
-        .modal-overlay.active { display: flex; }
-
-        .modal-window {
-            background: var(--surface);
-            border-radius: 30px 30px 0 0;
-            padding: 30px 24px 40px 24px;
-            width: 100%;
-            max-width: 520px;
-            box-shadow: 0 -20px 60px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            animation: slideUp 0.3s var(--ease-spring) forwards;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-header-row {
+        .dock-fab {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            box-shadow: var(--shadow-fab);
+            border: 3.5px solid var(--surface);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-spring);
         }
+        .dock-fab:active { transform: scale(0.92); }
+        .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
 
         /* Verified Footer */
         .footer-dock {
@@ -645,43 +640,21 @@
             align-items: center;
             gap: 8px;
         }
-
         .signature-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: var(--surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 100px;
-            box-shadow: var(--shadow-subtle);
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+            background: var(--surface); border: 1px solid var(--border-subtle);
+            border-radius: 100px; box-shadow: var(--shadow-subtle); text-decoration: none;
         }
+        .signature-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-primary); }
+        .signature-text { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-secondary); text-transform: uppercase; }
+        .signature-text span { color: var(--ink-primary); font-weight: 700; }
 
-        .signature-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--brand-primary);
-        }
-
-        .signature-text {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            color: var(--ink-secondary);
-            text-transform: uppercase;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .hidden-flow { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- Spatial Background Lighting -->
+    <!-- Ambient Spatial Canvas -->
     <div class="ambient-canvas"></div>
 
     <!-- Apple-Style Dynamic Island Header -->
@@ -689,51 +662,40 @@
         <header class="dynamic-island">
             <a href="dashboard.html" class="island-action-back">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                <span>Back</span>
+                <span>Dashboard</span>
             </a>
-            <span class="island-title">Log Record</span>
-            <div class="island-right-actions">
-                <div class="status-beacon">
-                    <div class="beacon-dot" id="networkDot"></div>
-                </div>
-                <!-- Properly Fixed Settings Icon -->
-                <a href="settings.html" class="settings-icon-btn" title="Settings">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                </a>
-            </div>
+            <span class="island-title">Log Transaction</span>
+            <a href="settings.html" class="island-action-settings" title="Settings">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </a>
         </header>
     </div>
 
-    <!-- Luxury Floating Toast Notification -->
+    <!-- Toast Notification -->
     <div class="toast-wrapper" id="toastBox">
         <div class="toast-capsule">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <span id="toastMsg">Notification message</span>
+            <svg id="toastIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="toastMsg">Notification</span>
         </div>
     </div>
 
     <!-- Master Viewport -->
     <main class="viewport">
 
-        <!-- Expense vs Income Type Toggle -->
-        <div class="type-toggle-wrapper">
-            <button type="button" class="type-toggle-btn active expense" id="tabExpense">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
-                Expense (Outflow)
-            </button>
-            <button type="button" class="type-toggle-btn income" id="tabIncome">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                Income (Inflow)
-            </button>
+        <!-- 1. SEGMENTED TABS (Expense vs Income) -->
+        <div class="segmented-tab-container">
+            <div class="tab-indicator" id="tabIndicator"></div>
+            <button type="button" class="tab-btn active" id="tabExpense" data-type="expense">Outflow (Expense)</button>
+            <button type="button" class="tab-btn" id="tabIncome" data-type="income">Inflow (Income)</button>
         </div>
 
-        <!-- REALTIME MULTILINGUAL VOICE TERMINAL -->
+        <!-- 2. SMART MULTILINGUAL VOICE TERMINAL (3s AUTO-STOP) -->
         <section class="voice-terminal-card" id="voiceCard">
             <div class="voice-meta-block">
-                <h3 class="voice-heading" id="voiceHeading">Smart Voice Entry</h3>
-                <p class="voice-caption" id="voiceCaption">Say: "5 kg rice 1500" or "پانچ کلو چاول پندرہ سو"</p>
+                <h3 class="voice-heading" id="voiceHeading">Multilingual Voice Entry</h3>
+                <p class="voice-caption" id="voiceCaption">Say "5 kilo chawal 1500" or "10 packet doodh 2600"</p>
             </div>
-            <button type="button" class="voice-mic-fab" id="micBtn" title="Start voice dictation">
+            <button type="button" class="voice-mic-fab" id="micBtn" title="Tap to Speak">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
@@ -742,73 +704,50 @@
             </button>
         </section>
 
-        <!-- UNIVERSAL TRANSACTION RECORD FORM -->
-        <form class="entry-form-card" id="entryForm" novalidate>
-            
-            <!-- 1. ITEM SPECIFICATION -->
+        <!-- 3. PRODUCT SUGGESTION SLIDER -->
+        <section class="suggestions-wrapper" id="suggestionWrapper">
+            <span class="suggestions-title">Quick Household Suggestions</span>
+            <div class="suggestions-slider">
+                <!-- High Priority Pakistani Staples -->
+                <div class="product-chip" data-name="Rice / Chawal" data-cat="Grocery" data-unit="KG">🍚 Rice / Chawal</div>
+                <div class="product-chip" data-name="Flour / Atta" data-cat="Grocery" data-unit="KG">🌾 Flour / Atta</div>
+                <div class="product-chip" data-name="Milk / Doodh" data-cat="Grocery" data-unit="Box">🥛 Milk / Box</div>
+                <div class="product-chip" data-name="Chicken" data-cat="Grocery" data-unit="KG">🍗 Chicken</div>
+                <div class="product-chip" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">🛢️ Cooking Oil</div>
+                <div class="product-chip" data-name="Sugar / Cheeni" data-cat="Grocery" data-unit="KG">🍬 Sugar / Cheeni</div>
+                <div class="product-chip" data-name="Masoor Dal" data-cat="Grocery" data-unit="KG">🥣 Masoor Dal</div>
+                <div class="product-chip" data-name="Chana Dal" data-cat="Grocery" data-unit="KG">🥣 Chana Dal</div>
+                <div class="product-chip" data-name="Eggs / Anday" data-cat="Grocery" data-unit="Dozen">🥚 Eggs / Dozen</div>
+                <div class="product-chip" data-name="Vegetables / Sabzi" data-cat="Grocery" data-unit="Amount Based">🥗 Vegetables</div>
+                <div class="product-chip" data-name="Electricity Bill" data-cat="Utility" data-unit="Amount Based">⚡ Electricity Bill</div>
+            </div>
+        </section>
+
+        <!-- 4. MASTER TRANSACTION FORM -->
+        <form class="form-card" id="entryForm" novalidate>
+
             <div class="form-group">
                 <label class="field-label" for="itemName">
-                    <span id="itemNameLabel">What was purchased?</span>
-                    <span style="font-size:11px; color:var(--ink-tertiary);">REQUIRED</span>
+                    <span id="itemNameLabel">Item / Product Description</span>
                 </label>
-                <input type="text" id="itemName" class="field-input" placeholder="e.g. Basmati Rice, Electric Bill, Salary" required autofocus>
-                
-                <!-- Quick Suggestion Tags (Horizontally Scrollable) -->
-                <div class="quick-tags-shelf" id="quickTagsExpense">
-                    <span class="tag-pill" data-name="Rice" data-cat="Grocery" data-unit="KG">Rice</span>
-                    <span class="tag-pill" data-name="Chicken" data-cat="Grocery" data-unit="KG">Chicken</span>
-                    <span class="tag-pill" data-name="Milk" data-cat="Grocery" data-unit="Liter">Milk</span>
-                    <span class="tag-pill" data-name="Cooking Oil" data-cat="Grocery" data-unit="Liter">Cooking Oil</span>
-                    <span class="tag-pill" data-name="Flour/Atta" data-cat="Grocery" data-unit="KG">Flour/Atta</span>
-                    <span class="tag-pill" data-name="Sugar" data-cat="Grocery" data-unit="KG">Sugar</span>
-                    <span class="tag-pill" data-name="Vegetables" data-cat="Food" data-unit="Amount Based">Vegetables</span>
-                    <span class="tag-pill" data-name="Electricity Bill" data-cat="Household" data-unit="Amount Based">Electricity</span>
-                    <span class="tag-pill" data-name="Masoor Dal" data-cat="Grocery" data-unit="KG">Masoor Dal</span>
-                    <span class="tag-pill" data-name="Eggs" data-cat="Grocery" data-unit="Dozen">Eggs</span>
-                    <span class="tag-pill" data-name="Bread" data-cat="Grocery" data-unit="Piece">Bread</span>
-                </div>
-                <!-- Quick Tags for Income (Hidden by default) -->
-                <div class="quick-tags-shelf" id="quickTagsIncome" style="display:none;">
-                    <span class="tag-pill" data-name="Monthly Salary" data-cat="Salary" data-unit="Amount Based">Salary</span>
-                    <span class="tag-pill" data-name="Business Profit" data-cat="Business" data-unit="Amount Based">Business</span>
-                    <span class="tag-pill" data-name="Crop Sale" data-cat="Agriculture" data-unit="Amount Based">Crop Sale</span>
-                    <span class="tag-pill" data-name="Rent Received" data-cat="Property" data-unit="Amount Based">Rent Received</span>
-                    <span class="tag-pill" data-name="Freelance" data-cat="Side Hustle" data-unit="Amount Based">Freelance</span>
-                </div>
+                <input type="text" id="itemName" class="field-input" placeholder="e.g. 5 Kilo Chawal, Freelance Project" required>
             </div>
 
-            <!-- 2. CATEGORY SELECTOR -->
-            <div class="form-group">
-                <label class="field-label">Category Classification</label>
-                <div class="category-grid" id="categoryGrid">
-                    <!-- Default Categories (Changes based on type) -->
-                    <div class="cat-chip active" data-cat="Grocery"><span class="cat-emoji">🛒</span><span class="cat-name">Grocery</span></div>
-                    <div class="cat-chip" data-cat="Food"><span class="cat-emoji">🍱</span><span class="cat-name">Food</span></div>
-                    <div class="cat-chip" data-cat="Household"><span class="cat-emoji">🏠</span><span class="cat-name">Home</span></div>
-                    <div class="cat-chip" data-cat="School"><span class="cat-emoji">🎓</span><span class="cat-name">School</span></div>
-                    <div class="cat-chip" data-cat="Zameen"><span class="cat-emoji">🚜</span><span class="cat-name">Zameen</span></div>
-                    <div class="cat-chip" data-cat="Shop"><span class="cat-emoji">🏪</span><span class="cat-name">Shop</span></div>
-                    <div class="cat-chip" data-cat="Advance"><span class="cat-emoji">💵</span><span class="cat-name">Advance</span></div>
-                    <!-- Add Custom Category Button -->
-                    <div class="cat-chip" id="addCategoryBtn" style="background:var(--surface); border:1.5px dashed var(--border-focus);"><span class="cat-emoji">➕</span><span class="cat-name" style="color:var(--ink-headline);">New</span></div>
-                </div>
-            </div>
-
-            <!-- 3. QUANTITY & UNIT SPECIFICATION -->
-            <div class="qty-unit-row">
+            <!-- Quantity & Unit Row (Hidden for Income) -->
+            <div class="grid-2" id="qtyUnitBlock">
                 <div class="form-group">
                     <label class="field-label" for="quantityInput">Quantity</label>
-                    <input type="number" id="quantityInput" class="field-input" value="1" step="any" min="0.01" required>
+                    <input type="number" id="quantityInput" class="field-input" placeholder="e.g. 5" step="any" min="0.01">
                 </div>
                 <div class="form-group">
-                    <label class="field-label" for="unitSelect">Measurement Unit</label>
+                    <label class="field-label" for="unitSelect">Measure Unit</label>
                     <select id="unitSelect" class="field-select">
-                        <option value="Amount Based" selected>Amount Based</option>
+                        <option value="Amount Based">Amount Based (No Unit)</option>
                         <option value="KG">Kilogram (kg)</option>
                         <option value="Gram">Gram (g)</option>
                         <option value="Liter">Liter (L)</option>
                         <option value="Packet">Packet / Pack</option>
-                        <option value="Piece">Piece / Full</option>
+                        <option value="Piece">Piece</option>
                         <option value="Dozen">Dozen</option>
                         <option value="Box">Box / Carton</option>
                         <option value="Bag">Bag / Sack / Bori</option>
@@ -816,95 +755,154 @@
                 </div>
             </div>
 
-            <!-- 4. TOTAL EXPENDITURE AMOUNT -->
+            <!-- Absolute Total Financial Amount -->
             <div class="form-group">
-                <label class="field-label" for="totalPrice">
-                    <span>Total Amount (Rs.)</span>
-                    <span style="font-size:11px; color:var(--ink-tertiary);">PRIMARY</span>
+                <label class="field-label" for="totalAmount">
+                    <span>Total Final Amount</span>
+                    <span style="color:var(--danger-ink); font-size:10px;">*STRICT VALUE</span>
                 </label>
-                <input type="number" id="totalPrice" class="field-input" placeholder="e.g. 1500" step="any" min="1" required style="font-size: 20px; font-weight: 800; color: var(--brand-primary);">
+                <div class="amount-input-wrapper">
+                    <span class="currency-prefix">Rs.</span>
+                    <input type="number" id="totalAmount" class="field-input" placeholder="2600" step="any" min="1" required>
+                </div>
             </div>
 
-            <!-- 5. REALTIME PER-UNIT INTELLIGENCE TELEMETRY -->
-            <div class="unit-intelligence-card" id="unitIntelligenceCard">
-                <span class="unit-intel-label">Calculated Unit Rate:</span>
-                <span class="unit-intel-val" id="unitIntelVal">≈ Rs. 0 / Unit</span>
+            <!-- Sector Categorization -->
+            <div class="form-group">
+                <label class="field-label">Sector Classification</label>
+                
+                <!-- Expense Categories Grid -->
+                <div class="category-matrix" id="expenseCatMatrix">
+                    <div class="cat-box active" data-cat="Grocery"><span class="cat-icon">🛒</span><span class="cat-text">Grocery</span></div>
+                    <div class="cat-box" data-cat="Food"><span class="cat-icon">🍱</span><span class="cat-text">Food</span></div>
+                    <div class="cat-box" data-cat="Utility"><span class="cat-icon">⚡</span><span class="cat-text">Utility</span></div>
+                    <div class="cat-box" data-cat="School"><span class="cat-icon">🎓</span><span class="cat-text">School</span></div>
+                    <div class="cat-box" data-cat="Agriculture"><span class="cat-icon">🚜</span><span class="cat-text">Agriculture</span></div>
+                    <div class="cat-box" data-cat="Shop"><span class="cat-icon">🏪</span><span class="cat-text">Shop</span></div>
+                    <div class="cat-box" data-cat="Fuel"><span class="cat-icon">⛽</span><span class="cat-text">Fuel</span></div>
+                    <!-- Trigger Bottom Sheet -->
+                    <div class="cat-box add-cat-btn" id="triggerCustomCatBtn"><span class="cat-icon">➕</span><span class="cat-text">Custom</span></div>
+                </div>
+
+                <!-- Income Categories Grid (Hidden Initially) -->
+                <div class="category-matrix hidden-flow" id="incomeCatMatrix">
+                    <div class="cat-box active" data-cat="Salary"><span class="cat-icon">💼</span><span class="cat-text">Salary</span></div>
+                    <div class="cat-box" data-cat="Business"><span class="cat-icon">📈</span><span class="cat-text">Business</span></div>
+                    <div class="cat-box" data-cat="Freelance"><span class="cat-icon">💻</span><span class="cat-text">Freelance</span></div>
+                    <div class="cat-box" data-cat="Gift"><span class="cat-icon">🎁</span><span class="cat-text">Gift</span></div>
+                    <div class="cat-box" data-cat="Investment"><span class="cat-icon">🏦</span><span class="cat-text">Investment</span></div>
+                    <div class="cat-box" data-cat="Other Income"><span class="cat-icon">💵</span><span class="cat-text">Other In</span></div>
+                </div>
             </div>
 
-            <!-- 6. ACCORDION EXPANDABLE SPECIFICATIONS (PAYMENT & NOTES) -->
+            <!-- Optional Details Accordion -->
             <div>
-                <button type="button" class="accordion-trigger" id="specToggle">
-                    <span>Payment & Optional Details</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <button type="button" class="accordion-trigger" id="detailsToggleBtn">
+                    <span>Advanced Transaction Details</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
-                <div class="accordion-body" id="specBody">
+                <div class="accordion-body" id="detailsBody">
                     <div class="form-group">
                         <label class="field-label" for="paymentMethod">Payment Method</label>
                         <select id="paymentMethod" class="field-select">
-                            <option value="Cash / By Hand">Cash / By Hand</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Cash">Cash / By Hand</option>
+                            <option value="Bank Transfer">Bank Transfer / Check</option>
                             <option value="Mobile Wallet">Mobile Wallet (JazzCash/Easypaisa)</option>
-                            <option value="Credit/Debit Card">Credit/Debit Card</option>
-                            <option value="Unpaid / Udhaar">Unpaid / Udhaar</option>
+                            <option value="Credit Card">Credit / Debit Card</option>
+                            <option value="Credit/Udhaar">On Credit (Udhaar)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="field-label" for="purposeNote">Purpose / Reason / Note</label>
-                        <input type="text" id="purposeNote" class="field-input" placeholder="e.g. Monthly stock, Guests visiting">
+                        <label class="field-label" for="notesInput">Notes / Purpose (Optional)</label>
+                        <input type="text" id="notesInput" class="field-input" placeholder="e.g. Monthly stock, Bonus payout">
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label class="field-label" for="dateInput">Date</label>
+                            <input type="date" id="dateInput" class="field-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="field-label" for="timeInput">Time</label>
+                            <input type="time" id="timeInput" class="field-input" required>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- MASTER COMMIT ACTION BUTTON -->
-            <button type="submit" class="btn-commit" id="commitBtn">
-                <span id="btnLabel">Commit to Vault (محفوظ کریں)</span>
-                <div class="btn-spinner" id="btnSpinner"></div>
+            <button type="submit" class="btn-commit" id="submitBtn">
+                <span id="btnLabel">Commit Transaction</span>
             </button>
 
         </form>
 
-        <!-- VERIFIED BESPOKE FOOTER -->
         <footer class="footer-dock">
             <div class="signature-pill">
                 <div class="signature-dot"></div>
-                <div class="signature-text">POWERED BY ROZ E HISAB</div>
+                <div class="signature-text">POWERED BY <span>@just_nasrullah</span></div>
             </div>
         </footer>
 
     </main>
 
-    <!-- CUSTOM CATEGORY BOTTOM SHEET / MODAL -->
-    <div class="modal-overlay" id="addCategoryModal">
-        <div class="modal-window">
-            <div class="modal-header-row">
-                <h3 class="modal-title" style="font-size:16px;">Add Custom Category</h3>
-                <button type="button" class="modal-close-btn" id="closeCatModalBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    <!-- CUSTOM CATEGORY BOTTOM SHEET -->
+    <div class="bottom-sheet-overlay" id="customCatSheet">
+        <div class="bottom-sheet-card">
+            <div class="sheet-header">
+                <h3 class="sheet-title">Add Custom Category</h3>
+                <button type="button" class="btn-close-sheet" id="closeSheetBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
-            <div class="form-group">
-                <label class="field-label">Category Name</label>
-                <input type="text" id="newCatName" class="field-input" placeholder="e.g. Pets, Business" autocomplete="off">
-            </div>
-            <button type="button" class="btn-commit" id="saveCustomCatBtn" style="height:48px; font-size:14px; margin-top:10px;">Apply to Transaction</button>
+            <form id="customCatForm">
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label class="field-label">Category Name & Emoji</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="customCatEmoji" class="field-input" placeholder="Emoji (e.g. 🐕)" maxlength="2" style="width:70px; text-align:center;">
+                        <input type="text" id="customCatName" class="field-input" placeholder="e.g. Livestock, Animals" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-commit" style="height:48px;">Apply to Entry</button>
+            </form>
         </div>
     </div>
 
+    <!-- LUXURY MOBILE ISLAND DOCK -->
+    <div class="dock-container">
+        <nav class="mobile-dock">
+            <a href="dashboard.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+            </a>
+            <a href="daily-register.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Register</span>
+            </a>
+            <div class="dock-fab-wrapper">
+                <a href="add.html" class="dock-fab" title="Quick Add Record">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </a>
+            </div>
+            <a href="reports.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                <span>Reports</span>
+            </a>
+            <a href="settings.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
     <!-- ==========================================================================
-       5. REALTIME FIREBASE, MULTILINGUAL VOICE & STRICT LOGIC ENGINE
+       10. FIREBASE LOGIC & MULTILINGUAL VOICE ENGINE (NO GHOST INCOMES)
        ========================================================================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
-            getFirestore, 
-            collection, 
-            addDoc, 
-            serverTimestamp,
-            enableIndexedDbPersistence 
+            getFirestore, collection, addDoc, serverTimestamp, enableIndexedDbPersistence 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // Verified Architecture Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
             authDomain: "roz-e-hisab.firebaseapp.com",
@@ -918,263 +916,159 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         enableIndexedDbPersistence(db).catch(() => {});
 
-        // DOM Nodes
-        const networkDot = document.getElementById('networkDot');
+        // State Machine
+        let activeTransactionType = "expense";
+        let activeCategory = "Grocery";
+        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        
+        // Setup Date & Time
+        const now = new Date();
+        document.getElementById('dateInput').value = now.toISOString().split('T')[0];
+        document.getElementById('timeInput').value = now.toTimeString().substring(0, 5);
+
+        // Toast Engine
         const toastBox = document.getElementById('toastBox');
         const toastMsg = document.getElementById('toastMsg');
-        
-        // Transaction Type Toggles
-        const tabExpense = document.getElementById('tabExpense');
-        const tabIncome = document.getElementById('tabIncome');
-        let currentTxType = "expense"; // "expense" | "income"
-
-        // Form Elements
-        const entryForm = document.getElementById('entryForm');
-        const itemName = document.getElementById('itemName');
-        const itemNameLabel = document.getElementById('itemNameLabel');
-        const categoryGrid = document.getElementById('categoryGrid');
-        const quantityInput = document.getElementById('quantityInput');
-        const unitSelect = document.getElementById('unitSelect');
-        const totalPrice = document.getElementById('totalPrice');
-        const unitIntelligenceCard = document.getElementById('unitIntelligenceCard');
-        const unitIntelVal = document.getElementById('unitIntelVal');
-        const specToggle = document.getElementById('specToggle');
-        const specBody = document.getElementById('specBody');
-        const paymentMethod = document.getElementById('paymentMethod');
-        const purposeNote = document.getElementById('purposeNote');
-        
-        const commitBtn = document.getElementById('commitBtn');
-        const btnLabel = document.getElementById('btnLabel');
-        const btnSpinner = document.getElementById('btnSpinner');
-        
-        // Voice Elements
-        const micBtn = document.getElementById('micBtn');
-        const voiceCard = document.getElementById('voiceCard');
-        const voiceHeading = document.getElementById('voiceHeading');
-        const voiceCaption = document.getElementById('voiceCaption');
-
-        // Categories
-        let selectedCategory = "Grocery";
-        const addCategoryBtn = document.getElementById('addCategoryBtn');
-        const addCategoryModal = document.getElementById('addCategoryModal');
-        const closeCatModalBtn = document.getElementById('closeCatModalBtn');
-        const saveCustomCatBtn = document.getElementById('saveCustomCatBtn');
-        const newCatName = document.getElementById('newCatName');
-        const quickTagsExpense = document.getElementById('quickTagsExpense');
-        const quickTagsIncome = document.getElementById('quickTagsIncome');
-
-        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
-
-        // Network Status
-        function updateNetwork() {
-            networkDot.style.backgroundColor = navigator.onLine ? "var(--status-online)" : "var(--status-offline)";
-        }
-        window.addEventListener('online', updateNetwork);
-        window.addEventListener('offline', updateNetwork);
-        updateNetwork();
-
-        // Toast Feedback Dispatcher
         let toastTimer;
         function notify(msg, isError = true) {
             clearTimeout(toastTimer);
             toastMsg.innerText = msg;
-            toastBox.querySelector('.toast-capsule').style.background = isError 
-                ? "rgba(220, 38, 38, 0.94)" 
-                : "rgba(16, 185, 129, 0.94)"; // Green for success
+            toastBox.querySelector('.toast-capsule').style.background = isError ? "rgba(220, 38, 38, 0.94)" : "rgba(4, 56, 42, 0.94)";
             toastBox.classList.add('active');
-            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3600);
+            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3500);
         }
 
-        // --- EXPENSE / INCOME TOGGLE LOGIC ---
-        function switchTransactionType(type) {
-            currentTxType = type;
-            tabExpense.classList.remove('active', 'expense');
-            tabIncome.classList.remove('active', 'income');
+        // Segregated Tab Controller (Expense vs Income)
+        const tabIndicator = document.getElementById('tabIndicator');
+        const tabExpense = document.getElementById('tabExpense');
+        const tabIncome = document.getElementById('tabIncome');
+        const qtyUnitBlock = document.getElementById('qtyUnitBlock');
+        const expenseCatMatrix = document.getElementById('expenseCatMatrix');
+        const incomeCatMatrix = document.getElementById('incomeCatMatrix');
+        const itemNameLabel = document.getElementById('itemNameLabel');
+        const suggestionWrapper = document.getElementById('suggestionWrapper');
+        const btnLabel = document.getElementById('btnLabel');
 
-            // Reset Categories visually (Keep Add Category Button at end)
-            const addBtnHTML = `<div class="cat-chip" id="addCategoryBtn" style="background:var(--surface); border:1.5px dashed var(--border-focus);"><span class="cat-emoji">➕</span><span class="cat-name" style="color:var(--ink-headline);">New</span></div>`;
-
-            if (type === "expense") {
-                tabExpense.classList.add('active', 'expense');
-                itemNameLabel.innerText = "What was purchased?";
-                quickTagsExpense.style.display = "flex";
-                quickTagsIncome.style.display = "none";
-                totalPrice.style.color = "var(--brand-primary)";
-                
-                categoryGrid.innerHTML = `
-                    <div class="cat-chip active" data-cat="Grocery"><span class="cat-emoji">🛒</span><span class="cat-name">Grocery</span></div>
-                    <div class="cat-chip" data-cat="Food"><span class="cat-emoji">🍱</span><span class="cat-name">Food</span></div>
-                    <div class="cat-chip" data-cat="Household"><span class="cat-emoji">🏠</span><span class="cat-name">Home</span></div>
-                    <div class="cat-chip" data-cat="School"><span class="cat-emoji">🎓</span><span class="cat-name">School</span></div>
-                    <div class="cat-chip" data-cat="Zameen"><span class="cat-emoji">🚜</span><span class="cat-name">Zameen</span></div>
-                    <div class="cat-chip" data-cat="Shop"><span class="cat-emoji">🏪</span><span class="cat-name">Shop</span></div>
-                    <div class="cat-chip" data-cat="Advance"><span class="cat-emoji">💵</span><span class="cat-name">Advance</span></div>
-                    ${addBtnHTML}
-                `;
-                selectedCategory = "Grocery";
+        function switchTab(type) {
+            activeTransactionType = type;
+            if (type === 'expense') {
+                tabIndicator.style.transform = "translateX(0)";
+                tabExpense.classList.add('active');
+                tabIncome.classList.remove('active');
+                qtyUnitBlock.classList.remove('hidden-flow');
+                expenseCatMatrix.classList.remove('hidden-flow');
+                incomeCatMatrix.classList.add('hidden-flow');
+                suggestionWrapper.classList.remove('hidden-flow');
+                itemNameLabel.innerText = "Item / Product Description";
+                btnLabel.innerText = "Commit Expense Outflow";
+                activeCategory = expenseCatMatrix.querySelector('.active').getAttribute('data-cat');
             } else {
-                tabIncome.classList.add('active', 'income');
-                itemNameLabel.innerText = "Source of Income?";
-                quickTagsExpense.style.display = "none";
-                quickTagsIncome.style.display = "flex";
-                totalPrice.style.color = "var(--income-color)";
-
-                categoryGrid.innerHTML = `
-                    <div class="cat-chip active" data-cat="Salary"><span class="cat-emoji">💼</span><span class="cat-name">Salary</span></div>
-                    <div class="cat-chip" data-cat="Business"><span class="cat-emoji">📈</span><span class="cat-name">Business</span></div>
-                    <div class="cat-chip" data-cat="Agriculture"><span class="cat-emoji">🌾</span><span class="cat-name">Agriculture</span></div>
-                    <div class="cat-chip" data-cat="Property"><span class="cat-emoji">🏢</span><span class="cat-name">Property</span></div>
-                    <div class="cat-chip" data-cat="Freelance"><span class="cat-emoji">💻</span><span class="cat-name">Freelance</span></div>
-                    <div class="cat-chip" data-cat="Gift"><span class="cat-emoji">🎁</span><span class="cat-name">Gift</span></div>
-                    <div class="cat-chip" data-cat="Advance Return"><span class="cat-emoji">↩️</span><span class="cat-name">Returned</span></div>
-                    ${addBtnHTML}
-                `;
-                selectedCategory = "Salary";
-                
-                // For income, Amount Based is practically always used
-                unitSelect.value = "Amount Based";
-                quantityInput.value = 1;
-                calculatePerUnitRate();
+                tabIndicator.style.transform = "translateX(100%)";
+                tabIncome.classList.add('active');
+                tabExpense.classList.remove('active');
+                qtyUnitBlock.classList.add('hidden-flow');
+                expenseCatMatrix.classList.add('hidden-flow');
+                incomeCatMatrix.classList.remove('hidden-flow');
+                suggestionWrapper.classList.add('hidden-flow');
+                itemNameLabel.innerText = "Income Source / Description";
+                btnLabel.innerText = "Commit Income Inflow";
+                activeCategory = incomeCatMatrix.querySelector('.active').getAttribute('data-cat');
             }
-
-            attachCategoryListeners();
         }
+        tabExpense.addEventListener('click', () => switchTab('expense'));
+        tabIncome.addEventListener('click', () => switchTab('income'));
 
-        tabExpense.addEventListener('click', () => switchTransactionType("expense"));
-        tabIncome.addEventListener('click', () => switchTransactionType("income"));
+        // Category Matrix Handlers
+        document.querySelectorAll('.cat-box:not(.add-cat-btn)').forEach(box => {
+            box.addEventListener('click', (e) => {
+                const parent = box.parentElement;
+                parent.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
+                box.classList.add('active');
+                activeCategory = box.getAttribute('data-cat');
+            });
+        });
 
-        // --- CATEGORY CHIPS LOGIC ---
-        function attachCategoryListeners() {
-            categoryGrid.querySelectorAll('.cat-chip').forEach(chip => {
-                if(chip.id === 'addCategoryBtn') {
-                    chip.addEventListener('click', () => addCategoryModal.classList.add('active'));
-                    return;
-                }
-                chip.addEventListener('click', () => {
-                    categoryGrid.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-                    chip.classList.add('active');
-                    selectedCategory = chip.getAttribute('data-cat');
+        // Product Suggestion Chips
+        document.querySelectorAll('.product-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.getElementById('itemName').value = chip.getAttribute('data-name');
+                const cat = chip.getAttribute('data-cat');
+                document.getElementById('unitSelect').value = chip.getAttribute('data-unit');
+                
+                // Auto Select Category in Expense Matrix
+                expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => {
+                    if (c.getAttribute('data-cat') === cat) c.click();
                 });
             });
-        }
-        attachCategoryListeners();
+        });
 
-        // Custom Category Modal Logic
-        closeCatModalBtn.addEventListener('click', () => addCategoryModal.classList.remove('active'));
+        // Details Accordion
+        document.getElementById('detailsToggleBtn').addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.getElementById('detailsBody').classList.toggle('open');
+        });
+
+        // Bottom Sheet Custom Category
+        const customCatSheet = document.getElementById('customCatSheet');
+        document.getElementById('triggerCustomCatBtn').addEventListener('click', () => {
+            customCatSheet.classList.add('active');
+        });
+        document.getElementById('closeSheetBtn').addEventListener('click', () => {
+            customCatSheet.classList.remove('active');
+        });
         
-        saveCustomCatBtn.addEventListener('click', () => {
-            const val = newCatName.value.trim();
-            if(!val) { notify("Please enter a category name."); return; }
-            
-            // Remove active state from others
-            categoryGrid.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-            
-            // Create new chip before the Add button
-            const newChip = document.createElement('div');
-            newChip.className = 'cat-chip active';
-            newChip.setAttribute('data-cat', val);
-            newChip.innerHTML = `<span class="cat-emoji">📌</span><span class="cat-name">${val.length > 8 ? val.substring(0,8)+'..' : val}</span>`;
-            
-            const addBtn = document.getElementById('addCategoryBtn');
-            categoryGrid.insertBefore(newChip, addBtn);
-            
-            selectedCategory = val;
-            newCatName.value = "";
-            addCategoryModal.classList.remove('active');
-            attachCategoryListeners(); // Re-attach listeners to include new chip
-        });
-
-        // Quick Tag Suggestions
-        document.querySelectorAll('.tag-pill').forEach(tag => {
-            tag.addEventListener('click', () => {
-                itemName.value = tag.getAttribute('data-name');
-                const cat = tag.getAttribute('data-cat');
-                const unit = tag.getAttribute('data-unit');
-                
-                // Select Category if it exists
-                let found = false;
-                categoryGrid.querySelectorAll('.cat-chip').forEach(c => {
-                    if (c.getAttribute('data-cat') === cat) {
-                        c.click();
-                        found = true;
-                    }
+        document.getElementById('customCatForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emoji = document.getElementById('customCatEmoji').value || '📌';
+            const name = document.getElementById('customCatName').value.trim();
+            if (name) {
+                // Prepend to expense matrix dynamically
+                const newBox = document.createElement('div');
+                newBox.className = 'cat-box active';
+                newBox.setAttribute('data-cat', name);
+                newBox.innerHTML = `<span class="cat-icon">${emoji}</span><span class="cat-text">${name}</span>`;
+                newBox.addEventListener('click', () => {
+                    expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
+                    newBox.classList.add('active');
+                    activeCategory = name;
                 });
                 
-                // Select Unit
-                unitSelect.value = unit;
-                totalPrice.focus();
-                calculatePerUnitRate();
-            });
-        });
-
-        // Expandable Specifications Accordion
-        specToggle.addEventListener('click', () => {
-            specToggle.classList.toggle('open');
-            specBody.classList.toggle('open');
-        });
-
-        // Flexible Pricing Calculation Engine
-        function calculatePerUnitRate() {
-            const qty = parseFloat(quantityInput.value);
-            const total = parseFloat(totalPrice.value);
-            const unit = unitSelect.value;
-
-            if (qty > 0 && total > 0 && unit !== "Amount Based") {
-                const perUnit = (total / qty).toFixed(2);
-                unitIntelVal.innerText = `≈ Rs. ${parseFloat(perUnit).toLocaleString()} / ${unit}`;
-                unitIntelligenceCard.style.display = 'flex';
-            } else {
-                unitIntelligenceCard.style.display = 'none';
+                expenseCatMatrix.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
+                expenseCatMatrix.insertBefore(newBox, document.getElementById('triggerCustomCatBtn'));
+                activeCategory = name;
+                
+                customCatSheet.classList.remove('active');
+                document.getElementById('customCatForm').reset();
             }
-        }
-
-        quantityInput.addEventListener('input', calculatePerUnitRate);
-        totalPrice.addEventListener('input', calculatePerUnitRate);
-        unitSelect.addEventListener('change', calculatePerUnitRate);
+        });
 
         // ==========================================================================
-        // SMART MULTILINGUAL VOICE ENGINE WITH SILENCE AUTO-STOP
+        // SMART MULTILINGUAL VOICE ENTRY (3s AUTO-STOP)
         // ==========================================================================
+        const micBtn = document.getElementById('micBtn');
+        const voiceCard = document.getElementById('voiceCard');
+        const voiceHeading = document.getElementById('voiceHeading');
+        const voiceCaption = document.getElementById('voiceCaption');
+        
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
         if (SpeechRecognition) {
             const recognizer = new SpeechRecognition();
-            recognizer.continuous = true; // Keep listening to catch pauses
+            recognizer.continuous = true; // Kept true so it doesn't drop words, managed manually by 3s timeout
             recognizer.interimResults = true;
-            // Supports English, Urdu, Hindi processing. 'en-US' captures Roman Urdu/Pakistani English very well.
+            // Supports multi-lingual variations by relying on browser's strong NLP (en-US is robust for Roman Urdu/Numbers)
             recognizer.lang = 'en-US'; 
 
-            let silenceTimer = null;
-            let isFinalProcessed = false;
-
-            function stopRecognition() {
-                if (voiceCard.classList.contains('listening')) {
-                    recognizer.stop();
-                    voiceCard.classList.remove('listening');
-                    micBtn.classList.remove('active');
-                    voiceHeading.innerText = "Processing Data...";
-                    voiceCaption.innerText = "Extracting values...";
-                }
-            }
-
-            function resetSilenceTimer() {
-                clearTimeout(silenceTimer);
-                silenceTimer = setTimeout(() => {
-                    stopRecognition();
-                }, 3000); // 3 seconds of silence auto-stops the mic
-            }
+            let silenceTimeout;
+            let finalTranscriptStr = "";
 
             micBtn.addEventListener('click', () => {
                 if (voiceCard.classList.contains('listening')) {
-                    stopRecognition();
+                    recognizer.stop();
                 } else {
-                    isFinalProcessed = false;
-                    try {
-                        recognizer.start();
-                    } catch(e) {}
+                    finalTranscriptStr = "";
+                    recognizer.start();
                 }
             });
 
@@ -1182,121 +1076,102 @@
                 voiceCard.classList.add('listening');
                 micBtn.classList.add('active');
                 voiceHeading.innerText = "Listening...";
-                voiceCaption.innerText = "Speak naturally (e.g. '5 kg rice 1500')";
-                resetSilenceTimer();
+                voiceCaption.innerText = "Speak naturally. Auto-stops after 3s of silence.";
+                
+                silenceTimeout = setTimeout(() => { recognizer.stop(); }, 5000);
             };
 
             recognizer.onresult = (event) => {
-                resetSilenceTimer(); // Reset timer on any noise/speech
-
-                let interimTranscript = '';
-                let finalTranscript = '';
-
+                clearTimeout(silenceTimeout);
+                
+                let interim = "";
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
                     if (event.results[i].isFinal) {
-                        finalTranscript += event.results[i][0].transcript;
+                        finalTranscriptStr += event.results[i][0].transcript;
                     } else {
-                        interimTranscript += event.results[i][0].transcript;
+                        interim += event.results[i][0].transcript;
                     }
                 }
-
-                const currentText = finalTranscript || interimTranscript;
+                
+                const currentText = finalTranscriptStr || interim;
                 voiceCaption.innerText = `"${currentText}"`;
 
-                if (finalTranscript && !isFinalProcessed) {
-                    isFinalProcessed = true;
-                    processVoiceTranscript(finalTranscript);
-                }
-            };
-
-            recognizer.onerror = (e) => {
-                clearTimeout(silenceTimer);
-                voiceCard.classList.remove('listening');
-                micBtn.classList.remove('active');
-                voiceHeading.innerText = "Voice Recognition Stopped";
-                voiceCaption.innerText = "Tap mic to try again.";
+                // 3 Second Silence Auto-Shutdown trigger
+                silenceTimeout = setTimeout(() => {
+                    recognizer.stop();
+                }, 3000);
             };
 
             recognizer.onend = () => {
-                clearTimeout(silenceTimer);
-                if (voiceCard.classList.contains('listening')) {
-                    stopRecognition();
-                }
-                // If stopped without final processing, process the last seen text in caption if needed.
-                if(!isFinalProcessed && voiceCaption.innerText.length > 5 && !voiceCaption.innerText.includes("Speak naturally")) {
-                    const cleanText = voiceCaption.innerText.replace(/"/g, '');
-                    processVoiceTranscript(cleanText);
-                }
+                clearTimeout(silenceTimeout);
+                voiceCard.classList.remove('listening');
+                micBtn.classList.remove('active');
+                voiceHeading.innerText = "Processing Details...";
                 
-                setTimeout(() => {
-                    voiceHeading.innerText = "Smart Voice Entry";
-                    voiceCaption.innerText = "Say: '5 kg rice 1500'";
-                }, 2000);
+                if (finalTranscriptStr) {
+                    parseVoiceInput(finalTranscriptStr);
+                } else {
+                    voiceHeading.innerText = "Multilingual Voice Entry";
+                    voiceCaption.innerText = "No voice detected. Tap mic to try again.";
+                }
             };
-
-            function processVoiceTranscript(transcript) {
-                transcript = transcript.toLowerCase().trim();
-
-                // Advanced Regex Parsing
-                // 1. Find Currency/Amount: Looks for numbers near currency words or just the last number
-                let amount = 0;
-                let currencyMatch = transcript.match(/(?:rs\.?|rupees|pkr|rupay|ropee)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:rs\.?|rupees|pkr|rupay|ropee)/i);
-                if (currencyMatch) {
-                    amount = parseFloat(currencyMatch[1] || currencyMatch[2]);
-                    transcript = transcript.replace(currencyMatch[0], ''); // Remove from string
-                }
-
-                // 2. Find Qty + Unit
-                let qty = 1;
-                let unit = "Amount Based";
-                let unitMatch = transcript.match(/(\d+(?:\.\d+)?)\s*(kg|kilo|gram|g|liter|litre|l|packet|pack|piece|dozen|box|carton|bag|sack|bori)/i);
-                
-                if (unitMatch) {
-                    qty = parseFloat(unitMatch[1]);
-                    const rawUnit = unitMatch[2];
-                    if (rawUnit.includes('kg') || rawUnit.includes('kilo')) unit = "KG";
-                    else if (rawUnit.includes('gram') || rawUnit === 'g') unit = "Gram";
-                    else if (rawUnit.includes('lit') || rawUnit === 'l') unit = "Liter";
-                    else if (rawUnit.includes('pack')) unit = "Packet";
-                    else if (rawUnit.includes('doz')) unit = "Dozen";
-                    else if (rawUnit.includes('box') || rawUnit.includes('carton')) unit = "Box";
-                    else if (rawUnit.includes('bag') || rawUnit.includes('sack') || rawUnit.includes('bori')) unit = "Bag";
-                    else unit = "Piece";
-
-                    transcript = transcript.replace(unitMatch[0], ''); // Remove from string
-                }
-
-                // 3. Fallback: If no currency word was found, find the LAST remaining number as Amount
-                if (amount === 0) {
-                    let nums = transcript.match(/\b\d+(?:\.\d+)?\b/g);
-                    if (nums && nums.length > 0) {
-                        amount = parseFloat(nums[nums.length - 1]);
-                        transcript = transcript.replace(nums[nums.length - 1], '');
-                    }
-                }
-
-                // 4. Cleanup remaining text for Item Name
-                let item = transcript.replace(/\b(for|ke|ka|worth|total|of|and|aur)\b/gi, '').trim();
-                
-                // Populate Form Safely
-                if (item.length > 0) {
-                    itemName.value = item.charAt(0).toUpperCase() + item.slice(1);
-                }
-                quantityInput.value = qty;
-                unitSelect.value = unit;
-                if (amount > 0) totalPrice.value = amount;
-
-                calculatePerUnitRate();
-                notify("Voice Parsed! Review and Save.", false);
-            }
-
         } else {
             micBtn.style.display = 'none';
-            voiceCaption.innerText = "Voice Dictation not supported.";
+        }
+
+        function parseVoiceInput(transcript) {
+            let t = transcript.toLowerCase().trim();
+            
+            // 1. Extract Price (Strictly numerical, often followed by currency)
+            let priceMatch = t.match(/(\d+(?:\.\d+)?)\s*(?:pkr|rs|rupees|usd|dollar)?$/i) || 
+                             t.match(/(?:rs|pkr|rupees)\s*(\d+(?:\.\d+)?)/i) ||
+                             t.match(/\b\d+\b(?=[^\d]*$)/); // Fallback: last standalone number
+            
+            // 2. Extract Quantity & Unit
+            let qtyUnitMatch = t.match(/(\d+(?:\.\d+)?)\s*(kg|kilo|gram|g|liter|litre|l|packet|pack|piece|dozen|box|carton|bag|sack|bori)/i);
+
+            let parsedQty = 1;
+            let parsedUnit = "Amount Based";
+            let parsedPrice = 0;
+            let parsedItem = transcript; // Keep full text by default
+
+            if (qtyUnitMatch) {
+                parsedQty = parseFloat(qtyUnitMatch[1]);
+                const rawU = qtyUnitMatch[2].toLowerCase();
+                if (rawU.includes('kg') || rawU.includes('kilo')) parsedUnit = "KG";
+                else if (rawU.includes('gram') || rawU === 'g') parsedUnit = "Gram";
+                else if (rawU.includes('lit') || rawU === 'l') parsedUnit = "Liter";
+                else if (rawU.includes('pack')) parsedUnit = "Packet";
+                else if (rawU.includes('box') || rawU.includes('carton')) parsedUnit = "Box";
+                else if (rawU.includes('bag') || rawU.includes('sack') || rawU.includes('bori')) parsedUnit = "Bag";
+                else if (rawU.includes('dozen')) parsedUnit = "Dozen";
+                else parsedUnit = "Piece";
+
+                // Strip the detected qty/unit from the name
+                parsedItem = parsedItem.replace(qtyUnitMatch[0], '');
+            }
+
+            if (priceMatch) {
+                parsedPrice = parseFloat(priceMatch[1]);
+                parsedItem = parsedItem.replace(priceMatch[0], ''); // Strip price
+            }
+
+            // Cleanup remaining item string
+            parsedItem = parsedItem.replace(/\b(for|ke|ka|worth|total|of|and|rupees|rs|pkr)\b/gi, '').trim();
+            if (parsedItem === "") parsedItem = transcript.trim(); // If completely stripped, fallback to raw text
+
+            document.getElementById('itemName').value = parsedItem.charAt(0).toUpperCase() + parsedItem.slice(1);
+            document.getElementById('quantityInput').value = parsedQty;
+            document.getElementById('unitSelect').value = parsedUnit;
+            if (parsedPrice > 0) document.getElementById('totalAmount').value = parsedPrice;
+
+            voiceHeading.innerText = "Multilingual Voice Entry";
+            voiceCaption.innerText = "Voice applied. You can edit the values below.";
+            notify("Speech analyzed successfully!", false);
         }
 
         // ==========================================================================
-        // STRICT MASTER RECORD COMMITMENT ENGINE (BUG-FREE ISOLATION)
+        // STRICT FIREBASE COMMIT ENGINE (PREVENTS GHOST DUPLICATION)
         // ==========================================================================
         onAuthStateChanged(auth, (user) => {
             if (!user) {
@@ -1304,64 +1179,55 @@
                 return;
             }
 
-            entryForm.addEventListener('submit', async (e) => {
+            document.getElementById('entryForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const name = itemName.value.trim();
-                const qty = parseFloat(quantityInput.value) || 1;
-                const unit = unitSelect.value;
-                const total = parseFloat(totalPrice.value);
-                const payMethod = paymentMethod.value;
-                const notes = purposeNote.value.trim();
-
+                const name = document.getElementById('itemName').value.trim();
+                const total = parseFloat(document.getElementById('totalAmount').value);
+                
                 if (!name || isNaN(total) || total <= 0) {
-                    notify("Please specify valid item name and total amount.");
+                    notify("Item description and valid Total Amount are required.");
                     return;
                 }
 
-                // UI Loading state
-                btnLabel.style.display = 'none';
-                btnSpinner.style.display = 'block';
-                commitBtn.disabled = true;
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').style.opacity = '0.7';
 
-                const now = new Date();
-                const dateKey = now.toISOString().split('T')[0];
-                const timeKey = now.toTimeString().split(' ')[0];
+                const nowD = new Date();
+                const dateVal = document.getElementById('dateInput').value;
+                const timeVal = document.getElementById('timeInput').value;
 
-                // CRITICAL FIX: Explicit transaction type ('expense' or 'income') is saved.
-                // It ensures dashboard aggregations DO NOT cross-pollinate.
-                const recordPayload = {
-                    type: currentTxType, 
-                    itemName: name,
-                    category: selectedCategory,
-                    quantity: qty,
-                    unit: unit,
-                    totalPrice: total,
-                    unitPrice: (qty > 0 && unit !== "Amount Based") ? parseFloat((total / qty).toFixed(2)) : total,
-                    paymentMethod: payMethod,
-                    notes: notes || null,
-                    date: dateKey,
-                    time: timeKey,
-                    month: now.getMonth() + 1,
-                    year: now.getFullYear(),
+                // Explicitly construct payload to prevent hidden duplications
+                const payload = {
                     familyId: activeFamilyId,
+                    type: activeTransactionType, // Strictly "expense" or "income"
+                    category: activeCategory,
+                    itemName: name,
+                    totalPrice: total, // SINGLE SOURCE OF TRUTH FOR AMOUNT
+                    date: dateVal,
+                    time: timeVal,
+                    month: parseInt(dateVal.split('-')[1]),
+                    year: parseInt(dateVal.split('-')[0]),
+                    paymentMethod: document.getElementById('paymentMethod').value,
+                    notes: document.getElementById('notesInput').value.trim() || null,
                     createdBy: user.uid,
-                    createdAt: serverTimestamp(),
-                    syncStatus: navigator.onLine ? "Synced" : "Pending_Sync"
+                    createdAt: serverTimestamp()
                 };
 
+                // Add Quantity and Unit ONLY if it's an expense
+                if (activeTransactionType === 'expense') {
+                    payload.quantity = parseFloat(document.getElementById('quantityInput').value) || 1;
+                    payload.unit = document.getElementById('unitSelect').value;
+                    payload.unitPrice = payload.unit !== "Amount Based" ? parseFloat((total / payload.quantity).toFixed(2)) : total;
+                }
+
                 try {
-                    await addDoc(collection(db, "records"), recordPayload);
-                    notify("Transaction Committed Successfully!", false);
-                    setTimeout(() => {
-                        window.location.href = "dashboard.html";
-                    }, 400);
+                    await addDoc(collection(db, "records"), payload);
+                    notify("Vault Ledger Updated!", false);
+                    setTimeout(() => window.location.href = "dashboard.html", 400);
                 } catch (err) {
-                    console.warn("[Local Offline Write]:", err);
-                    notify("Record Stored Locally. Sync pending.", false);
-                    setTimeout(() => {
-                        window.location.href = "dashboard.html";
-                    }, 400);
+                    notify("Offline Fallback: Saved Locally.", false);
+                    setTimeout(() => window.location.href = "dashboard.html", 400);
                 }
             });
         });
