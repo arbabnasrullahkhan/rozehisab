@@ -31,7 +31,6 @@
             --brand-deep: #064E3B;
             --brand-mint: #ECFDF5;
             --brand-emerald: #10B981;
-            --brand-gradient: linear-gradient(135deg, #059669 0%, #064E3B 100%);
 
             --ink-headline: #04382A;
             --ink-title: #0F172A;
@@ -54,21 +53,16 @@
 
             --danger-ink: #EF4444;
             --danger-bg: #FEF2F2;
-            --success-ink: #10B981;
-            --success-bg: #ECFDF5;
 
             --border-subtle: rgba(15, 23, 42, 0.06);
             --border-card: #EDF2F7;
-            --border-focus: #047857;
 
             --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
             --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
             --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
-            --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.25);
-            --shadow-toast: 0 20px 40px -8px rgba(0, 0, 0, 0.15);
+            --shadow-modal: 0 -20px 60px rgba(0, 0, 0, 0.15);
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -89,16 +83,6 @@
             overflow-x: hidden;
         }
 
-        .ambient-canvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
         /* Mobile Container Frame */
         .mobile-viewport {
             width: 100%;
@@ -110,87 +94,28 @@
             flex-direction: column;
             padding-bottom: 100px;
             position: relative;
-            z-index: 10;
         }
 
-        /* ==========================================================================
-           2. EXECUTIVE TOP APP BAR & APPLE ISLAND
-           ========================================================================== */
-        .island-container {
+        .ambient-canvas {
             position: fixed;
-            top: env(safe-area-inset-top, 16px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 500;
-            width: 92%;
-            max-width: 520px;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
             pointer-events: none;
         }
 
-        .dynamic-island {
-            pointer-events: auto;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border-radius: 100px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-island);
-            transition: all 0.4s var(--ease-spring);
-        }
-
-        .island-action-back {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--ink-secondary);
-            text-decoration: none;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: var(--surface-subtle);
-            transition: all 0.2s ease;
-        }
-
-        .island-action-back:hover {
-            color: var(--ink-primary);
-            background: #E2E8F0;
-        }
-
-        .island-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--ink-primary);
-            letter-spacing: -0.02em;
-        }
-
-        .island-action-settings {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--surface-subtle);
-            color: var(--ink-secondary);
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .island-action-settings:hover { background: #E2E8F0; color: var(--brand-deep); }
-
+        /* ==========================================================================
+           2. EXECUTIVE TOP APP BAR (EXACT AS REQUESTED)
+           ========================================================================== */
         .top-appbar {
             position: sticky;
             top: 0;
             z-index: 100;
             background: var(--surface);
             border-bottom: 1px solid var(--border-subtle);
-            padding: calc(env(safe-area-inset-top, 12px) + 68px) 16px 12px 16px;
+            padding: calc(env(safe-area-inset-top, 12px) + 8px) 16px 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -201,7 +126,7 @@
             width: 38px;
             height: 38px;
             border-radius: 12px;
-            background: var(--brand-gradient);
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -221,6 +146,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
         .header-title-str {
@@ -232,19 +158,22 @@
         }
 
         .header-subtitle-str {
-            font-size: 11.5px;
-            color: var(--ink-tertiary);
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+            margin-top: 2px;
         }
 
         .status-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background-color: var(--status-online);
+            background-color: var(--brand-emerald); /* Will be updated via JS */
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            transition: background-color 0.3s ease;
         }
 
         .header-right-actions {
@@ -274,54 +203,15 @@
         }
 
         /* ==========================================================================
-           3. FLOATING TOAST NOTIFICATION
-           ========================================================================== */
-        .toast-wrapper {
-            position: fixed;
-            top: calc(env(safe-area-inset-top, 20px) + 65px);
-            left: 50%;
-            transform: translateX(-50%) translateY(-20px);
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1100;
-            transition: all 0.4s var(--ease-spring);
-            pointer-events: none;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .toast-wrapper.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
-        }
-
-        .toast-capsule {
-            background: rgba(15, 23, 42, 0.94);
-            color: #FFFFFF;
-            backdrop-filter: blur(16px);
-            padding: 12px 18px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: var(--shadow-toast);
-            font-size: 13.5px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .toast-capsule svg { flex-shrink: 0; width: 18px; height: 18px; }
-
-        /* ==========================================================================
-           4. INTERACTIVE DATE CAROUSEL BAR
+           3. INTERACTIVE DATE CAROUSEL BAR
            ========================================================================== */
         .content-stream {
             display: flex;
             flex-direction: column;
             gap: 16px;
             padding: 16px;
+            position: relative;
+            z-index: 10;
         }
 
         .date-carousel-card {
@@ -350,7 +240,11 @@
             transition: all 0.2s var(--ease-spring);
         }
 
-        .date-nav-btn:hover { background: var(--brand-mint); color: var(--brand-deep); }
+        .date-nav-btn:hover {
+            background: var(--brand-mint);
+            color: var(--brand-deep);
+        }
+
         .date-nav-btn:active { transform: scale(0.92); }
 
         .date-center-capsule {
@@ -399,10 +293,10 @@
         }
 
         /* ==========================================================================
-           5. DAILY TELEMETRY HERO BANNER
+           4. DAILY TELEMETRY HERO BANNER
            ========================================================================== */
         .daily-telemetry-hero {
-            background: var(--brand-gradient);
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             border-radius: 24px;
             padding: 22px 20px;
             color: white;
@@ -430,8 +324,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 2;
         }
 
         .hero-date-tag {
@@ -456,8 +348,6 @@
             display: flex;
             align-items: baseline;
             gap: 5px;
-            position: relative;
-            z-index: 2;
         }
 
         .burn-currency { font-size: 20px; font-weight: 700; color: #A7F3D0; }
@@ -469,8 +359,6 @@
             gap: 14px;
             padding-top: 14px;
             border-top: 1px solid rgba(255, 255, 255, 0.12);
-            position: relative;
-            z-index: 2;
         }
 
         .dual-col {
@@ -494,7 +382,7 @@
         }
 
         /* ==========================================================================
-           6. SEARCH & CATEGORY FILTER CHIPS
+           5. SEARCH, FILTER CHIPS & CATEGORY BARS
            ========================================================================== */
         .filter-controls-group {
             display: flex;
@@ -566,7 +454,7 @@
         }
 
         /* ==========================================================================
-           7. DIGITAL REGISTER CARDS STACK
+           6. DIGITAL REGISTER CARDS STACK
            ========================================================================== */
         .register-ledger-stack {
             display: flex;
@@ -677,8 +565,8 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .item-total-expense { color: var(--danger-ink); }
-        .item-total-income { color: var(--success-ink); }
+        .income-color { color: #10B981; }
+        .expense-color { color: var(--danger-ink); }
 
         .item-category-tag {
             font-size: 11px;
@@ -686,7 +574,6 @@
             color: var(--ink-tertiary);
         }
 
-        /* Empty State */
         .empty-register-box {
             background: var(--surface);
             border: 1.5px dashed #CBD5E1;
@@ -724,174 +611,152 @@
         }
 
         /* ==========================================================================
-           8. MODALS (DETAIL INVOICE, EDIT RECORD, DELETE CONFIRM)
+           7. MODAL DRAWER (PREMIUM ONBOARDING STYLE)
            ========================================================================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(4, 56, 42, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(4, 56, 42, 0.55);
+            backdrop-filter: blur(12px);
             z-index: 1000;
             display: none;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: 20px;
         }
 
         .modal-overlay.active { display: flex; }
 
         .modal-card {
             background: var(--surface);
-            border-radius: 28px;
-            padding: 26px 22px;
             width: 100%;
-            max-width: 420px;
+            max-width: 500px;
+            border-radius: 36px 36px 0 0;
+            padding: 32px 24px 44px 24px;
             box-shadow: var(--shadow-modal);
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            animation: slideUpModal 0.28s var(--ease-spring);
+            gap: 20px;
+            animation: slideUpSheet 0.35s var(--ease-spring);
         }
 
-        @keyframes slideUpModal {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes slideUpSheet {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
         .modal-header-line {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
+            margin-bottom: 4px;
         }
 
         .modal-title-str {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--ink-headline);
+            line-height: 1.2;
+            max-width: 80%;
         }
 
         .modal-close-btn {
             background: var(--surface-subtle);
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: var(--ink-secondary);
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
         }
 
-        .modal-close-btn:hover { background: #E2E8F0; }
+        .modal-close-btn:hover { background: #E2E8F0; color: var(--ink-headline); }
 
-        /* Invoice Data Grid */
         .modal-invoice-grid {
             background: var(--surface-subtle);
-            border-radius: 16px;
-            padding: 16px;
+            border-radius: 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
+            border: 1px solid var(--border-card);
         }
 
         .invoice-row {
             display: flex;
             justify-content: space-between;
-            font-size: 13.5px;
-            align-items: flex-start;
+            align-items: center;
+            font-size: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #CBD5E1;
         }
 
-        .invoice-row-label { color: var(--ink-secondary); font-weight: 500; }
-        .invoice-row-val { font-weight: 700; color: var(--ink-title); text-align: right; word-break: break-word; max-width: 180px; }
+        .invoice-row:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
 
-        .modal-actions-row {
+        .invoice-row-label { color: var(--ink-secondary); font-weight: 600; }
+        .invoice-row-val { font-weight: 800; color: var(--ink-title); font-family: 'JetBrains Mono', monospace; text-align: right; }
+
+        .modal-actions-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
+            margin-top: 8px;
         }
 
-        .btn-modal-standard {
-            height: 48px;
-            border: 1px solid var(--border-card);
-            background: var(--surface);
-            border-radius: 14px;
-            font-size: 14px;
+        .btn-modal-action {
+            height: 52px;
+            border-radius: 16px;
+            font-size: 14.5px;
             font-weight: 700;
-            color: var(--ink-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .btn-modal-standard:hover { background: var(--surface-subtle); color: var(--ink-title); }
-
-        .btn-modal-primary {
-            height: 48px;
-            border: none;
-            background: var(--brand-gradient);
-            color: white;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(4, 120, 87, 0.3);
-            transition: transform 0.2s ease;
+        .btn-modal-print {
+            background: var(--surface);
+            border: 1.5px solid var(--border-subtle);
+            color: var(--brand-deep);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
+        .btn-modal-print:hover { border-color: var(--brand-emerald); background: var(--brand-mint); }
 
-        .btn-modal-primary:active { transform: scale(0.96); }
-
-        .btn-modal-danger {
-            height: 48px;
+        .btn-modal-edit {
+            background: var(--brand-deep);
+            color: white;
             border: none;
+            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.3);
+        }
+        .btn-modal-edit:hover { background: #04382A; }
+
+        .btn-modal-delete {
+            grid-column: span 2;
+            height: 52px;
             background: var(--danger-bg);
             color: var(--danger-ink);
-            border-radius: 14px;
-            font-size: 14px;
+            border: none;
+            border-radius: 16px;
             font-weight: 700;
+            font-size: 14.5px;
             cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .btn-modal-danger:hover { background: #FECACA; }
-
-        /* Edit Form inside Modal */
-        .edit-form-group {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        
-        .edit-label { font-size: 12px; font-weight: 600; color: var(--ink-title); }
-        
-        .edit-input {
-            width: 100%;
-            height: 46px;
-            background: var(--surface-subtle);
-            border: 1.5px solid transparent;
-            border-radius: 12px;
-            padding: 0 14px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--ink-title);
-            outline: none;
-        }
-        
-        .edit-input:focus {
-            background: var(--surface);
-            border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px var(--brand-glow);
-        }
-
-        .edit-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .btn-modal-delete:hover { background: #FECACA; }
 
         /* ==========================================================================
-           9. LUXURY MOBILE ISLAND DOCK
+           8. LUXURY MOBILE ISLAND DOCK
            ========================================================================== */
         .dock-container {
             position: fixed;
@@ -951,7 +816,7 @@
             width: 58px;
             height: 58px;
             border-radius: 50%;
-            background: var(--brand-gradient);
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
             box-shadow: var(--shadow-fab);
             border: 3.5px solid var(--surface);
             display: flex;
@@ -967,62 +832,55 @@
         .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
 
         /* ==========================================================================
-           10. PRINT MEDIA STYLES (PROFESSIONAL A4 REPORT)
+           9. PRINT OPTIMIZATION (THE "PAD" RECEIPT LAYOUT)
            ========================================================================== */
-        .print-header { display: none; }
+        #printSection { display: none; }
 
         @media print {
-            body, html { background: white !important; color: black !important; }
-            .mobile-viewport { max-width: 100%; padding: 0 !important; }
+            body * { visibility: hidden; }
+            #printSection, #printSection * { visibility: visible; }
+            #printSection { 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                padding: 20px; 
+                color: black; 
+                background: white; 
+                font-family: sans-serif;
+            }
+            .mobile-viewport, .dock-container, .modal-overlay, .ambient-canvas { display: none !important; }
             
-            /* Hide all UI elements */
-            .island-container, .top-appbar, .date-carousel-card, .daily-telemetry-hero, 
-            .filter-controls-group, .dock-container, .toast-wrapper, .modal-overlay { 
-                display: none !important; 
-            }
-
-            /* Show custom Print Header */
-            .print-header {
-                display: block !important;
-                text-align: center;
-                padding: 20px 0;
-                border-bottom: 2px solid #000;
-                margin-bottom: 20px;
-            }
-            .print-title { font-size: 24px; font-weight: 800; margin-bottom: 5px; }
-            .print-date { font-size: 14px; font-weight: 600; color: #555; }
-
-            /* Style Ledger for Paper */
-            .register-ledger-stack { gap: 0 !important; }
-            .ledger-item-card {
-                box-shadow: none !important;
-                border: none !important;
-                border-bottom: 1px solid #ccc !important;
-                border-radius: 0 !important;
-                padding: 12px 0 !important;
-                break-inside: avoid;
-            }
-            .time-badge-box { background: none !important; border: 1px solid #ddd; }
-            .item-total-str { color: black !important; }
+            .print-header { text-align: center; margin-bottom: 24px; border-bottom: 2px solid #000; padding-bottom: 10px;}
+            .print-header h2 { margin: 0; font-size: 24px; font-weight: bold; }
+            .print-header p { margin: 4px 0 0 0; font-size: 14px; color: #333; }
+            
+            .print-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+            .print-table th, .print-table td { border: 1px solid #000; padding: 10px; text-align: left; }
+            .print-table th { background-color: #f1f5f9 !important; font-weight: bold; -webkit-print-color-adjust: exact; }
+            
+            .print-totals { margin-top: 20px; text-align: right; font-weight: bold; font-size: 16px; border-top: 2px solid #000; padding-top: 10px;}
+            
+            /* Single Receipt Styling */
+            .receipt-box { border: 2px solid #000; padding: 20px; border-radius: 8px; width: 100%; max-width: 400px; margin: 0 auto;}
+            .receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ccc; font-size: 14px;}
+            .receipt-row:last-child { border-bottom: none; }
+            .receipt-row strong { font-weight: bold; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Print Header (Hidden on screen, visible on print) -->
-    <div class="print-header">
-        <div class="print-title">Roz E Hisab - Daily Report</div>
-        <div class="print-date" id="printDateLabel">September 13, 2026</div>
-    </div>
-
-    <!-- Ambient Canvas Background -->
+    <!-- Ambient Space Background -->
     <div class="ambient-canvas"></div>
 
+    <!-- Hidden Print Section (Activated dynamically via JS) -->
+    <div id="printSection"></div>
 
     <!-- Main Mobile Frame Viewport -->
     <main class="mobile-viewport">
 
-        <!-- 1. Top Appbar -->
+        <!-- 1. Top Appbar (As requested) -->
         <header class="top-appbar">
             <!-- App Logo on Left -->
             <a href="dashboard.html" class="app-logo-link" title="Roz E Hisab Home">
@@ -1038,11 +896,11 @@
             </div>
 
             <div class="header-right-actions">
-                <button type="button" class="btn-header-action" onclick="window.print()" title="Print Register">
+                <button type="button" class="btn-header-action" id="btnMainPrint" title="Print Register">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 </button>
                 
-                <!-- NEW EXACT SETTINGS SVG APPLIED HERE -->
+                <!-- NEW EXACT SETTINGS SVG -->
                 <a href="settings.html" class="btn-header-action" title="Settings">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
@@ -1050,14 +908,6 @@
                     </svg>
                 </a>
             </div>
-    <!-- Toast Notification -->
-    <div class="toast-wrapper" id="toastBox">
-        <div class="toast-capsule">
-            <svg id="toastIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <span id="toastMsg">Notification message</span>
-        </div>
-    </div>
-
         </header>
 
         <!-- 2. Scrollable Body Stream -->
@@ -1074,8 +924,7 @@
                         <span id="dateHeadline">Today</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </div>
-                    <span class="date-sub-text" id="dateSubtext">September 13, 2026</span>
-                    <!-- Hidden native date input -->
+                    <span class="date-sub-text" id="dateSubtext">Loading...</span>
                     <input type="date" class="native-calendar-overlay" id="nativeCalendarPicker">
                 </div>
 
@@ -1101,12 +950,12 @@
 
                 <div class="hero-bottom-dual">
                     <div class="dual-col">
-                        <span class="dual-label">Total Outflow</span>
-                        <span class="dual-val" style="color: #FECACA;" id="dailyTotalExpense">Rs. 0</span>
+                        <span class="dual-label">Total Income</span>
+                        <span class="dual-val" id="dailyTotalIncome" style="color:#A7F3D0;">Rs. 0</span>
                     </div>
                     <div class="dual-col" style="text-align: right;">
-                        <span class="dual-label">Total Inflow</span>
-                        <span class="dual-val" style="color: #A7F3D0;" id="dailyTotalIncome">Rs. 0</span>
+                        <span class="dual-label">Total Expense</span>
+                        <span class="dual-val" id="dailyTotalExpense" style="color:#FECACA;">Rs. 0</span>
                     </div>
                 </div>
             </section>
@@ -1120,17 +969,19 @@
 
                 <div class="category-filter-shelf" id="catFilterShelf">
                     <button type="button" class="cat-pill-btn active" data-cat="ALL">All Items</button>
-                    <button type="button" class="cat-pill-btn" data-cat="Expense">💸 Expenses Only</button>
-                    <button type="button" class="cat-pill-btn" data-cat="Income">💼 Incomes Only</button>
                     <button type="button" class="cat-pill-btn" data-cat="Grocery">🛒 Grocery</button>
                     <button type="button" class="cat-pill-btn" data-cat="Food">🍱 Food</button>
                     <button type="button" class="cat-pill-btn" data-cat="Household">⚡ Utilities</button>
+                    <button type="button" class="cat-pill-btn" data-cat="School">🎓 School</button>
+                    <button type="button" class="cat-pill-btn" data-cat="Zameen">🚜 Agriculture</button>
+                    <button type="button" class="cat-pill-btn" data-cat="Shop">🏪 Shop</button>
+                    <button type="button" class="cat-pill-btn" data-cat="Advance">💵 Advance</button>
                 </div>
             </section>
 
             <!-- Digital Register Card Stack -->
             <section class="register-ledger-stack" id="registerLedgerStack">
-                <!-- Dynamically Rendered via Firestore -->
+                <!-- Dynamically Rendered -->
                 <div class="empty-register-box">
                     <div class="empty-icon-circle">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1167,12 +1018,8 @@
                     <span>Reports</span>
                 </a>
 
-                <!-- NEW EXACT SETTINGS SVG APPLIED HERE IN DOCK TOO -->
                 <a href="settings.html" class="dock-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     <span>Settings</span>
                 </a>
             </nav>
@@ -1180,17 +1027,13 @@
 
     </main>
 
-    <!-- ==========================================================================
-       4. MODALS (DETAIL INVOICE & EDIT/DELETE)
-       ========================================================================== -->
-    
-    <!-- 4A. View Transaction Detail Modal -->
+    <!-- 4. PURE PREMIUM TRANSACTION DETAIL MODAL (BOTTOM SHEET STYLE) -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-card">
             <div class="modal-header-line">
-                <h3 class="modal-title-str" id="modalItemTitle">Transaction Details</h3>
+                <h3 class="modal-title-str" id="modalItemTitle" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Item Specification</h3>
                 <button type="button" class="modal-close-btn" id="modalCloseBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
 
@@ -1200,166 +1043,94 @@
                     <span class="invoice-row-val" id="modalItemCat">--</span>
                 </div>
                 <div class="invoice-row">
-                    <span class="invoice-row-label">Type</span>
-                    <span class="invoice-row-val" id="modalItemType">--</span>
-                </div>
-                <div class="invoice-row" id="modalQtyRow">
                     <span class="invoice-row-label">Quantity & Measure</span>
                     <span class="invoice-row-val" id="modalItemQty">--</span>
                 </div>
-                <div class="invoice-row" id="modalRateRow">
+                <div class="invoice-row">
                     <span class="invoice-row-label">Unit Rate</span>
                     <span class="invoice-row-val" id="modalItemRate">--</span>
                 </div>
                 <div class="invoice-row">
                     <span class="invoice-row-label">Total Amount</span>
-                    <span class="invoice-row-val" id="modalItemAmount">--</span>
+                    <span class="invoice-row-val" id="modalItemAmount" style="font-size:16px;">--</span>
                 </div>
                 <div class="invoice-row">
                     <span class="invoice-row-label">Time Logged</span>
-                    <span class="invoice-row-val" id="modalItemTime">--:--</span>
+                    <span class="invoice-row-val" id="modalItemTime">--</span>
                 </div>
                 <div class="invoice-row">
-                    <span class="invoice-row-label">Payment Method</span>
-                    <span class="invoice-row-val" id="modalItemVendor">Cash</span>
+                    <span class="invoice-row-label">Payment Mode</span>
+                    <span class="invoice-row-val" id="modalItemVendor">--</span>
                 </div>
-                <div class="invoice-row" id="modalNotesRow" style="display:none;">
+                <div class="invoice-row" id="modalNotesRow" style="display:none; flex-direction:column; gap:6px;">
                     <span class="invoice-row-label">Remarks / Note</span>
-                    <span class="invoice-row-val" id="modalItemNotes" style="text-align: right;">--</span>
+                    <span class="invoice-row-val" id="modalItemNotes" style="text-align: left; font-size:12px; color:var(--ink-secondary);">--</span>
                 </div>
             </div>
 
-            <div class="modal-actions-row">
-                <button type="button" class="btn-modal-danger" id="triggerDeleteBtn">Delete</button>
-                <button type="button" class="btn-modal-primary" id="triggerEditBtn">Edit Transaction</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4B. Edit Transaction Modal (Live Form) -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal-card">
-            <div class="modal-header-line">
-                <h3 class="modal-title-str">Edit Transaction</h3>
-                <button type="button" class="modal-close-btn" id="editCloseBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="modal-actions-grid">
+                <button type="button" class="btn-modal-action btn-modal-print" id="modalPrintBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path></svg>
+                    Print
+                </button>
+                <button type="button" class="btn-modal-action btn-modal-edit" id="modalEditBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Edit
+                </button>
+                <button type="button" class="btn-modal-delete" id="modalDeleteBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Delete Record
                 </button>
             </div>
-
-            <form id="editForm" style="display: flex; flex-direction: column; gap: 14px;">
-                <div class="edit-form-group">
-                    <label class="edit-label">Description / Item Name</label>
-                    <input type="text" id="editItemName" class="edit-input" required>
-                </div>
-
-                <div class="edit-grid-2">
-                    <div class="edit-form-group">
-                        <label class="edit-label">Amount (Rs.)</label>
-                        <input type="number" id="editAmount" class="edit-input" step="any" min="1" required>
-                    </div>
-                    <div class="edit-form-group">
-                        <label class="edit-label">Category</label>
-                        <input type="text" id="editCategory" class="edit-input" required>
-                    </div>
-                </div>
-
-                <div class="edit-grid-2" id="editQtyBlock">
-                    <div class="edit-form-group">
-                        <label class="edit-label">Quantity</label>
-                        <input type="number" id="editQty" class="edit-input" step="any" min="0">
-                    </div>
-                    <div class="edit-form-group">
-                        <label class="edit-label">Unit</label>
-                        <select id="editUnit" class="edit-input">
-                            <option value="Amount Based">Amount Based</option>
-                            <option value="KG">KG</option>
-                            <option value="Gram">Gram</option>
-                            <option value="Liter">Liter</option>
-                            <option value="Packet">Packet</option>
-                            <option value="Piece">Piece</option>
-                            <option value="Dozen">Dozen</option>
-                            <option value="Box">Box</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-actions-row" style="margin-top: 6px;">
-                    <button type="button" class="btn-modal-standard" id="editCancelBtn">Cancel</button>
-                    <button type="submit" class="btn-modal-primary" id="editSaveBtn">Save Changes</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <!-- ==========================================================================
-       9. REALTIME FIREBASE DAILY REGISTER INTEGRATION ENGINE
+       9. REALTIME FIREBASE DAILY REGISTER & PRINT ENGINE
        ========================================================================== -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
-            getFirestore, 
-            collection, 
-            query, 
-            where, 
-            onSnapshot, 
-            doc, 
-            deleteDoc,
-            updateDoc,
-            serverTimestamp,
-            enableIndexedDbPersistence 
+            collection, query, where, onSnapshot, doc, deleteDoc, getDoc 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // Verified Firebase Architecture Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
-            authDomain: "roz-e-hisab.firebaseapp.com",
-            projectId: "roz-e-hisab",
-            storageBucket: "roz-e-hisab.firebasestorage.app",
-            messagingSenderId: "776423119730",
-            appId: "1:776423119730:web:19c78561f4826224771beb",
-            measurementId: "G-17Q9D41WNR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Offline Cache
-        enableIndexedDbPersistence(db).catch(() => {});
-
         // DOM Handles
-        const networkDot = document.getElementById('networkDot');
         const activeWorkspaceSubtitle = document.getElementById('activeWorkspaceSubtitle');
+        const networkDot = document.getElementById('networkDot');
         const prevDayBtn = document.getElementById('prevDayBtn');
         const nextDayBtn = document.getElementById('nextDayBtn');
         const todayJumpBtn = document.getElementById('todayJumpBtn');
         const dateHeadline = document.getElementById('dateHeadline');
         const dateSubtext = document.getElementById('dateSubtext');
         const nativeCalendarPicker = document.getElementById('nativeCalendarPicker');
+        
         const recordsCountChip = document.getElementById('recordsCountChip');
         const dailyTotalAmount = document.getElementById('dailyTotalAmount');
-        const dailyTotalExpense = document.getElementById('dailyTotalExpense');
         const dailyTotalIncome = document.getElementById('dailyTotalIncome');
-        const dailyAvgTicket = document.getElementById('dailyAvgTicket');
-        const dailyPeakPurchase = document.getElementById('dailyPeakPurchase');
+        const dailyTotalExpense = document.getElementById('dailyTotalExpense');
         const registerSearchInput = document.getElementById('registerSearchInput');
         const catFilterShelf = document.getElementById('catFilterShelf');
         const registerLedgerStack = document.getElementById('registerLedgerStack');
-        const printDateLabel = document.getElementById('printDateLabel');
 
-        // Detail Modal Handles
+        // Modal Handles
         const detailModal = document.getElementById('detailModal');
         const modalCloseBtn = document.getElementById('modalCloseBtn');
-        const triggerDeleteBtn = document.getElementById('triggerDeleteBtn');
-        const triggerEditBtn = document.getElementById('triggerEditBtn');
-        
-        // Edit Modal Handles
-        const editModal = document.getElementById('editModal');
-        const editForm = document.getElementById('editForm');
-        const editCloseBtn = document.getElementById('editCloseBtn');
-        const editCancelBtn = document.getElementById('editCancelBtn');
-        const editSaveBtn = document.getElementById('editSaveBtn');
+        const modalDeleteBtn = document.getElementById('modalDeleteBtn');
+        const modalEditBtn = document.getElementById('modalEditBtn');
+        const modalPrintBtn = document.getElementById('modalPrintBtn');
+        const btnMainPrint = document.getElementById('btnMainPrint');
+        const printSection = document.getElementById('printSection');
+
+        const modalItemTitle = document.getElementById('modalItemTitle');
+        const modalItemCat = document.getElementById('modalItemCat');
+        const modalItemQty = document.getElementById('modalItemQty');
+        const modalItemRate = document.getElementById('modalItemRate');
+        const modalItemAmount = document.getElementById('modalItemAmount');
+        const modalItemTime = document.getElementById('modalItemTime');
+        const modalItemVendor = document.getElementById('modalItemVendor');
+        const modalNotesRow = document.getElementById('modalNotesRow');
+        const modalItemNotes = document.getElementById('modalItemNotes');
 
         // State Machine
         let activeDate = new Date();
@@ -1367,8 +1138,9 @@
         let cachedDayRecords = [];
         let activeCategoryFilter = "ALL";
         let activeSelectedRecord = null;
+        let filteredDataset = [];
 
-        // Dynamic Network Monitor
+        // Network Monitor
         function updateNetwork() {
             networkDot.style.backgroundColor = navigator.onLine ? "var(--status-online)" : "var(--status-offline)";
         }
@@ -1376,21 +1148,7 @@
         window.addEventListener('offline', updateNetwork);
         updateNetwork();
 
-        // Toast Feedback Dispatcher
-        const toastBox = document.getElementById('toastBox');
-        const toastMsg = document.getElementById('toastMsg');
-        let toastTimer;
-        function notify(msg, isError = true) {
-            clearTimeout(toastTimer);
-            toastMsg.innerText = msg;
-            toastBox.querySelector('.toast-capsule').style.background = isError 
-                ? "rgba(220, 38, 38, 0.94)" 
-                : "rgba(4, 120, 87, 0.94)";
-            toastBox.classList.add('active');
-            toastTimer = setTimeout(() => toastBox.classList.remove('active'), 3400);
-        }
-
-        // Date helper (YYYY-MM-DD)
+        // Date helper
         function formatDateKey(d) {
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -1398,32 +1156,26 @@
             return `${y}-${m}-${day}`;
         }
 
-        // Update Date UI & Trigger Sync
+        // Update Date UI
         function refreshDateCarousel() {
             const todayStr = formatDateKey(new Date());
             const activeStr = formatDateKey(activeDate);
 
             nativeCalendarPicker.value = activeStr;
 
-            const options = { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' };
-            const fullDateText = activeDate.toLocaleDateString('en-US', options);
-
             if (todayStr === activeStr) {
                 dateHeadline.innerText = "Today";
                 todayJumpBtn.style.display = "none";
             } else {
-                dateHeadline.innerText = activeDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateHeadline.innerText = activeDate.toLocaleDateString('en-US', options);
                 todayJumpBtn.style.display = "block";
             }
 
-            dateSubtext.innerText = fullDateText;
-            printDateLabel.innerText = fullDateText; // For Printer
-            
-            // Re-listen for active date
+            dateSubtext.innerText = activeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             bindDailyRecords(activeStr);
         }
 
-        // Date Navigation Listeners
         prevDayBtn.addEventListener('click', () => { activeDate.setDate(activeDate.getDate() - 1); refreshDateCarousel(); });
         nextDayBtn.addEventListener('click', () => { activeDate.setDate(activeDate.getDate() + 1); refreshDateCarousel(); });
         todayJumpBtn.addEventListener('click', () => { activeDate = new Date(); refreshDateCarousel(); });
@@ -1445,178 +1197,196 @@
             });
         });
 
-        registerSearchInput.addEventListener('input', renderLedgerDOM);
+        registerSearchInput.addEventListener('input', () => { renderLedgerDOM(); });
 
-        // ==========================================================================
-        // DETAIL & EDIT MODAL CONTROLS
-        // ==========================================================================
-        function closeDetailModal() { detailModal.classList.remove('active'); activeSelectedRecord = null; }
-        modalCloseBtn.addEventListener('click', closeDetailModal);
+        // Modal Controls
+        function closeModal() {
+            detailModal.classList.remove('active');
+            activeSelectedRecord = null;
+        }
+        modalCloseBtn.addEventListener('click', closeModal);
+        
+        detailModal.addEventListener('click', (e) => {
+            if(e.target === detailModal) closeModal();
+        });
 
-        function closeEditModal() { editModal.classList.remove('active'); }
-        editCloseBtn.addEventListener('click', closeEditModal);
-        editCancelBtn.addEventListener('click', closeEditModal);
+        // Edit Record Action
+        modalEditBtn.addEventListener('click', () => {
+            if(activeSelectedRecord) {
+                // Navigate to add.html with edit query parameter
+                window.location.href = `add.html?edit=${activeSelectedRecord.id}`;
+            }
+        });
 
-        // Delete Action
-        triggerDeleteBtn.addEventListener('click', async () => {
+        // Delete Record Action
+        modalDeleteBtn.addEventListener('click', async () => {
             if (!activeSelectedRecord) return;
-            if (confirm(`Are you sure you want to permanently delete "${activeSelectedRecord.itemName}"?`)) {
+            if (confirm(`Permanently delete "${activeSelectedRecord.itemName}" from your ledger?`)) {
                 try {
-                    triggerDeleteBtn.innerText = "Deleting...";
+                    modalDeleteBtn.innerHTML = "Deleting...";
                     await deleteDoc(doc(db, "records", activeSelectedRecord.id));
-                    notify("Transaction deleted successfully.", false);
-                    closeDetailModal();
+                    closeModal();
                 } catch(e) {
-                    notify("Error: " + e.message);
+                    alert("Error: " + e.message);
                 } finally {
-                    triggerDeleteBtn.innerText = "Delete";
+                    modalDeleteBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Delete Record`;
                 }
             }
         });
 
-        // Open Edit Form
-        triggerEditBtn.addEventListener('click', () => {
-            if (!activeSelectedRecord) return;
+        // Print Functions
+        btnMainPrint.addEventListener('click', () => {
+            generateDailyPrint();
+            window.print();
+        });
+
+        modalPrintBtn.addEventListener('click', () => {
+            if(!activeSelectedRecord) return;
+            generateReceiptPrint(activeSelectedRecord);
+            window.print();
+        });
+
+        function generateDailyPrint() {
+            const dateStr = dateSubtext.innerText;
+            const famName = activeWorkspaceSubtitle.innerText.replace('Family Ledger', '').trim() || 'Roz E Hisab';
             
-            // Populate Edit Form
-            document.getElementById('editItemName').value = activeSelectedRecord.itemName || '';
-            document.getElementById('editAmount').value = activeSelectedRecord.totalPrice || 0;
-            document.getElementById('editCategory').value = activeSelectedRecord.category || 'General';
+            let totalEx = 0, totalInc = 0;
+            let rows = filteredDataset.map((item, index) => {
+                const amt = parseFloat(item.totalPrice) || 0;
+                let priceCol = "";
+                if(item.type === 'income') {
+                    totalInc += amt;
+                    priceCol = `<span style="color:#10B981;">+${amt.toLocaleString()}</span>`;
+                } else {
+                    totalEx += amt;
+                    priceCol = `<span style="color:#EF4444;">-${amt.toLocaleString()}</span>`;
+                }
+                
+                const unitStr = (item.quantity && item.unit !== "Amount Based") ? `${item.quantity} ${item.unit}` : '-';
+                const rateStr = item.unitPrice ? item.unitPrice.toLocaleString() : '-';
 
-            if (activeSelectedRecord.type === 'income') {
-                document.getElementById('editQtyBlock').style.display = 'none';
-            } else {
-                document.getElementById('editQtyBlock').style.display = 'grid';
-                document.getElementById('editQty').value = activeSelectedRecord.quantity || 1;
-                document.getElementById('editUnit').value = activeSelectedRecord.unit || 'Amount Based';
-            }
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${(item.time || '').substring(0, 5)}</td>
+                        <td><strong>${item.itemName}</strong><br><small>${item.category}</small></td>
+                        <td>${unitStr}</td>
+                        <td>${rateStr}</td>
+                        <td>${priceCol}</td>
+                    </tr>
+                `;
+            }).join('');
 
-            detailModal.classList.remove('active');
-            editModal.classList.add('active');
-        });
+            printSection.innerHTML = `
+                <div class="print-header">
+                    <h2>${famName} - Daily Register</h2>
+                    <p>Date: ${dateStr} • Generated by Roz E Hisab</p>
+                </div>
+                <table class="print-table">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">S.No</th>
+                            <th style="width:10%">Time</th>
+                            <th style="width:40%">Item / Category</th>
+                            <th style="width:15%">Quantity</th>
+                            <th style="width:15%">Unit Rate</th>
+                            <th style="width:15%">Total (Rs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+                <div class="print-totals">
+                    <p>Total Income: Rs. ${totalInc.toLocaleString()}</p>
+                    <p>Total Expense: Rs. ${totalEx.toLocaleString()}</p>
+                    <p style="font-size:18px; border-top:1px solid #000; padding-top:5px; margin-top:5px;">
+                        Net Balance: Rs. ${(totalInc - totalEx).toLocaleString()}
+                    </p>
+                </div>
+            `;
+        }
 
-        // Save Edit Form
-        editForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!activeSelectedRecord) return;
+        function generateReceiptPrint(record) {
+            const famName = activeWorkspaceSubtitle.innerText.replace('Family Ledger', '').trim() || 'Roz E Hisab';
+            const isInc = record.type === 'income';
+            const sign = isInc ? '+' : '-';
+            const qtyStr = (record.quantity && record.unit !== "Amount Based") ? `${record.quantity} ${record.unit}` : 'Amount Based';
+            const rateStr = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : 'N/A';
 
-            const newName = document.getElementById('editItemName').value.trim();
-            const newTotal = parseFloat(document.getElementById('editAmount').value) || 0;
-            const newCat = document.getElementById('editCategory').value.trim();
-
-            if (!newName || newTotal <= 0) {
-                notify("Invalid name or amount.");
-                return;
-            }
-
-            editSaveBtn.innerText = "Saving...";
-            editSaveBtn.disabled = true;
-
-            const payload = {
-                itemName: newName,
-                totalPrice: newTotal,
-                category: newCat,
-                updatedAt: serverTimestamp()
-            };
-
-            if (activeSelectedRecord.type !== 'income') {
-                const newQty = parseFloat(document.getElementById('editQty').value) || 1;
-                const newUnit = document.getElementById('editUnit').value;
-                payload.quantity = newQty;
-                payload.unit = newUnit;
-                payload.unitPrice = newUnit !== "Amount Based" ? parseFloat((newTotal / newQty).toFixed(2)) : newTotal;
-            }
-
-            try {
-                await updateDoc(doc(db, "records", activeSelectedRecord.id), payload);
-                notify("Transaction updated successfully!", false);
-                closeEditModal();
-            } catch (err) {
-                notify("Update Error: " + err.message);
-            } finally {
-                editSaveBtn.innerText = "Save Changes";
-                editSaveBtn.disabled = false;
-            }
-        });
+            printSection.innerHTML = `
+                <div class="print-header">
+                    <h2>${famName}</h2>
+                    <p>Transaction Receipt</p>
+                </div>
+                <div class="receipt-box">
+                    <div class="receipt-row"><span>Date & Time:</span> <strong>${record.date} ${record.time || ''}</strong></div>
+                    <div class="receipt-row"><span>Item:</span> <strong>${record.itemName}</strong></div>
+                    <div class="receipt-row"><span>Category:</span> <strong>${record.category}</strong></div>
+                    <div class="receipt-row"><span>Quantity:</span> <strong>${qtyStr}</strong></div>
+                    <div class="receipt-row"><span>Unit Rate:</span> <strong>${rateStr}</strong></div>
+                    <div class="receipt-row"><span>Payment Mode:</span> <strong>${record.paymentMethod || record.vendor || 'Cash'}</strong></div>
+                    <div class="receipt-row" style="margin-top:10px; border-top:2px solid #000; padding-top:10px;">
+                        <span>Total Amount:</span> 
+                        <strong style="font-size:18px;">${sign} Rs. ${parseFloat(record.totalPrice).toLocaleString()}</strong>
+                    </div>
+                </div>
+            `;
+        }
 
         // Master Computation & Renderer
         function renderLedgerDOM() {
             const queryTerm = registerSearchInput.value.toLowerCase().trim();
 
-            const filtered = cachedDayRecords.filter(r => {
-                // Main Tab Filter
-                if (activeCategoryFilter === "Expense" && r.type === "income") return false;
-                if (activeCategoryFilter === "Income" && r.type !== "income") return false;
-                
-                // Specific Category Filter
-                if (activeCategoryFilter !== "ALL" && activeCategoryFilter !== "Expense" && activeCategoryFilter !== "Income") {
-                    if ((r.category || '').toLowerCase() !== activeCategoryFilter.toLowerCase()) return false;
-                }
-
-                // Text Search Filter
+            filteredDataset = cachedDayRecords.filter(r => {
+                if (activeCategoryFilter !== "ALL" && (r.category || '').toLowerCase() !== activeCategoryFilter.toLowerCase()) return false;
                 if (queryTerm) {
                     const matchItem = (r.itemName || '').toLowerCase().includes(queryTerm);
-                    const matchVendor = (r.paymentMethod || r.vendor || '').toLowerCase().includes(queryTerm);
+                    const matchVendor = (r.vendor || '').toLowerCase().includes(queryTerm);
                     const matchNotes = (r.notes || '').toLowerCase().includes(queryTerm);
                     if (!matchItem && !matchVendor && !matchNotes) return false;
                 }
                 return true;
             });
 
-            // Sort Descending by Time
-            filtered.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+            filteredDataset.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
 
-            // Compute Day Summary
-            let expSum = 0;
-            let incSum = 0;
-            let peakAmount = 0;
-            let expCount = 0;
+            let dayExp = 0;
+            let dayInc = 0;
 
-            filtered.forEach(item => {
+            filteredDataset.forEach(item => {
                 const amt = parseFloat(item.totalPrice) || 0;
-                if (item.type === 'income') {
-                    incSum += amt;
-                } else {
-                    expSum += amt;
-                    expCount++;
-                    if (amt > peakAmount) peakAmount = amt;
-                }
+                if(item.type === 'income') dayInc += amt;
+                else dayExp += amt;
             });
 
-            const netBal = incSum - expSum;
-            
+            const netBal = dayInc - dayExp;
             dailyTotalAmount.innerText = netBal.toLocaleString();
-            dailyTotalExpense.innerText = `Rs. ${expSum.toLocaleString()}`;
-            dailyTotalIncome.innerText = `Rs. ${incSum.toLocaleString()}`;
-            
-            recordsCountChip.innerText = `${filtered.length} Entries`;
-            const avg = expCount > 0 ? Math.round(expSum / expCount) : 0;
-            dailyAvgTicket.innerText = `Rs. ${avg.toLocaleString()}`;
-            dailyPeakPurchase.innerText = `Rs. ${peakAmount.toLocaleString()}`;
+            dailyTotalIncome.innerText = `Rs. ${dayInc.toLocaleString()}`;
+            dailyTotalExpense.innerText = `Rs. ${dayExp.toLocaleString()}`;
+            recordsCountChip.innerText = `${filteredDataset.length} Entries`;
 
-            // Render Ledger Cards
-            if (filtered.length === 0) {
+            if (filteredDataset.length === 0) {
                 registerLedgerStack.innerHTML = `
                     <div class="empty-register-box">
                         <div class="empty-icon-circle">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                         </div>
                         <span class="empty-title">No Transactions Recorded</span>
-                        <span class="empty-sub">No purchases or inflows found matching this date or filter. Tap the + button to log an entry.</span>
+                        <span class="empty-sub">No purchases or inflows found matching this date or filter.</span>
                     </div>
                 `;
                 return;
             }
 
-            registerLedgerStack.innerHTML = filtered.map(item => {
+            registerLedgerStack.innerHTML = filteredDataset.map(item => {
                 const isInc = item.type === 'income';
+                const priceClass = isInc ? 'income-color' : 'expense-color';
                 const sign = isInc ? '+' : '-';
-                const colorClass = isInc ? 'item-total-income' : 'item-total-expense';
                 
-                let unitRateStr = '';
-                if (!isInc && item.quantity && item.unit !== "Amount Based" && item.unitPrice) {
-                    unitRateStr = `<span class="calc-rate-pill">@ Rs.${parseFloat(item.unitPrice).toLocaleString()}/${item.unit}</span>`;
-                }
+                const unitRateStr = (item.quantity && item.unit !== "Amount Based" && item.unitPrice) 
+                    ? `<span class="calc-rate-pill">@ Rs.${parseFloat(item.unitPrice).toLocaleString()}/${item.unit}</span>` 
+                    : '';
 
                 return `
                     <div class="ledger-item-card" data-id="${item.id}">
@@ -1628,22 +1398,22 @@
                             <div class="card-meta-column">
                                 <span class="item-headline-str">${item.itemName}</span>
                                 <div class="item-spec-tags">
-                                    ${!isInc ? `<span class="qty-unit-pill">${item.quantity || 1} ${item.unit || 'Unit'}</span>` : `<span class="qty-unit-pill" style="color:var(--status-online);">Income Inflow</span>`}
+                                    <span class="qty-unit-pill">${item.quantity || 1} ${item.unit || 'Unit'}</span>
                                     ${unitRateStr}
-                                    ${item.paymentMethod ? `<span>• ${item.paymentMethod}</span>` : ''}
+                                    ${item.vendor || item.paymentMethod ? `<span>• ${item.vendor || item.paymentMethod}</span>` : ''}
                                 </div>
                             </div>
                         </div>
 
                         <div class="card-right-group">
-                            <span class="item-total-str ${colorClass}">${sign} Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
+                            <span class="item-total-str ${priceClass}">${sign} Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
                             <span class="item-category-tag">${item.category || 'General'}</span>
                         </div>
                     </div>
                 `;
             }).join('');
 
-            // Card Click Handler -> Open Full Detail Invoice Drawer
+            // Card Click Handler -> Open Modal
             registerLedgerStack.querySelectorAll('.ledger-item-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const id = card.getAttribute('data-id');
@@ -1651,30 +1421,23 @@
                     if (!record) return;
 
                     activeSelectedRecord = record;
-                    document.getElementById('modalItemTitle').innerText = record.itemName;
-                    document.getElementById('modalItemCat').innerText = record.category || 'General';
-                    document.getElementById('modalItemType').innerText = record.type === 'income' ? 'Inflow (Income)' : 'Outflow (Expense)';
+                    modalItemTitle.innerText = record.itemName;
+                    modalItemCat.innerText = record.category || 'General';
+                    modalItemQty.innerText = record.quantity ? `${record.quantity} ${record.unit || 'Unit'}` : 'Amount Based';
+                    modalItemRate.innerText = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : '--';
                     
-                    if (record.type === 'income') {
-                        document.getElementById('modalQtyRow').style.display = 'none';
-                        document.getElementById('modalRateRow').style.display = 'none';
-                    } else {
-                        document.getElementById('modalQtyRow').style.display = 'flex';
-                        document.getElementById('modalRateRow').style.display = 'flex';
-                        document.getElementById('modalItemQty').innerText = `${record.quantity || 1} ${record.unit || 'Unit'}`;
-                        document.getElementById('modalItemRate').innerText = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : 'Standard';
-                    }
-
-                    document.getElementById('modalItemAmount').innerText = `Rs. ${parseFloat(record.totalPrice).toLocaleString()}`;
-                    document.getElementById('modalItemAmount').style.color = record.type === 'income' ? 'var(--success-ink)' : 'var(--danger-ink)';
-                    document.getElementById('modalItemTime').innerText = record.time || '12:00 PM';
-                    document.getElementById('modalItemVendor').innerText = record.paymentMethod || record.vendor || 'Cash';
+                    const isInc = record.type === 'income';
+                    modalItemAmount.innerText = `${isInc ? '+' : '-'} Rs. ${parseFloat(record.totalPrice).toLocaleString()}`;
+                    modalItemAmount.style.color = isInc ? 'var(--success-ink)' : 'var(--danger-ink)';
+                    
+                    modalItemTime.innerText = `${record.date} • ${(record.time || '').substring(0, 5)}`;
+                    modalItemVendor.innerText = record.paymentMethod || record.vendor || 'Cash / Undefined';
 
                     if (record.notes) {
-                        document.getElementById('modalItemNotes').innerText = record.notes;
-                        document.getElementById('modalNotesRow').style.display = "flex";
+                        modalItemNotes.innerText = record.notes;
+                        modalNotesRow.style.display = "flex";
                     } else {
-                        document.getElementById('modalNotesRow').style.display = "none";
+                        modalNotesRow.style.display = "none";
                     }
 
                     detailModal.classList.add('active');
@@ -1682,15 +1445,14 @@
             });
         }
 
-        // Realtime Firestore Subscription for Active Day
+        // Realtime Subscription
         let unsubscribeDay = null;
 
         function bindDailyRecords(dateStr) {
             if (unsubscribeDay) unsubscribeDay();
 
-            const recordsRef = collection(db, "records");
             const q = query(
-                recordsRef, 
+                collection(db, "records"), 
                 where("familyId", "==", activeFamilyId),
                 where("date", "==", dateStr)
             );
@@ -1713,6 +1475,19 @@
                 window.location.href = "login.html";
                 return;
             }
+
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    activeFamilyId = userDoc.data().familyId || activeFamilyId;
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
+                }
+
+                const familyDoc = await getDoc(doc(db, "families", activeFamilyId));
+                if (familyDoc.exists()) {
+                    document.getElementById('activeWorkspaceSubtitle').innerText = familyDoc.data().name || "Family Ledger";
+                }
+            } catch(e) {}
 
             refreshDateCarousel();
         });
