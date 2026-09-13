@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#F7FBF8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Roz E Hisab — Master Household Dashboard</title>
+
+    <!-- Next-Gen Favicon Architecture -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <!-- Global Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. ROZ E HISAB EMERALD LUXURY DESIGN SYSTEM (LIGHT PALETTE)
+           ========================================================================== */
+        :root {
+            --canvas: #F7FBF8;
+            --surface: #FFFFFF;
+            --surface-subtle: #F0FDF4;
+            --surface-glass: rgba(255, 255, 255, 0.94);
+
+            --forest-950: #02231A;
+            --forest-900: #064E3B;
+            --forest-800: #055944;
+            --forest-700: #047857;
+            --forest-600: #059669;
+            --forest-500: #10B981;
+            --forest-100: #D1FAE5;
+            --forest-50:  #ECFDF5;
+
+            --ink-headline: #04382A;
+            --ink-title: #0F172A;
+            --ink-body: #64748B;
+            --ink-muted: #94A3B8;
+
+            --border-card: #E8EFEA;
+            --border-subtle: rgba(6, 78, 59, 0.08);
+
+            --cat-grocery: #F59E0B;
+            --cat-home: #3B82F6;
+            --cat-transport: #06B6D4;
+            --cat-school: #8B5CF6;
+            --cat-agri: #10B981;
+            --cat-other: #64748B;
+
+            --btn-gradient: linear-gradient(180deg, #055944 0%, #03392B 100%);
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-card: 0 12px 30px -6px rgba(6, 78, 59, 0.05);
+            --shadow-dock: 0 20px 50px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            --shadow-fab: 0 16px 32px -4px rgba(5, 89, 68, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--canvas);
+            color: var(--ink-title);
+            overflow-x: hidden;
+        }
+
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(100% 70% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.6) 60%, #F7FBF8 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. TOP EXECUTIVE APP BAR (SEARCH, NOTIFICATION, USER)
+           ========================================================================== */
+        .top-appbar {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: calc(env(safe-area-inset-top, 16px) + 8px) 16px 12px 16px;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .menu-icon-btn {
+            background: none;
+            border: none;
+            color: var(--forest-900);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar-box {
+            flex: 1;
+            height: 40px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 8px;
+        }
+
+        .search-bar-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13px;
+            width: 100%;
+            color: var(--ink-title);
+        }
+
+        .search-bar-box input::placeholder { color: var(--ink-muted); }
+
+        .appbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notif-btn {
+            position: relative;
+            background: #FFFFFF;
+            border: 1px solid var(--border-card);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-body);
+            cursor: pointer;
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: #EF4444;
+            border-radius: 50%;
+            border: 1.5px solid white;
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .user-avatar-frame {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: var(--forest-100);
+            color: var(--forest-900);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            overflow: hidden;
+        }
+
+        .user-avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ==========================================================================
+           3. MOBILE-FIRST MASTER VIEWPORT
+           ========================================================================== */
+        .viewport {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: calc(env(safe-area-inset-top, 16px) + 68px) 16px calc(env(safe-area-inset-bottom, 16px) + 95px) 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Banner Hero Container with Villa Graphic */
+        .hero-banner-card {
+            background: linear-gradient(135deg, #E6F4EA 0%, #CEEAD6 100%);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(6, 78, 59, 0.1);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hero-top-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-greeting-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .banner-app-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.2);
+        }
+
+        .banner-app-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+
+        .banner-text-block h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--forest-900);
+            letter-spacing: -0.02em;
+        }
+
+        .banner-text-block p {
+            font-size: 12px;
+            color: var(--forest-800);
+            font-weight: 500;
+            margin-top: 2px;
+            line-height: 1.35;
+        }
+
+        .villa-illustration-art {
+            width: 85px;
+            height: 70px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+        .villa-illustration-art img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 4 Horizontal Metric Badges */
+        .metric-chips-shelf {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 2;
+        }
+        .metric-chips-shelf::-webkit-scrollbar { display: none; }
+
+        .metric-mini-chip {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .chip-icon-box {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .chip-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .chip-caption { font-size: 10px; font-weight: 600; color: var(--ink-body); text-transform: uppercase; }
+        .chip-val { font-size: 13.5px; font-weight: 800; color: var(--ink-title); letter-spacing: -0.01em; }
+
+        /* ==========================================================================
+           4. QUICK ACTIONS GRID (EXACT 6 ACTIONS FROM SCREENSHOT)
+           ========================================================================== */
+        .section-headline {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .action-card-btn {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 14px 8px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .action-card-btn:active { transform: scale(0.96); }
+
+        .action-icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .action-card-btn span {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink-title);
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+
+        /* ==========================================================================
+           5. TOTAL BALANCE HERO CARD & EYE VISIBILITY TOGGLE
+           ========================================================================== */
+        .balance-hero-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .balance-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .balance-label-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-body);
+        }
+
+        .growth-pill {
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .balance-amount-display {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+        }
+
+        .balance-update-time {
+            font-size: 11px;
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           6. EXPENSE OVERVIEW (INTERACTIVE DONUT CHART & METRICS)
+           ========================================================================== */
+        .chart-master-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .donut-content-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .donut-visual-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+
+        .donut-visual-box svg { transform: rotate(-90deg); }
+
+        .donut-center-info {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .donut-center-amount { font-size: 13px; font-weight: 800; color: var(--ink-headline); }
+        .donut-center-sub { font-size: 8.5px; font-weight: 600; color: var(--ink-body); text-transform: uppercase; }
+
+        .donut-legend-stack {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11.5px;
+        }
+
+        .legend-label-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--ink-title);
+        }
+
+        .legend-color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-amount-group {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--ink-headline);
+        }
+
+        /* ==========================================================================
+           7. INTERACTIVE CALENDAR WIDGET
+           ========================================================================== */
+        .calendar-widget-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .cal-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cal-month-title { font-size: 14.5px; font-weight: 800; color: var(--ink-headline); }
+
+        .cal-nav-arrows { display: flex; gap: 4px; }
+        .cal-arrow-btn {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--forest-900);
+            cursor: pointer;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+
+        .cal-day-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+        }
+
+        .cal-cell {
+            font-size: 11.5px;
+            font-weight: 600;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cal-cell.today {
+            background: var(--forest-900);
+            color: #FFFFFF;
+            font-weight: 800;
+        }
+
+        .cal-cell.muted { color: #CBD5E1; }
+
+        /* ==========================================================================
+           8. MONTHLY OVERVIEW LINE CHART
+           ========================================================================== */
+        .linechart-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .linechart-legend {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11.5px;
+            font-weight: 600;
+        }
+
+        .linechart-svg {
+            width: 100%;
+            height: 130px;
+            overflow: visible;
+        }
+
+        /* ==========================================================================
+           9. TOP CATEGORIES & QUICK SUMMARY CARDS
+           ========================================================================== */
+        .top-categories-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .top-cat-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .top-cat-info-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        .top-cat-name {
+            font-weight: 700;
+            color: var(--ink-title);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-cat-track {
+            width: 100%;
+            height: 5px;
+            background: #F1F5F9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .top-cat-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* Quick Summary Box */
+        .quick-summary-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .summary-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--ink-title);
+        }
+
+        .summary-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+        }
+
+        .btn-view-report {
+            width: 100%;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--btn-gradient);
+            color: #FFFFFF;
+            font-size: 13.5px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        /* ==========================================================================
+           10. RECENT ACTIVITY LIST FEED
+           ========================================================================== */
+        .recent-activity-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .activity-tile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .activity-tile:last-child { border-bottom: none; }
+
+        .activity-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--surface-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .activity-meta { display: flex; flex-direction: column; gap: 2px; }
+        .activity-title-str { font-size: 13.5px; font-weight: 700; color: var(--ink-title); }
+        .activity-cat-str { font-size: 11px; color: var(--ink-body); font-weight: 500; }
+
+        .activity-right { text-align: right; display: flex; flex-direction: column; gap: 2px; }
+        .activity-price { font-size: 14px; font-weight: 800; color: #DC2626; }
+        .activity-time { font-size: 10.5px; color: var(--ink-muted); }
+
+        /* Inspirational Quote Card */
+        .quote-banner-card {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border-radius: 22px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid rgba(5, 150, 105, 0.2);
+        }
+
+        .quote-leaf-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: var(--forest-900);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .quote-text {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--forest-900);
+            line-height: 1.4;
+        }
+
+        /* ==========================================================================
+           11. LUXURY MOBILE ISLAND DOCK (BOTTOM BAR)
+           ========================================================================== */
+        .dock-container {
+            position: fixed;
+            bottom: env(safe-area-inset-bottom, 16px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 600;
+            width: 92%;
+            max-width: 480px;
+            pointer-events: none;
+        }
+
+        .mobile-dock {
+            pointer-events: auto;
+            width: 100%;
+            height: 68px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: var(--shadow-dock);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+
+        .dock-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: var(--ink-muted);
+            text-decoration: none;
+            width: 54px;
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dock-btn svg { width: 22px; height: 22px; stroke-width: 2; }
+        .dock-btn span { font-size: 10px; font-weight: 700; }
+        .dock-btn.active { color: var(--forest-900); }
+
+        .dock-fab-wrapper {
+            position: relative;
+            top: -22px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dock-fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--btn-gradient);
+            box-shadow: var(--shadow-fab);
+            border: 3.5px solid #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .dock-fab:active { transform: scale(0.92); }
+        .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
+
+        /* Income Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 13, 20, 0.45);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-window {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Subtle Background -->
+    <div class="ambient-canvas"></div>
+
+    <!-- Top Executive App Bar -->
+    <header class="top-appbar">
+        <button class="menu-icon-btn" onclick="window.location.href='settings.html'" aria-label="Open Navigation Settings">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
+        <div class="search-bar-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="globalSearchInput" placeholder="Search records, categories...">
+        </div>
+
+        <div class="appbar-right">
+            <button class="notif-btn" aria-label="Notifications">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span class="notif-dot"></span>
+            </button>
+
+            <a href="settings.html" class="user-chip">
+                <div class="user-avatar-frame" id="headerAvatarFrame">A</div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Master Mobile-First Viewport -->
+    <main class="viewport">
+
+        <!-- 1. GOOD MORNING HERO BANNER (WITH VILLA ART & 4 STATS) -->
+        <section class="hero-banner-card">
+            <div class="hero-top-row">
+                <div class="hero-greeting-block">
+                    <div class="banner-app-logo">
+                        <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
+                    </div>
+                    <div class="banner-text-block">
+                        <h2 id="greetingName">Good Morning, Ahmed!</h2>
+                        <p>Keep your household records organized and stay on track with your goals.</p>
+                    </div>
+                </div>
+
+                <div class="villa-illustration-art">
+                    <!-- High-Resolution Luxury Villa Asset / Modern Architecture -->
+                    <img src="assets/banner.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&q=80';" alt="Household Architecture">
+                </div>
+            </div>
+
+            <!-- 4 Metric Chips Shelf -->
+            <div class="metric-chips-shelf">
+                <div class="metric-mini-chip">
+                    <div class="chip-icon-box" style="background:#ECFDF5; color:#059669;">👛</div>
+                    <div class="chip-meta">
+                        <span class="chip-caption">Total Balance</span>
+                        <span class="chip-val" id="bannerTotalBalance">Rs. 48,750</span>
+                    </div>
+                </div>
+
+                <div class="metric-mini-chip">
+                    <div class="chip-icon-box" style="background:#FEF2F2; color:#DC2626;">🛑</div>
+                    <div class="chip-meta">
+                        <span class="chip-caption">This Month Expense</span>
+                        <span class="chip-val" id="bannerMonthExpense" style="color:#DC2626;">Rs. 32,600</span>
+                    </div>
+                </div>
+
+                <div class="metric-mini-chip">
+                    <div class="chip-icon-box" style="background:#F0FDF4; color:#10B981;">🟢</div>
+                    <div class="chip-meta">
+                        <span class="chip-caption">This Month Income</span>
+                        <span class="chip-val" id="bannerMonthIncome" style="color:#10B981;">Rs. 57,800</span>
+                    </div>
+                </div>
+
+                <div class="metric-mini-chip">
+                    <div class="chip-icon-box" style="background:#EFF6FF; color:#3B82F6;">🏦</div>
+                    <div class="chip-meta">
+                        <span class="chip-caption">Savings</span>
+                        <span class="chip-val" id="bannerSavings" style="color:#3B82F6;">Rs. 12,400</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QUICK ACTIONS (EXACT 6 BUTTONS FROM SCREENSHOT) -->
+        <section>
+            <div class="section-headline" style="margin-bottom:10px;">
+                <span>Quick Actions</span>
+            </div>
+            <div class="quick-actions-grid">
+                <!-- 1. Add Expense -->
+                <a href="add.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#FEF2F2; color:#EF4444;">⊕</div>
+                    <span>Add Expense</span>
+                </a>
+
+                <!-- 2. Add Income -->
+                <button type="button" class="action-card-btn" id="openIncomeBtn">
+                    <div class="action-icon-circle" style="background:#ECFDF5; color:#059669;">🔄</div>
+                    <span>Add Income</span>
+                </button>
+
+                <!-- 3. Add Record -->
+                <a href="add.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#EFF6FF; color:#3B82F6;">📅</div>
+                    <span>Add Record</span>
+                </a>
+
+                <!-- 4. Set Budget -->
+                <a href="budget.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#F5F3FF; color:#8B5CF6;">🎯</div>
+                    <span>Set Budget</span>
+                </a>
+
+                <!-- 5. Add Family Member -->
+                <a href="family.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#FFF7ED; color:#EA580C;">👥</div>
+                    <span>Family Access</span>
+                </a>
+
+                <!-- 6. View Report -->
+                <a href="reports.html" class="action-card-btn">
+                    <div class="action-icon-circle" style="background:#F0FDFA; color:#0D9488;">📊</div>
+                    <span>View Report</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. TOTAL BALANCE CARD WITH EYE VISIBILITY TOGGLE -->
+        <section class="balance-hero-card">
+            <div class="balance-header-row">
+                <div class="balance-label-group">
+                    <span>Total Balance</span>
+                    <button type="button" id="toggleBalanceEye" style="background:none; border:none; color:var(--forest-700); cursor:pointer;">
+                        <svg id="balanceEyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+                <div class="growth-pill">
+                    <span>↗ +12%</span>
+                </div>
+            </div>
+
+            <div class="balance-amount-display" id="mainBalanceDisplay">Rs. 48,750</div>
+            <div class="balance-update-time" id="balanceTime">Last updated: Today, 09:42 AM</div>
+        </section>
+
+        <!-- 4. EXPENSE OVERVIEW (DONUT CHART & CATEGORIES) -->
+        <section class="chart-master-card">
+            <div class="section-headline">
+                <span>Expense Overview</span>
+                <span style="font-size:12px; color:var(--ink-body); font-weight:600;">This Month</span>
+            </div>
+
+            <div class="donut-content-row">
+                <div class="donut-visual-box">
+                    <svg width="120" height="120" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="38" stroke="#F1F5F9" stroke-width="14" fill="none"/>
+                        <!-- Donut Slices (Dynamic Colors from Screenshot) -->
+                        <circle cx="50" cy="50" r="38" stroke="#F59E0B" stroke-width="14" stroke-dasharray="76 163" stroke-dashoffset="0" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="#3B82F6" stroke-width="14" stroke-dasharray="43 196" stroke-dashoffset="-76" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="#06B6D4" stroke-width="14" stroke-dasharray="28 211" stroke-dashoffset="-119" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="#8B5CF6" stroke-width="14" stroke-dasharray="24 215" stroke-dashoffset="-147" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="14" stroke-dasharray="19 220" stroke-dashoffset="-171" fill="none"/>
+                        <circle cx="50" cy="50" r="38" stroke="#64748B" stroke-width="14" stroke-dasharray="48 191" stroke-dashoffset="-190" fill="none"/>
+                    </svg>
+                    <div class="donut-center-info">
+                        <span class="donut-center-amount" id="donutCenterSum">Rs. 32.6K</span>
+                        <span class="donut-center-sub">Total</span>
+                    </div>
+                </div>
+
+                <div class="donut-legend-stack" id="donutLegendStack">
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-grocery);"></span><span>Food & Groceries</span></div>
+                        <span class="legend-amount-group">32% • Rs. 10,432</span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-home);"></span><span>Home & Utilities</span></div>
+                        <span class="legend-amount-group">18% • Rs. 5,872</span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-transport);"></span><span>Transport</span></div>
+                        <span class="legend-amount-group">12% • Rs. 3,912</span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-school);"></span><span>School</span></div>
+                        <span class="legend-amount-group">10% • Rs. 3,260</span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-agri);"></span><span>Agriculture / Land</span></div>
+                        <span class="legend-amount-group">8% • Rs. 2,608</span>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-other);"></span><span>Other</span></div>
+                        <span class="legend-amount-group">20% • Rs. 6,516</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. INTERACTIVE CALENDAR WIDGET -->
+        <section class="calendar-widget-card">
+            <div class="cal-header-bar">
+                <span class="cal-month-title" id="calendarMonthTitle">September 2026</span>
+                <div class="cal-nav-arrows">
+                    <button class="cal-arrow-btn" id="calPrevBtn" aria-label="Previous Month">&lt;</button>
+                    <button class="cal-arrow-btn" id="calNextBtn" aria-label="Next Month">&gt;</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid" id="calendarGridDays">
+                <span class="cal-day-label">Sun</span>
+                <span class="cal-day-label">Mon</span>
+                <span class="cal-day-label">Tue</span>
+                <span class="cal-day-label">Wed</span>
+                <span class="cal-day-label">Thu</span>
+                <span class="cal-day-label">Fri</span>
+                <span class="cal-day-label">Sat</span>
+                <!-- Calendar cells dynamically mounted -->
+            </div>
+        </section>
+
+        <!-- 6. MONTHLY OVERVIEW (INCOME VS EXPENSE TREND CHART) -->
+        <section class="linechart-card">
+            <div class="section-headline">
+                <span>Monthly Overview</span>
+                <div class="linechart-legend">
+                    <span style="color:#064E3B;">● Income</span>
+                    <span style="color:#A7F3D0;">● Expense</span>
+                </div>
+            </div>
+
+            <svg class="linechart-svg" viewBox="0 0 320 120">
+                <line x1="0" y1="100" x2="320" y2="100" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="60" x2="320" y2="60" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="20" x2="320" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+                
+                <!-- Expense Curve (Light Mint) -->
+                <path d="M 10 90 Q 40 85, 70 70 T 130 85 T 190 65 T 250 80 T 310 60" fill="none" stroke="#A7F3D0" stroke-width="3" stroke-linecap="round"/>
+                
+                <!-- Income Curve (Deep Forest Green) -->
+                <path d="M 10 75 Q 40 60, 70 55 T 130 70 T 190 40 T 250 60 T 310 35" fill="none" stroke="#064E3B" stroke-width="3.5" stroke-linecap="round"/>
+
+                <!-- Monthly Dots -->
+                <circle cx="70" cy="55" r="4" fill="#064E3B"/>
+                <circle cx="190" cy="40" r="4" fill="#064E3B"/>
+                <circle cx="310" cy="35" r="4" fill="#064E3B"/>
+            </svg>
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:#94A3B8; font-weight:700;">
+                <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
+            </div>
+        </section>
+
+        <!-- 7. TOP CATEGORIES DETAILED BREAKDOWN -->
+        <section class="top-categories-card">
+            <div class="section-headline">
+                <span>Top Categories</span>
+                <a href="categories.html" style="font-size:12px; color:var(--forest-700); text-decoration:none; font-weight:700;">This Month &gt;</a>
+            </div>
+
+            <div class="top-cat-row">
+                <div class="top-cat-info-line">
+                    <span class="top-cat-name">🛒 Food & Groceries</span>
+                    <span style="font-weight:700;">32% • Rs. 10,432</span>
+                </div>
+                <div class="top-cat-track"><div class="top-cat-fill" style="width:32%; background:var(--cat-grocery);"></div></div>
+            </div>
+
+            <div class="top-cat-row">
+                <div class="top-cat-info-line">
+                    <span class="top-cat-name">🏠 Home & Utilities</span>
+                    <span style="font-weight:700;">18% • Rs. 5,872</span>
+                </div>
+                <div class="top-cat-track"><div class="top-cat-fill" style="width:18%; background:var(--cat-home);"></div></div>
+            </div>
+
+            <div class="top-cat-row">
+                <div class="top-cat-info-line">
+                    <span class="top-cat-name">⛽ Transport & Petrol</span>
+                    <span style="font-weight:700;">12% • Rs. 3,912</span>
+                </div>
+                <div class="top-cat-track"><div class="top-cat-fill" style="width:12%; background:var(--cat-transport);"></div></div>
+            </div>
+
+            <div class="top-cat-row">
+                <div class="top-cat-info-line">
+                    <span class="top-cat-name">🎓 School & Fees</span>
+                    <span style="font-weight:700;">10% • Rs. 3,260</span>
+                </div>
+                <div class="top-cat-track"><div class="top-cat-fill" style="width:10%; background:var(--cat-school);"></div></div>
+            </div>
+
+            <div class="top-cat-row">
+                <div class="top-cat-info-line">
+                    <span class="top-cat-name">🚜 Agriculture / Land</span>
+                    <span style="font-weight:700;">8% • Rs. 2,608</span>
+                </div>
+                <div class="top-cat-track"><div class="top-cat-fill" style="width:8%; background:var(--cat-agri);"></div></div>
+            </div>
+        </section>
+
+        <!-- 8. QUICK SUMMARY CARD -->
+        <section class="quick-summary-card">
+            <div class="section-headline">
+                <span>Quick Summary</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="summary-label"><span style="color:#059669;">↗</span> Total Income</span>
+                <span class="summary-val" style="color:#059669;" id="summaryIncomeVal">Rs. 57,800</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label"><span style="color:#DC2626;">↘</span> Total Expense</span>
+                <span class="summary-val" style="color:#DC2626;" id="summaryExpenseVal">Rs. 32,600</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label"><span style="color:#3B82F6;">👛</span> Total Savings</span>
+                <span class="summary-val" style="color:#3B82F6;" id="summarySavingsVal">Rs. 12,400</span>
+            </div>
+
+            <button type="button" class="btn-view-report" onclick="window.location.href='reports.html'">
+                <span>View Full Report →</span>
+            </button>
+        </section>
+
+        <!-- 9. RECENT RECORDS FEED -->
+        <section class="recent-activity-card">
+            <div class="section-headline">
+                <span>Recent Activity</span>
+                <a href="daily-register.html" style="font-size:12px; color:var(--forest-700); text-decoration:none; font-weight:700;">View All</a>
+            </div>
+
+            <div id="recentActivityList">
+                <!-- Activity Tiles dynamically mounted from Firestore -->
+                <div class="activity-tile">
+                    <div class="activity-left">
+                        <div class="activity-icon-box">🛒</div>
+                        <div class="activity-meta">
+                            <span class="activity-title-str">Grocery Shopping</span>
+                            <span class="activity-cat-str">Food & Groceries</span>
+                        </div>
+                    </div>
+                    <div class="activity-right">
+                        <span class="activity-price">Rs. 2,450</span>
+                        <span class="activity-time">Today, 09:12 AM</span>
+                    </div>
+                </div>
+
+                <div class="activity-tile">
+                    <div class="activity-left">
+                        <div class="activity-icon-box">🎓</div>
+                        <div class="activity-meta">
+                            <span class="activity-title-str">School Fees</span>
+                            <span class="activity-cat-str">School</span>
+                        </div>
+                    </div>
+                    <div class="activity-right">
+                        <span class="activity-price">Rs. 8,000</span>
+                        <span class="activity-time">Yesterday, 04:32 PM</span>
+                    </div>
+                </div>
+
+                <div class="activity-tile">
+                    <div class="activity-left">
+                        <div class="activity-icon-box">⛽</div>
+                        <div class="activity-meta">
+                            <span class="activity-title-str">Petrol</span>
+                            <span class="activity-cat-str">Transport</span>
+                        </div>
+                    </div>
+                    <div class="activity-right">
+                        <span class="activity-price">Rs. 3,200</span>
+                        <span class="activity-time">10 Sep, 08:15 AM</span>
+                    </div>
+                </div>
+
+                <div class="activity-tile">
+                    <div class="activity-left">
+                        <div class="activity-icon-box">💡</div>
+                        <div class="activity-meta">
+                            <span class="activity-title-str">Electricity Bill</span>
+                            <span class="activity-cat-str">Home & Utilities</span>
+                        </div>
+                    </div>
+                    <div class="activity-right">
+                        <span class="activity-price">Rs. 4,780</span>
+                        <span class="activity-time">09 Sep, 06:42 PM</span>
+                    </div>
+                </div>
+
+                <div class="activity-tile">
+                    <div class="activity-left">
+                        <div class="activity-icon-box">🌾</div>
+                        <div class="activity-meta">
+                            <span class="activity-title-str">Fertilizer Purchase</span>
+                            <span class="activity-cat-str">Agriculture / Land</span>
+                        </div>
+                    </div>
+                    <div class="activity-right">
+                        <span class="activity-price">Rs. 6,500</span>
+                        <span class="activity-time">08 Sep, 03:20 PM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. INSPIRATIONAL QUOTE BANNER -->
+        <section class="quote-banner-card">
+            <div class="quote-leaf-icon">🌱</div>
+            <span class="quote-text">Small steps today build big dreams tomorrow.</span>
+        </section>
+
+    </main>
+
+    <!-- FLOATING MOBILE ISLAND DOCK -->
+    <div class="dock-container">
+        <nav class="mobile-dock">
+            <a href="dashboard.html" class="dock-btn active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+            </a>
+
+            <a href="daily-register.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Register</span>
+            </a>
+
+            <div class="dock-fab-wrapper">
+                <a href="add.html" class="dock-fab" title="Quick Add Record">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </a>
+            </div>
+
+            <a href="reports.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                <span>Reports</span>
+            </a>
+
+            <a href="settings.html" class="dock-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- QUICK ADD INCOME MODAL -->
+    <div class="modal-overlay" id="incomeModal">
+        <div class="modal-window">
+            <h3 style="font-size:17px; font-weight:800; color:var(--forest-900);">Add Income Record</h3>
+            <form id="incomeForm" style="display:flex; flex-direction:column; gap:12px;">
+                <input type="text" id="incomeSourceInput" placeholder="Income Source (e.g. Salary, Rent, Crop Sale)" required style="height:48px; border:1px solid #E2E8E4; border-radius:12px; padding:0 14px; font-size:14px; outline:none;">
+                <input type="number" id="incomeAmountInput" placeholder="Amount (Rs.)" min="1" required style="height:48px; border:1px solid #E2E8E4; border-radius:12px; padding:0 14px; font-size:14px; outline:none;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <button type="button" id="closeIncomeBtn" style="height:44px; border:1px solid #CBD5E1; background:#FFF; border-radius:12px; font-weight:700; cursor:pointer;">Cancel</button>
+                    <button type="submit" style="height:44px; border:none; background:var(--btn-gradient); color:#FFF; border-radius:12px; font-weight:700; cursor:pointer;">Save Income</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       12. FIREBASE REALTIME MULTI-DATA TELEMETRY ENGINE
+       ========================================================================== -->
+    <script type="module">
+        import { auth, db } from './firebase/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { 
+            collection, 
+            query, 
+            where, 
+            onSnapshot, 
+            addDoc, 
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // DOM Handles
+        const greetingName = document.getElementById('greetingName');
+        const headerAvatarFrame = document.getElementById('headerAvatarFrame');
+        const bannerTotalBalance = document.getElementById('bannerTotalBalance');
+        const bannerMonthExpense = document.getElementById('bannerMonthExpense');
+        const bannerMonthIncome = document.getElementById('bannerMonthIncome');
+        const bannerSavings = document.getElementById('bannerSavings');
+        const mainBalanceDisplay = document.getElementById('mainBalanceDisplay');
+        const toggleBalanceEye = document.getElementById('toggleBalanceEye');
+        const balanceEyeIcon = document.getElementById('balanceEyeIcon');
+        const summaryIncomeVal = document.getElementById('summaryIncomeVal');
+        const summaryExpenseVal = document.getElementById('summaryExpenseVal');
+        const summarySavingsVal = document.getElementById('summarySavingsVal');
+        const recentActivityList = document.getElementById('recentActivityList');
+        const donutCenterSum = document.getElementById('donutCenterSum');
+
+        // Income Modal Handles
+        const openIncomeBtn = document.getElementById('openIncomeBtn');
+        const closeIncomeBtn = document.getElementById('closeIncomeBtn');
+        const incomeModal = document.getElementById('incomeModal');
+        const incomeForm = document.getElementById('incomeForm');
+
+        let rawIncome = 57800;
+        let rawExpense = 32600;
+        let isBalanceHidden = false;
+
+        // Balance Eye Toggle Logic
+        toggleBalanceEye.addEventListener('click', () => {
+            isBalanceHidden = !isBalanceHidden;
+            const netBalance = rawIncome - rawExpense;
+            if (isBalanceHidden) {
+                mainBalanceDisplay.innerText = "Rs. •••••••";
+                balanceEyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            } else {
+                mainBalanceDisplay.innerText = `Rs. ${netBalance.toLocaleString()}`;
+                balanceEyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+            }
+        });
+
+        // Income Modal Controls
+        openIncomeBtn.addEventListener('click', () => incomeModal.classList.add('active'));
+        closeIncomeBtn.addEventListener('click', () => incomeModal.classList.remove('active'));
+
+        incomeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const source = document.getElementById('incomeSourceInput').value.trim();
+            const amt = parseFloat(document.getElementById('incomeAmountInput').value) || 0;
+            const activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+
+            try {
+                await addDoc(collection(db, "income"), {
+                    familyId: activeFamilyId,
+                    source: source,
+                    amount: amt,
+                    date: new Date().toISOString().split('T')[0],
+                    createdAt: serverTimestamp()
+                });
+                incomeModal.classList.remove('active');
+                incomeForm.reset();
+            } catch (err) {
+                alert("Saved locally: " + err.message);
+                incomeModal.classList.remove('active');
+            }
+        });
+
+        // Interactive Calendar Month Logic
+        const calMonthTitle = document.getElementById('calendarMonthTitle');
+        const calendarGridDays = document.getElementById('calendarGridDays');
+        let currentCalDate = new Date();
+
+        function renderCalendar(date) {
+            const y = date.getFullYear();
+            const m = date.getMonth();
+            calMonthTitle.innerText = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(y, m, 1).getDay();
+            const daysInMonth = new Date(y, m + 1, 0).getDate();
+            const today = new Date();
+
+            // Clear previous day cells (retain headers)
+            const headers = calendarGridDays.querySelectorAll('.cal-day-label');
+            calendarGridDays.innerHTML = '';
+            headers.forEach(h => calendarGridDays.appendChild(h));
+
+            // Leading blanks
+            for (let i = 0; i < firstDay; i++) {
+                const blank = document.createElement('div');
+                blank.className = 'cal-cell muted';
+                calendarGridDays.appendChild(blank);
+            }
+
+            // Days of month
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-cell';
+                cell.innerText = d;
+                if (d === today.getDate() && m === today.getMonth() && y === today.getFullYear()) {
+                    cell.classList.add('today');
+                }
+                calendarGridDays.appendChild(cell);
+            }
+        }
+
+        renderCalendar(currentCalDate);
+        document.getElementById('calPrevBtn').addEventListener('click', () => {
+            currentCalDate.setMonth(currentCalDate.getMonth() - 1);
+            renderCalendar(currentCalDate);
+        });
+        document.getElementById('calNextBtn').addEventListener('click', () => {
+            currentCalDate.setMonth(currentCalDate.getMonth() + 1);
+            renderCalendar(currentCalDate);
+        });
+
+        // Realtime Firebase Integration
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const userName = user.displayName || "Family Member";
+            greetingName.innerText = `Good Morning, ${userName.split(' ')[0]}!`;
+            headerAvatarFrame.innerText = userName.charAt(0).toUpperCase();
+
+            const activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+
+            // Listen to records
+            const q = query(collection(db, "records"), where("familyId", "==", activeFamilyId));
+            onSnapshot(q, (snapshot) => {
+                let expenseSum = 0;
+                let recordsList = [];
+
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    expenseSum += parseFloat(d.totalPrice) || 0;
+                    recordsList.push({ id: doc.id, ...d });
+                });
+
+                if (recordsList.length > 0) {
+                    rawExpense = expenseSum;
+                    const balance = rawIncome - rawExpense;
+                    const savings = Math.max(0, balance);
+
+                    bannerMonthExpense.innerText = `Rs. ${rawExpense.toLocaleString()}`;
+                    bannerTotalBalance.innerText = `Rs. ${balance.toLocaleString()}`;
+                    bannerSavings.innerText = `Rs. ${savings.toLocaleString()}`;
+                    summaryExpenseVal.innerText = `Rs. ${rawExpense.toLocaleString()}`;
+                    summarySavingsVal.innerText = `Rs. ${savings.toLocaleString()}`;
+                    donutCenterSum.innerText = `Rs. ${(rawExpense / 1000).toFixed(1)}K`;
+
+                    if (!isBalanceHidden) {
+                        mainBalanceDisplay.innerText = `Rs. ${balance.toLocaleString()}`;
+                    }
+
+                    // Render Recent List
+                    recordsList.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    recentActivityList.innerHTML = recordsList.slice(0, 5).map(r => `
+                        <div class="activity-tile">
+                            <div class="activity-left">
+                                <div class="activity-icon-box">${r.category === 'Grocery' ? '🛒' : (r.category === 'School' ? '🎓' : (r.category === 'Zameen' ? '🌾' : '💡'))}</div>
+                                <div class="activity-meta">
+                                    <span class="activity-title-str">${r.itemName}</span>
+                                    <span class="activity-cat-str">${r.category}</span>
+                                </div>
+                            </div>
+                            <div class="activity-right">
+                                <span class="activity-price">Rs. ${parseFloat(r.totalPrice).toLocaleString()}</span>
+                                <span class="activity-time">${r.date || 'Today'}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }, (err) => {
+                console.warn("[Dashboard Offline Cache]:", err);
+            });
+        });
+    </script>
+</body>
+</html>
