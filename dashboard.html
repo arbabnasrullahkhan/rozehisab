@@ -19,14 +19,16 @@
 
     <style>
         /* ==========================================================================
-           1. ROZ E HISAB EMERALD LUXURY DESIGN SYSTEM (LIGHT PALETTE)
+           1. EXACT SCREENSHOT COLOR TOKENS & MOBILE-FIRST SYSTEM
            ========================================================================== */
         :root {
-            --canvas: #F7FBF8;
+            --canvas: #F8FAFC;
             --surface: #FFFFFF;
-            --surface-subtle: #F0FDF4;
+            --surface-subtle: #F1F5F9;
             --surface-glass: rgba(255, 255, 255, 0.94);
+            --surface-dock: rgba(255, 255, 255, 0.96);
 
+            /* Exact Screenshot Forest & Emerald Palette */
             --forest-950: #02231A;
             --forest-900: #064E3B;
             --forest-800: #055944;
@@ -36,26 +38,29 @@
             --forest-100: #D1FAE5;
             --forest-50:  #ECFDF5;
 
-            --ink-headline: #04382A;
-            --ink-title: #0F172A;
-            --ink-body: #64748B;
-            --ink-muted: #94A3B8;
-
-            --border-card: #E8EFEA;
-            --border-subtle: rgba(6, 78, 59, 0.08);
-
-            --cat-grocery: #F59E0B;
+            /* Category Colors from Image */
+            --cat-food: #F59E0B;
             --cat-home: #3B82F6;
-            --cat-transport: #06B6D4;
-            --cat-school: #8B5CF6;
-            --cat-agri: #10B981;
-            --cat-other: #64748B;
+            --cat-transport: #10B981;
+            --cat-school: #065F46;
+            --cat-agri: #047857;
+            --cat-other: #0284C7;
 
-            --btn-gradient: linear-gradient(180deg, #055944 0%, #03392B 100%);
+            --ink-headline: #04382A;
+            --ink-primary: #0F172A;
+            --ink-secondary: #64748B;
+            --ink-tertiary: #94A3B8;
+
+            --border-subtle: rgba(15, 23, 42, 0.06);
+            --border-card: rgba(6, 78, 59, 0.08);
+
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-            --shadow-card: 0 12px 30px -6px rgba(6, 78, 59, 0.05);
-            --shadow-dock: 0 20px 50px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
-            --shadow-fab: 0 16px 32px -4px rgba(5, 89, 68, 0.45);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+            --shadow-subtle: 0 2px 10px rgba(6, 78, 59, 0.03);
+            --shadow-card: 0 14px 34px -10px rgba(6, 78, 59, 0.06), 0 0 0 1px rgba(6, 78, 59, 0.04);
+            --shadow-dock: 0 -8px 30px rgba(0, 0, 0, 0.08);
+            --shadow-fab: 0 14px 28px -4px rgba(5, 89, 68, 0.45);
         }
 
         * {
@@ -72,150 +77,180 @@
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
-            color: var(--ink-title);
+            color: var(--ink-primary);
             overflow-x: hidden;
         }
 
+        /* Ambient Background */
         .ambient-canvas {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(100% 70% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.6) 60%, #F7FBF8 100%);
+            background: radial-gradient(100% 60% at 50% 0%, #FFFFFF 0%, rgba(240, 253, 244, 0.4) 50%, #F8FAFC 100%);
             z-index: 0;
             pointer-events: none;
         }
 
         /* ==========================================================================
-           2. TOP EXECUTIVE APP BAR (SEARCH, NOTIFICATION, USER)
+           2. TOP APP NAVBAR (APP LOGO ON LEFT INSTEAD OF 3 LINES)
            ========================================================================== */
-        .top-appbar {
-            position: fixed;
+        .top-navbar {
+            position: sticky;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            z-index: 100;
             width: 100%;
-            max-width: 480px;
             background: var(--surface-glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: calc(env(safe-area-inset-top, 16px) + 8px) 16px 12px 16px;
-            z-index: 500;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: calc(env(safe-area-inset-top, 14px) + 8px) 16px 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            border-bottom: 1px solid var(--border-subtle);
+            gap: 12px;
         }
 
-        .menu-icon-btn {
-            background: none;
-            border: none;
-            color: var(--forest-900);
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar-box {
-            flex: 1;
-            height: 40px;
-            background: #FFFFFF;
-            border: 1px solid var(--border-card);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 8px;
-        }
-
-        .search-bar-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 13px;
-            width: 100%;
-            color: var(--ink-title);
-        }
-
-        .search-bar-box input::placeholder { color: var(--ink-muted); }
-
-        .appbar-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .notif-btn {
-            position: relative;
-            background: #FFFFFF;
-            border: 1px solid var(--border-card);
+        .navbar-logo-btn {
             width: 38px;
             height: 38px;
             border-radius: 12px;
+            background: var(--forest-900);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--ink-body);
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.2);
+            text-decoration: none;
+        }
+
+        .navbar-logo-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .search-pill-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            color: var(--ink-tertiary);
+            pointer-events: none;
+        }
+
+        .search-pill-input {
+            width: 100%;
+            height: 40px;
+            background: var(--surface-subtle);
+            border: 1px solid transparent;
+            border-radius: 100px;
+            padding: 0 14px 0 36px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink-primary);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-pill-input:focus {
+            background: #FFFFFF;
+            border-color: var(--forest-600);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .nav-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn-bell-notif {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-secondary);
             cursor: pointer;
         }
 
-        .notif-dot {
+        .btn-bell-notif::after {
+            content: '';
             position: absolute;
             top: 8px;
-            right: 8px;
+            right: 9px;
             width: 7px;
             height: 7px;
             background: #EF4444;
             border-radius: 50%;
-            border: 1.5px solid white;
+            border: 1.5px solid #FFFFFF;
         }
 
-        .user-chip {
+        .user-avatar-chip {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
+            cursor: pointer;
         }
 
-        .user-avatar-frame {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            background: var(--forest-100);
+        .user-avatar-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #D1FAE5;
             color: var(--forest-900);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
             font-weight: 700;
+            border: 2px solid #FFFFFF;
+            box-shadow: var(--shadow-subtle);
             overflow: hidden;
         }
 
-        .user-avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .user-avatar-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         /* ==========================================================================
-           3. MOBILE-FIRST MASTER VIEWPORT
+           3. MASTER MOBILE VIEWPORT (SCROLLABLE FEED)
            ========================================================================== */
-        .viewport {
+        .mobile-viewport {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             margin: 0 auto;
-            padding: calc(env(safe-area-inset-top, 16px) + 68px) 16px calc(env(safe-area-inset-bottom, 16px) + 95px) 16px;
+            padding: 16px 16px 110px 16px;
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        /* Banner Hero Container with Villa Graphic */
-        .hero-banner-card {
-            background: linear-gradient(135deg, #E6F4EA 0%, #CEEAD6 100%);
+        /* 1. Exact Screenshot Greeting Hero Banner */
+        .greeting-hero-card {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #A7F3D0 100%);
             border-radius: 24px;
-            padding: 20px;
-            border: 1px solid rgba(6, 78, 59, 0.1);
+            padding: 20px 18px;
+            border: 1px solid rgba(5, 150, 105, 0.16);
             box-shadow: var(--shadow-card);
             position: relative;
             overflow: hidden;
@@ -224,164 +259,176 @@
             gap: 16px;
         }
 
-        .hero-top-row {
+        .hero-banner-top {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            position: relative;
+            align-items: center;
+            gap: 14px;
             z-index: 2;
         }
 
-        .hero-greeting-block {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .banner-app-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #055944 0%, #03392B 100%);
+        .hero-avatar-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: var(--forest-900);
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             flex-shrink: 0;
-            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.2);
+            box-shadow: 0 8px 16px rgba(6, 78, 59, 0.25);
         }
 
-        .banner-app-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+        .hero-avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-        .banner-text-block h2 {
+        .hero-text-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .hero-title-greeting {
             font-size: 18px;
             font-weight: 800;
-            color: var(--forest-900);
+            color: var(--forest-950);
             letter-spacing: -0.02em;
         }
 
-        .banner-text-block p {
-            font-size: 12px;
-            color: var(--forest-800);
+        .hero-sub-motto {
+            font-size: 12.5px;
             font-weight: 500;
-            margin-top: 2px;
+            color: var(--forest-800);
             line-height: 1.35;
         }
 
-        .villa-illustration-art {
-            width: 85px;
-            height: 70px;
-            flex-shrink: 0;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-        }
-        .villa-illustration-art img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* 4 Horizontal Metric Badges */
-        .metric-chips-shelf {
-            display: flex;
+        /* 4 Horizontal Stat Pills inside Banner */
+        .hero-pills-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 2px;
-            scrollbar-width: none;
-            position: relative;
             z-index: 2;
         }
-        .metric-chips-shelf::-webkit-scrollbar { display: none; }
 
-        .metric-mini-chip {
-            background: #FFFFFF;
+        .metric-pill-box {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(10px);
             border-radius: 14px;
-            padding: 10px 14px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        .chip-icon-box {
+        .pill-icon-circle {
             width: 32px;
             height: 32px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
-        .chip-meta {
+        .icon-bal { background: #ECFDF5; color: #059669; }
+        .icon-exp { background: #FEF2F2; color: #EF4444; }
+        .icon-inc { background: #ECFDF5; color: #10B981; }
+        .icon-sav { background: #EFF6FF; color: #3B82F6; }
+
+        .pill-meta-group {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            line-height: 1.2;
+            min-width: 0;
         }
 
-        .chip-caption { font-size: 10px; font-weight: 600; color: var(--ink-body); text-transform: uppercase; }
-        .chip-val { font-size: 13.5px; font-weight: 800; color: var(--ink-title); letter-spacing: -0.01em; }
+        .pill-label-str {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-        /* ==========================================================================
-           4. QUICK ACTIONS GRID (EXACT 6 ACTIONS FROM SCREENSHOT)
-           ========================================================================== */
-        .section-headline {
-            font-size: 15px;
+        .pill-val-str {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--ink-primary);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 2. Quick Actions Grid (6 Tiles as in Image) */
+        .section-header-title {
+            font-size: 15.5px;
             font-weight: 800;
             color: var(--ink-headline);
             letter-spacing: -0.02em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 2px;
         }
 
         .quick-actions-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
 
-        .action-card-btn {
-            background: #FFFFFF;
+        .quick-action-tile {
+            background: var(--surface);
             border-radius: 18px;
-            padding: 14px 8px;
+            padding: 14px 6px;
             border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
+            box-shadow: var(--shadow-subtle);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            cursor: pointer;
             transition: all 0.2s var(--ease-spring);
         }
 
-        .action-card-btn:active { transform: scale(0.96); }
+        .quick-action-tile:active {
+            transform: scale(0.96);
+        }
 
-        .action-icon-circle {
+        .tile-icon-box {
             width: 42px;
             height: 42px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
         }
 
-        .action-card-btn span {
+        .bg-red-soft { background: #FEF2F2; color: #EF4444; }
+        .bg-green-soft { background: #ECFDF5; color: #10B981; }
+        .bg-blue-soft { background: #EFF6FF; color: #3B82F6; }
+        .bg-purple-soft { background: #F5F3FF; color: #8B5CF6; }
+        .bg-orange-soft { background: #FFF7ED; color: #EA580C; }
+        .bg-teal-soft { background: #F0FDFA; color: #0D9488; }
+
+        .tile-label-str {
             font-size: 11px;
             font-weight: 700;
-            color: var(--ink-title);
+            color: var(--ink-headline);
             text-align: center;
-            letter-spacing: -0.01em;
+            white-space: nowrap;
         }
 
-        /* ==========================================================================
-           5. TOTAL BALANCE HERO CARD & EYE VISIBILITY TOGGLE
-           ========================================================================== */
-        .balance-hero-card {
-            background: #FFFFFF;
+        /* 3. Total Balance Card */
+        .balance-master-card {
+            background: var(--surface);
             border-radius: 22px;
-            padding: 20px;
+            padding: 20px 20px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
@@ -389,26 +436,36 @@
             gap: 12px;
         }
 
-        .balance-header-row {
+        .balance-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .balance-label-group {
+        .balance-eyebrow {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 13px;
-            font-weight: 600;
-            color: var(--ink-body);
+            font-weight: 700;
+            color: var(--ink-secondary);
         }
 
-        .growth-pill {
-            background: #E8F5E9;
-            color: #2E7D32;
+        .btn-eye-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--ink-tertiary);
+            display: flex;
+            align-items: center;
+        }
+
+        .trend-badge-pill {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11.5px;
             font-weight: 700;
+            color: #059669;
+            background: #ECFDF5;
             padding: 4px 10px;
             border-radius: 100px;
             display: flex;
@@ -416,25 +473,23 @@
             gap: 4px;
         }
 
-        .balance-amount-display {
-            font-size: 34px;
+        .balance-huge-val {
+            font-size: 38px;
             font-weight: 800;
-            color: var(--ink-headline);
             letter-spacing: -0.04em;
-            line-height: 1.1;
+            color: var(--ink-headline);
+            line-height: 1;
         }
 
-        .balance-update-time {
-            font-size: 11px;
-            color: var(--ink-muted);
+        .balance-time-stamp {
+            font-size: 11.5px;
             font-weight: 500;
+            color: var(--ink-tertiary);
         }
 
-        /* ==========================================================================
-           6. EXPENSE OVERVIEW (INTERACTIVE DONUT CHART & METRICS)
-           ========================================================================== */
-        .chart-master-card {
-            background: #FFFFFF;
+        /* 4. Exact Screenshot Circular Meter Graph (Expense Overview) */
+        .expense-overview-card {
+            background: var(--surface);
             border-radius: 22px;
             padding: 20px;
             border: 1px solid var(--border-card);
@@ -444,73 +499,115 @@
             gap: 16px;
         }
 
-        .donut-content-row {
+        .card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-period-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-tertiary);
+            font-weight: 600;
+        }
+
+        .donut-interactive-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .svg-donut-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
             display: flex;
             align-items: center;
-            gap: 18px;
+            justify-content: center;
         }
 
-        .donut-visual-box {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            flex-shrink: 0;
+        .svg-donut-circle {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
         }
-
-        .donut-visual-box svg { transform: rotate(-90deg); }
 
         .donut-center-info {
             position: absolute;
-            inset: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
+            line-height: 1.15;
         }
 
-        .donut-center-amount { font-size: 13px; font-weight: 800; color: var(--ink-headline); }
-        .donut-center-sub { font-size: 8.5px; font-weight: 600; color: var(--ink-body); text-transform: uppercase; }
+        .donut-center-amt {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--ink-headline);
+            letter-spacing: -0.02em;
+        }
 
-        .donut-legend-stack {
-            flex: 1;
+        .donut-center-lbl {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ink-tertiary);
+            margin-top: 2px;
+        }
+
+        /* Category Legend List */
+        .category-legend-list {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .legend-row {
+        .legend-item-row {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            font-size: 11.5px;
+            align-items: center;
+            font-size: 12.5px;
+            padding: 4px 0;
         }
 
-        .legend-label-group {
+        .legend-left {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            color: var(--ink-primary);
             font-weight: 600;
-            color: var(--ink-title);
         }
 
-        .legend-color-dot {
+        .dot-indicator {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
 
-        .legend-amount-group {
+        .legend-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
-            color: var(--ink-headline);
+            font-size: 12px;
         }
 
-        /* ==========================================================================
-           7. INTERACTIVE CALENDAR WIDGET
-           ========================================================================== */
-        .calendar-widget-card {
-            background: #FFFFFF;
+        .pct-badge {
+            color: var(--forest-700);
+            background: var(--forest-50);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10.5px;
+        }
+
+        /* 5. Monthly Line / Trend Chart */
+        .chart-trend-card {
+            background: var(--surface);
             border-radius: 22px;
             padding: 20px;
             border: 1px solid var(--border-card);
@@ -520,29 +617,64 @@
             gap: 14px;
         }
 
-        .cal-header-bar {
+        .chart-legend-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+        }
+
+        .chart-svg-view {
+            width: 100%;
+            height: 130px;
+            overflow: visible;
+        }
+
+        /* 6. Mini Dynamic Calendar Widget */
+        .calendar-widget-card {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .cal-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .cal-month-title { font-size: 14.5px; font-weight: 800; color: var(--ink-headline); }
+        .cal-month-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--ink-headline);
+        }
 
-        .cal-nav-arrows { display: flex; gap: 4px; }
-        .cal-arrow-btn {
-            background: var(--surface-subtle);
-            border: 1px solid var(--border-subtle);
+        .cal-arrows {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-cal-arrow {
             width: 28px;
             height: 28px;
-            border-radius: 8px;
+            border-radius: 50%;
+            background: var(--surface-subtle);
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--forest-900);
             cursor: pointer;
+            color: var(--ink-secondary);
         }
 
-        .calendar-grid {
+        .calendar-grid-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 6px;
@@ -550,64 +682,37 @@
         }
 
         .cal-day-label {
-            font-size: 10px;
+            font-size: 10.5px;
             font-weight: 700;
-            color: var(--ink-muted);
-            text-transform: uppercase;
+            color: var(--ink-tertiary);
+            padding-bottom: 4px;
         }
 
-        .cal-cell {
-            font-size: 11.5px;
-            font-weight: 600;
-            height: 30px;
+        .cal-date-node {
+            height: 32px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink-primary);
             cursor: pointer;
         }
 
-        .cal-cell.today {
+        .cal-date-node.active-today {
             background: var(--forest-900);
             color: #FFFFFF;
             font-weight: 800;
         }
 
-        .cal-cell.muted { color: #CBD5E1; }
-
-        /* ==========================================================================
-           8. MONTHLY OVERVIEW LINE CHART
-           ========================================================================== */
-        .linechart-card {
-            background: #FFFFFF;
-            border-radius: 22px;
-            padding: 20px;
-            border: 1px solid var(--border-card);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+        .cal-date-node.muted {
+            color: #CBD5E1;
         }
 
-        .linechart-legend {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 11.5px;
-            font-weight: 600;
-        }
-
-        .linechart-svg {
-            width: 100%;
-            height: 130px;
-            overflow: visible;
-        }
-
-        /* ==========================================================================
-           9. TOP CATEGORIES & QUICK SUMMARY CARDS
-           ========================================================================== */
+        /* 7. Top Categories Progress Matrix */
         .top-categories-card {
-            background: #FFFFFF;
+            background: var(--surface);
             border-radius: 22px;
             padding: 20px;
             border: 1px solid var(--border-card);
@@ -617,94 +722,73 @@
             gap: 12px;
         }
 
-        .top-cat-row {
+        .cat-progress-item {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-        }
-
-        .top-cat-info-line {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-        }
-
-        .top-cat-name {
-            font-weight: 700;
-            color: var(--ink-title);
-            display: flex;
-            align-items: center;
             gap: 6px;
         }
 
-        .top-cat-track {
+        .progress-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .progress-bar-track {
             width: 100%;
             height: 5px;
-            background: #F1F5F9;
-            border-radius: 10px;
+            background: var(--surface-subtle);
+            border-radius: 100px;
             overflow: hidden;
         }
 
-        .top-cat-fill {
+        .progress-bar-fill {
             height: 100%;
-            border-radius: 10px;
+            border-radius: 100px;
+            transition: width 0.6s var(--ease-spring);
         }
 
-        /* Quick Summary Box */
+        /* 8. Quick Summary Card with Green Button */
         .quick-summary-card {
-            background: #FFFFFF;
+            background: var(--surface);
             border-radius: 22px;
             padding: 20px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .summary-row {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            font-size: 13px;
-        }
-
-        .summary-label {
-            display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: var(--ink-title);
+            font-size: 13.5px;
         }
 
-        .summary-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 800;
-        }
-
-        .btn-view-report {
+        .btn-full-report {
             width: 100%;
             height: 48px;
             border-radius: 14px;
-            background: var(--btn-gradient);
+            background: var(--forest-900);
             color: #FFFFFF;
+            border: none;
             font-size: 13.5px;
             font-weight: 700;
-            border: none;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-top: 4px;
+            gap: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px -4px rgba(6, 78, 59, 0.4);
         }
 
-        /* ==========================================================================
-           10. RECENT ACTIVITY LIST FEED
-           ========================================================================== */
-        .recent-activity-card {
-            background: #FFFFFF;
+        /* 9. Recent Activity & Records List */
+        .recent-feed-card {
+            background: var(--surface);
             border-radius: 22px;
             padding: 20px;
             border: 1px solid var(--border-card);
@@ -714,23 +798,25 @@
             gap: 12px;
         }
 
-        .activity-tile {
+        .activity-tile-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 10px 0;
+            align-items: center;
+            padding: 8px 0;
             border-bottom: 1px solid #F1F5F9;
         }
 
-        .activity-tile:last-child { border-bottom: none; }
+        .activity-tile-item:last-child {
+            border-bottom: none;
+        }
 
-        .activity-left {
+        .act-left-meta {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .activity-icon-box {
+        .act-avatar {
             width: 40px;
             height: 40px;
             border-radius: 12px;
@@ -739,31 +825,50 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
+            flex-shrink: 0;
         }
 
-        .activity-meta { display: flex; flex-direction: column; gap: 2px; }
-        .activity-title-str { font-size: 13.5px; font-weight: 700; color: var(--ink-title); }
-        .activity-cat-str { font-size: 11px; color: var(--ink-body); font-weight: 500; }
+        .act-title-str {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-headline);
+        }
 
-        .activity-right { text-align: right; display: flex; flex-direction: column; gap: 2px; }
-        .activity-price { font-size: 14px; font-weight: 800; color: #DC2626; }
-        .activity-time { font-size: 10.5px; color: var(--ink-muted); }
+        .act-sub-str {
+            font-size: 11.5px;
+            color: var(--ink-tertiary);
+        }
 
-        /* Inspirational Quote Card */
+        .act-right-meta {
+            text-align: right;
+        }
+
+        .act-amount-val {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0F172A;
+        }
+
+        .act-date-val {
+            font-size: 10.5px;
+            color: var(--ink-tertiary);
+        }
+
+        /* 10. Motivational Sprout Footer */
         .quote-banner-card {
-            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-            border-radius: 22px;
-            padding: 16px 20px;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 20px;
+            padding: 16px 18px;
             display: flex;
             align-items: center;
             gap: 14px;
-            border: 1px solid rgba(5, 150, 105, 0.2);
         }
 
-        .quote-leaf-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
+        .quote-sprout-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background: var(--forest-900);
             color: #FFFFFF;
             display: flex;
@@ -773,19 +878,19 @@
             flex-shrink: 0;
         }
 
-        .quote-text {
+        .quote-text-str {
             font-size: 12.5px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--forest-900);
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         /* ==========================================================================
-           11. LUXURY MOBILE ISLAND DOCK (BOTTOM BAR)
+           4. FLOATING MOBILE ISLAND DOCK
            ========================================================================== */
         .dock-container {
             position: fixed;
-            bottom: env(safe-area-inset-bottom, 16px);
+            bottom: env(safe-area-inset-bottom, 14px);
             left: 50%;
             transform: translateX(-50%);
             z-index: 600;
@@ -798,11 +903,11 @@
             pointer-events: auto;
             width: 100%;
             height: 68px;
-            background: var(--surface-glass);
+            background: var(--surface-dock);
             backdrop-filter: blur(28px) saturate(200%);
             -webkit-backdrop-filter: blur(28px) saturate(200%);
             border-radius: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             box-shadow: var(--shadow-dock);
             display: flex;
             align-items: center;
@@ -816,20 +921,20 @@
             align-items: center;
             justify-content: center;
             gap: 3px;
-            color: var(--ink-muted);
+            color: var(--ink-tertiary);
             text-decoration: none;
             width: 54px;
             height: 100%;
             transition: all 0.2s ease;
         }
 
-        .dock-btn svg { width: 22px; height: 22px; stroke-width: 2; }
-        .dock-btn span { font-size: 10px; font-weight: 700; }
+        .dock-btn svg { width: 20px; height: 20px; stroke-width: 2; }
+        .dock-btn span { font-size: 10px; font-weight: 600; }
         .dock-btn.active { color: var(--forest-900); }
 
         .dock-fab-wrapper {
             position: relative;
-            top: -22px;
+            top: -20px;
             width: 60px;
             height: 60px;
             display: flex;
@@ -841,9 +946,9 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: var(--btn-gradient);
+            background: linear-gradient(180deg, #055944 0%, #03392B 100%);
             box-shadow: var(--shadow-fab);
-            border: 3.5px solid #FFFFFF;
+            border: 4px solid var(--surface);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -855,449 +960,294 @@
 
         .dock-fab:active { transform: scale(0.92); }
         .dock-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
-
-        /* Income Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(9, 13, 20, 0.45);
-            backdrop-filter: blur(8px);
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-window {
-            background: #FFFFFF;
-            border-radius: 24px;
-            padding: 24px;
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Subtle Background -->
+    <!-- Ambient Scrim -->
     <div class="ambient-canvas"></div>
 
-    <!-- Top Executive App Bar -->
-    <header class="top-appbar">
-        <button class="menu-icon-btn" onclick="window.location.href='settings.html'" aria-label="Open Navigation Settings">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
+    <!-- TOP MOBILE NAVBAR (APP LOGO INSTEAD OF 3 LINES) -->
+    <header class="top-navbar">
+        <!-- Official Logo Replaces 3-line hamburger menu -->
+        <a href="dashboard.html" class="navbar-logo-btn" title="Roz E Hisab Home">
+            <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
+        </a>
 
-        <div class="search-bar-box">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="globalSearchInput" placeholder="Search records, categories...">
+        <!-- Global Search Bar -->
+        <div class="search-pill-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-pill-input" id="globalSearchInput" placeholder="Search records, categories...">
         </div>
 
-        <div class="appbar-right">
-            <button class="notif-btn" aria-label="Notifications">
+        <!-- Notification Bell & Profile Avatar -->
+        <div class="nav-right-actions">
+            <button type="button" class="btn-bell-notif" id="bellNotifBtn" title="Notifications">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                <span class="notif-dot"></span>
             </button>
 
-            <a href="settings.html" class="user-chip">
-                <div class="user-avatar-frame" id="headerAvatarFrame">A</div>
+            <a href="settings.html" class="user-avatar-chip">
+                <div class="user-avatar-img" id="userNavAvatar">A</div>
             </a>
         </div>
     </header>
 
-    <!-- Master Mobile-First Viewport -->
-    <main class="viewport">
+    <!-- MASTER SCROLLABLE MOBILE VIEWPORT -->
+    <main class="mobile-viewport">
 
-        <!-- 1. GOOD MORNING HERO BANNER (WITH VILLA ART & 4 STATS) -->
-        <section class="hero-banner-card">
-            <div class="hero-top-row">
-                <div class="hero-greeting-block">
-                    <div class="banner-app-logo">
-                        <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="Logo">
-                    </div>
-                    <div class="banner-text-block">
-                        <h2 id="greetingName">Good Morning, Ahmed!</h2>
-                        <p>Keep your household records organized and stay on track with your goals.</p>
-                    </div>
+        <!-- 1. GREETING HERO CARD WITH HOUSE ART & 4 STAT PILLS -->
+        <section class="greeting-hero-card">
+            <div class="hero-banner-top">
+                <div class="hero-avatar-box">
+                    <img src="assets/logo.png" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'none\'><rect width=\'100\' height=\'100\' rx=\'28\' fill=\'%23064E3B\'/><path d=\'M28 50L44 66L74 34\' stroke=\'white\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>';" alt="App Icon">
                 </div>
-
-                <div class="villa-illustration-art">
-                    <!-- High-Resolution Luxury Villa Asset / Modern Architecture -->
-                    <img src="assets/banner.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&q=80';" alt="Household Architecture">
+                <div class="hero-text-meta">
+                    <h2 class="hero-title-greeting" id="userGreetingTitle">Good Day!</h2>
+                    <p class="hero-sub-motto">Keep your household records organized and stay on track with your goals.</p>
                 </div>
             </div>
 
-            <!-- 4 Metric Chips Shelf -->
-            <div class="metric-chips-shelf">
-                <div class="metric-mini-chip">
-                    <div class="chip-icon-box" style="background:#ECFDF5; color:#059669;">👛</div>
-                    <div class="chip-meta">
-                        <span class="chip-caption">Total Balance</span>
-                        <span class="chip-val" id="bannerTotalBalance">Rs. 48,750</span>
+            <div class="hero-pills-row">
+                <div class="metric-pill-box">
+                    <div class="pill-icon-circle icon-bal">👛</div>
+                    <div class="pill-meta-group">
+                        <span class="pill-label-str">Total Balance</span>
+                        <span class="pill-val-str" id="heroTotalBalance">Rs. 0</span>
                     </div>
                 </div>
 
-                <div class="metric-mini-chip">
-                    <div class="chip-icon-box" style="background:#FEF2F2; color:#DC2626;">🛑</div>
-                    <div class="chip-meta">
-                        <span class="chip-caption">This Month Expense</span>
-                        <span class="chip-val" id="bannerMonthExpense" style="color:#DC2626;">Rs. 32,600</span>
+                <div class="metric-pill-box">
+                    <div class="pill-icon-circle icon-exp">⊕</div>
+                    <div class="pill-meta-group">
+                        <span class="pill-label-str">This Month Exp</span>
+                        <span class="pill-val-str" style="color: #EF4444;" id="heroMonthExpense">Rs. 0</span>
                     </div>
                 </div>
 
-                <div class="metric-mini-chip">
-                    <div class="chip-icon-box" style="background:#F0FDF4; color:#10B981;">🟢</div>
-                    <div class="chip-meta">
-                        <span class="chip-caption">This Month Income</span>
-                        <span class="chip-val" id="bannerMonthIncome" style="color:#10B981;">Rs. 57,800</span>
+                <div class="metric-pill-box">
+                    <div class="pill-icon-circle icon-inc">↑</div>
+                    <div class="pill-meta-group">
+                        <span class="pill-label-str">This Month Inc</span>
+                        <span class="pill-val-str" style="color: #10B981;" id="heroMonthIncome">Rs. 0</span>
                     </div>
                 </div>
 
-                <div class="metric-mini-chip">
-                    <div class="chip-icon-box" style="background:#EFF6FF; color:#3B82F6;">🏦</div>
-                    <div class="chip-meta">
-                        <span class="chip-caption">Savings</span>
-                        <span class="chip-val" id="bannerSavings" style="color:#3B82F6;">Rs. 12,400</span>
+                <div class="metric-pill-box">
+                    <div class="pill-icon-circle icon-sav">💰</div>
+                    <div class="pill-meta-group">
+                        <span class="pill-label-str">Savings</span>
+                        <span class="pill-val-str" style="color: #3B82F6;" id="heroSavings">Rs. 0</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. QUICK ACTIONS (EXACT 6 BUTTONS FROM SCREENSHOT) -->
-        <section>
-            <div class="section-headline" style="margin-bottom:10px;">
-                <span>Quick Actions</span>
-            </div>
+        <!-- 2. QUICK ACTIONS (6 EXACT SCREENSHOT TILES) -->
+        <div>
+            <h3 class="section-header-title">Quick Actions</h3>
             <div class="quick-actions-grid">
-                <!-- 1. Add Expense -->
-                <a href="add.html" class="action-card-btn">
-                    <div class="action-icon-circle" style="background:#FEF2F2; color:#EF4444;">⊕</div>
-                    <span>Add Expense</span>
+                <a href="add.html" class="quick-action-tile">
+                    <div class="tile-icon-box bg-red-soft">⊕</div>
+                    <span class="tile-label-str">Add Expense</span>
                 </a>
 
-                <!-- 2. Add Income -->
-                <button type="button" class="action-card-btn" id="openIncomeBtn">
-                    <div class="action-icon-circle" style="background:#ECFDF5; color:#059669;">🔄</div>
-                    <span>Add Income</span>
-                </button>
-
-                <!-- 3. Add Record -->
-                <a href="add.html" class="action-card-btn">
-                    <div class="action-icon-circle" style="background:#EFF6FF; color:#3B82F6;">📅</div>
-                    <span>Add Record</span>
+                <a href="add.html?type=income" class="quick-action-tile">
+                    <div class="tile-icon-box bg-green-soft">⇋</div>
+                    <span class="tile-label-str">Add Income</span>
                 </a>
 
-                <!-- 4. Set Budget -->
-                <a href="budget.html" class="action-card-btn">
-                    <div class="action-icon-circle" style="background:#F5F3FF; color:#8B5CF6;">🎯</div>
-                    <span>Set Budget</span>
+                <a href="add.html" class="quick-action-tile">
+                    <div class="tile-icon-box bg-blue-soft">📅</div>
+                    <span class="tile-label-str">Add Record</span>
                 </a>
 
-                <!-- 5. Add Family Member -->
-                <a href="family.html" class="action-card-btn">
-                    <div class="action-icon-circle" style="background:#FFF7ED; color:#EA580C;">👥</div>
-                    <span>Family Access</span>
+                <a href="budget.html" class="quick-action-tile">
+                    <div class="tile-icon-box bg-purple-soft">🎯</div>
+                    <span class="tile-label-str">Set Budget</span>
                 </a>
 
-                <!-- 6. View Report -->
-                <a href="reports.html" class="action-card-btn">
-                    <div class="action-icon-circle" style="background:#F0FDFA; color:#0D9488;">📊</div>
-                    <span>View Report</span>
+                <a href="family.html" class="quick-action-tile">
+                    <div class="tile-icon-box bg-orange-soft">👥</div>
+                    <span class="tile-label-str">Add Member</span>
+                </a>
+
+                <a href="reports.html" class="quick-action-tile">
+                    <div class="tile-icon-box bg-teal-soft">📊</div>
+                    <span class="tile-label-str">View Report</span>
                 </a>
             </div>
-        </section>
+        </div>
 
         <!-- 3. TOTAL BALANCE CARD WITH EYE VISIBILITY TOGGLE -->
-        <section class="balance-hero-card">
-            <div class="balance-header-row">
-                <div class="balance-label-group">
+        <section class="balance-master-card">
+            <div class="balance-card-header">
+                <div class="balance-eyebrow">
                     <span>Total Balance</span>
-                    <button type="button" id="toggleBalanceEye" style="background:none; border:none; color:var(--forest-700); cursor:pointer;">
-                        <svg id="balanceEyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <button type="button" class="btn-eye-toggle" id="toggleBalanceEye" title="Hide/Show Amount">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-                <div class="growth-pill">
+                <div class="trend-badge-pill">
                     <span>↗ +12%</span>
                 </div>
             </div>
 
-            <div class="balance-amount-display" id="mainBalanceDisplay">Rs. 48,750</div>
-            <div class="balance-update-time" id="balanceTime">Last updated: Today, 09:42 AM</div>
+            <div class="balance-huge-val" id="masterBalanceNumber">Rs. 0</div>
+            <div class="balance-time-stamp" id="balanceTimestampLabel">Last updated: Today</div>
         </section>
 
-        <!-- 4. EXPENSE OVERVIEW (DONUT CHART & CATEGORIES) -->
-        <section class="chart-master-card">
-            <div class="section-headline">
-                <span>Expense Overview</span>
-                <span style="font-size:12px; color:var(--ink-body); font-weight:600;">This Month</span>
+        <!-- 4. EXPENSE OVERVIEW (CIRCULAR DONUT METER LIKE UFONE/BANKING APPS) -->
+        <section class="expense-overview-card">
+            <div class="card-title-row">
+                <h3 class="section-header-title" style="margin-bottom:0;">Expense Overview</h3>
+                <span class="card-period-tag" id="overviewPeriodLabel">This Month</span>
             </div>
 
-            <div class="donut-content-row">
-                <div class="donut-visual-box">
-                    <svg width="120" height="120" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="38" stroke="#F1F5F9" stroke-width="14" fill="none"/>
-                        <!-- Donut Slices (Dynamic Colors from Screenshot) -->
-                        <circle cx="50" cy="50" r="38" stroke="#F59E0B" stroke-width="14" stroke-dasharray="76 163" stroke-dashoffset="0" fill="none"/>
-                        <circle cx="50" cy="50" r="38" stroke="#3B82F6" stroke-width="14" stroke-dasharray="43 196" stroke-dashoffset="-76" fill="none"/>
-                        <circle cx="50" cy="50" r="38" stroke="#06B6D4" stroke-width="14" stroke-dasharray="28 211" stroke-dashoffset="-119" fill="none"/>
-                        <circle cx="50" cy="50" r="38" stroke="#8B5CF6" stroke-width="14" stroke-dasharray="24 215" stroke-dashoffset="-147" fill="none"/>
-                        <circle cx="50" cy="50" r="38" stroke="#10B981" stroke-width="14" stroke-dasharray="19 220" stroke-dashoffset="-171" fill="none"/>
-                        <circle cx="50" cy="50" r="38" stroke="#64748B" stroke-width="14" stroke-dasharray="48 191" stroke-dashoffset="-190" fill="none"/>
+            <div class="donut-interactive-stage">
+                <!-- SVG Multi-Segment Donut Meter -->
+                <div class="svg-donut-wrapper">
+                    <svg class="svg-donut-circle" viewBox="0 0 100 100">
+                        <!-- Background Circle Track -->
+                        <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="12"></circle>
+                        
+                        <!-- Real-time Segments (Food, Home, Transport, School, Agri, Other) -->
+                        <circle id="donutSeg1" cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="12" stroke-dasharray="80 238" stroke-dashoffset="0"></circle>
+                        <circle id="donutSeg2" cx="50" cy="50" r="38" fill="none" stroke="#3B82F6" stroke-width="12" stroke-dasharray="45 238" stroke-dashoffset="-80"></circle>
+                        <circle id="donutSeg3" cx="50" cy="50" r="38" fill="none" stroke="#10B981" stroke-width="12" stroke-dasharray="30 238" stroke-dashoffset="-125"></circle>
+                        <circle id="donutSeg4" cx="50" cy="50" r="38" fill="none" stroke="#065F46" stroke-width="12" stroke-dasharray="25 238" stroke-dashoffset="-155"></circle>
+                        <circle id="donutSeg5" cx="50" cy="50" r="38" fill="none" stroke="#059669" stroke-width="12" stroke-dasharray="20 238" stroke-dashoffset="-180"></circle>
+                        <circle id="donutSeg6" cx="50" cy="50" r="38" fill="none" stroke="#0284C7" stroke-width="12" stroke-dasharray="38 238" stroke-dashoffset="-200"></circle>
                     </svg>
+
                     <div class="donut-center-info">
-                        <span class="donut-center-amount" id="donutCenterSum">Rs. 32.6K</span>
-                        <span class="donut-center-sub">Total</span>
+                        <span class="donut-center-amt" id="donutCenterAmount">Rs. 0</span>
+                        <span class="donut-center-lbl">Total Expense</span>
                     </div>
                 </div>
 
-                <div class="donut-legend-stack" id="donutLegendStack">
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-grocery);"></span><span>Food & Groceries</span></div>
-                        <span class="legend-amount-group">32% • Rs. 10,432</span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-home);"></span><span>Home & Utilities</span></div>
-                        <span class="legend-amount-group">18% • Rs. 5,872</span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-transport);"></span><span>Transport</span></div>
-                        <span class="legend-amount-group">12% • Rs. 3,912</span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-school);"></span><span>School</span></div>
-                        <span class="legend-amount-group">10% • Rs. 3,260</span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-agri);"></span><span>Agriculture / Land</span></div>
-                        <span class="legend-amount-group">8% • Rs. 2,608</span>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-label-group"><span class="legend-color-dot" style="background:var(--cat-other);"></span><span>Other</span></div>
-                        <span class="legend-amount-group">20% • Rs. 6,516</span>
-                    </div>
+                <!-- Category Legend List -->
+                <div class="category-legend-list" id="categoryLegendList">
+                    <!-- Populated dynamically via JS -->
                 </div>
             </div>
         </section>
 
-        <!-- 5. INTERACTIVE CALENDAR WIDGET -->
-        <section class="calendar-widget-card">
-            <div class="cal-header-bar">
-                <span class="cal-month-title" id="calendarMonthTitle">September 2026</span>
-                <div class="cal-nav-arrows">
-                    <button class="cal-arrow-btn" id="calPrevBtn" aria-label="Previous Month">&lt;</button>
-                    <button class="cal-arrow-btn" id="calNextBtn" aria-label="Next Month">&gt;</button>
+        <!-- 5. MONTHLY TREND LINE CHART (INCOME VS EXPENSE) -->
+        <section class="chart-trend-card">
+            <div class="card-title-row">
+                <h3 class="section-header-title" style="margin-bottom:0;">Monthly Overview</h3>
+                <div class="chart-legend-top">
+                    <span style="display:flex; align-items:center; gap:4px;"><span class="dot-indicator" style="background:#047857;"></span> Income</span>
+                    <span style="display:flex; align-items:center; gap:4px;"><span class="dot-indicator" style="background:#6EE7B7;"></span> Expense</span>
                 </div>
             </div>
 
-            <div class="calendar-grid" id="calendarGridDays">
-                <span class="cal-day-label">Sun</span>
-                <span class="cal-day-label">Mon</span>
-                <span class="cal-day-label">Tue</span>
-                <span class="cal-day-label">Wed</span>
-                <span class="cal-day-label">Thu</span>
-                <span class="cal-day-label">Fri</span>
-                <span class="cal-day-label">Sat</span>
-                <!-- Calendar cells dynamically mounted -->
-            </div>
-        </section>
-
-        <!-- 6. MONTHLY OVERVIEW (INCOME VS EXPENSE TREND CHART) -->
-        <section class="linechart-card">
-            <div class="section-headline">
-                <span>Monthly Overview</span>
-                <div class="linechart-legend">
-                    <span style="color:#064E3B;">● Income</span>
-                    <span style="color:#A7F3D0;">● Expense</span>
-                </div>
-            </div>
-
-            <svg class="linechart-svg" viewBox="0 0 320 120">
-                <line x1="0" y1="100" x2="320" y2="100" stroke="#F1F5F9" stroke-width="1"/>
-                <line x1="0" y1="60" x2="320" y2="60" stroke="#F1F5F9" stroke-width="1"/>
-                <line x1="0" y1="20" x2="320" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+            <!-- Smooth Vector Curve Chart -->
+            <svg class="chart-svg-view" viewBox="0 0 320 130">
+                <defs>
+                    <linearGradient id="chartFillGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#10B981" stop-opacity="0.18"/>
+                        <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+                <!-- Grid Lines -->
+                <line x1="0" y1="30" x2="320" y2="30" stroke="#F1F5F9" stroke-width="1"></line>
+                <line x1="0" y1="70" x2="320" y2="70" stroke="#F1F5F9" stroke-width="1"></line>
+                <line x1="0" y1="110" x2="320" y2="110" stroke="#F1F5F9" stroke-width="1"></line>
                 
-                <!-- Expense Curve (Light Mint) -->
-                <path d="M 10 90 Q 40 85, 70 70 T 130 85 T 190 65 T 250 80 T 310 60" fill="none" stroke="#A7F3D0" stroke-width="3" stroke-linecap="round"/>
-                
-                <!-- Income Curve (Deep Forest Green) -->
-                <path d="M 10 75 Q 40 60, 70 55 T 130 70 T 190 40 T 250 60 T 310 35" fill="none" stroke="#064E3B" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Area Fill -->
+                <path d="M0 100 Q 80 40, 160 70 T 320 30 L 320 120 L 0 120 Z" fill="url(#chartFillGrad)"></path>
 
-                <!-- Monthly Dots -->
-                <circle cx="70" cy="55" r="4" fill="#064E3B"/>
-                <circle cx="190" cy="40" r="4" fill="#064E3B"/>
-                <circle cx="310" cy="35" r="4" fill="#064E3B"/>
+                <!-- Income Curve (Dark Green) -->
+                <path d="M0 100 Q 80 40, 160 70 T 320 30" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round"></path>
+                <!-- Expense Curve (Light Green) -->
+                <path d="M0 110 Q 80 75, 160 90 T 320 60" fill="none" stroke="#6EE7B7" stroke-width="2.5" stroke-linecap="round"></path>
+
+                <!-- Interactive Data Nodes -->
+                <circle cx="0" cy="100" r="4" fill="#047857"></circle>
+                <circle cx="80" cy="55" r="4" fill="#047857"></circle>
+                <circle cx="160" cy="70" r="4" fill="#047857"></circle>
+                <circle cx="240" cy="45" r="4" fill="#047857"></circle>
+                <circle cx="320" cy="30" r="4" fill="#047857"></circle>
             </svg>
-            <div style="display:flex; justify-content:space-between; font-size:10px; color:#94A3B8; font-weight:700;">
-                <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
+        </section>
+
+        <!-- 6. MINI DYNAMIC CALENDAR WIDGET -->
+        <section class="calendar-widget-card">
+            <div class="cal-header-row">
+                <span class="cal-month-title" id="calMonthTitle">September 2026</span>
+                <div class="cal-arrows">
+                    <button type="button" class="btn-cal-arrow" id="prevCalMonthBtn">‹</button>
+                    <button type="button" class="btn-cal-arrow" id="nextCalMonthBtn">›</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid-days" id="calendarGrid">
+                <!-- Days generated dynamically -->
             </div>
         </section>
 
-        <!-- 7. TOP CATEGORIES DETAILED BREAKDOWN -->
+        <!-- 7. TOP CATEGORIES PROGRESS MATRIX -->
         <section class="top-categories-card">
-            <div class="section-headline">
-                <span>Top Categories</span>
-                <a href="categories.html" style="font-size:12px; color:var(--forest-700); text-decoration:none; font-weight:700;">This Month &gt;</a>
+            <div class="card-title-row">
+                <h3 class="section-header-title" style="margin-bottom:0;">Top Categories</h3>
+                <a href="categories.html" style="font-size:12px; color:var(--forest-700); font-weight:700; text-decoration:none;">View All ›</a>
             </div>
 
-            <div class="top-cat-row">
-                <div class="top-cat-info-line">
-                    <span class="top-cat-name">🛒 Food & Groceries</span>
-                    <span style="font-weight:700;">32% • Rs. 10,432</span>
-                </div>
-                <div class="top-cat-track"><div class="top-cat-fill" style="width:32%; background:var(--cat-grocery);"></div></div>
-            </div>
-
-            <div class="top-cat-row">
-                <div class="top-cat-info-line">
-                    <span class="top-cat-name">🏠 Home & Utilities</span>
-                    <span style="font-weight:700;">18% • Rs. 5,872</span>
-                </div>
-                <div class="top-cat-track"><div class="top-cat-fill" style="width:18%; background:var(--cat-home);"></div></div>
-            </div>
-
-            <div class="top-cat-row">
-                <div class="top-cat-info-line">
-                    <span class="top-cat-name">⛽ Transport & Petrol</span>
-                    <span style="font-weight:700;">12% • Rs. 3,912</span>
-                </div>
-                <div class="top-cat-track"><div class="top-cat-fill" style="width:12%; background:var(--cat-transport);"></div></div>
-            </div>
-
-            <div class="top-cat-row">
-                <div class="top-cat-info-line">
-                    <span class="top-cat-name">🎓 School & Fees</span>
-                    <span style="font-weight:700;">10% • Rs. 3,260</span>
-                </div>
-                <div class="top-cat-track"><div class="top-cat-fill" style="width:10%; background:var(--cat-school);"></div></div>
-            </div>
-
-            <div class="top-cat-row">
-                <div class="top-cat-info-line">
-                    <span class="top-cat-name">🚜 Agriculture / Land</span>
-                    <span style="font-weight:700;">8% • Rs. 2,608</span>
-                </div>
-                <div class="top-cat-track"><div class="top-cat-fill" style="width:8%; background:var(--cat-agri);"></div></div>
+            <div id="topCategoriesContainer" style="display:flex; flex-direction:column; gap:12px;">
+                <!-- Populated dynamically -->
             </div>
         </section>
 
-        <!-- 8. QUICK SUMMARY CARD -->
+        <!-- 8. QUICK SUMMARY & REPORT CTA -->
         <section class="quick-summary-card">
-            <div class="section-headline">
-                <span>Quick Summary</span>
+            <div class="card-title-row">
+                <h3 class="section-header-title" style="margin-bottom:0;">Quick Summary</h3>
+                <span style="font-size:14px;">📋</span>
             </div>
 
             <div class="summary-row">
-                <span class="summary-label"><span style="color:#059669;">↗</span> Total Income</span>
-                <span class="summary-val" style="color:#059669;" id="summaryIncomeVal">Rs. 57,800</span>
-            </div>
-            <div class="summary-row">
-                <span class="summary-label"><span style="color:#DC2626;">↘</span> Total Expense</span>
-                <span class="summary-val" style="color:#DC2626;" id="summaryExpenseVal">Rs. 32,600</span>
-            </div>
-            <div class="summary-row">
-                <span class="summary-label"><span style="color:#3B82F6;">👛</span> Total Savings</span>
-                <span class="summary-val" style="color:#3B82F6;" id="summarySavingsVal">Rs. 12,400</span>
+                <span style="color:var(--ink-secondary); font-weight:600;">Total Income</span>
+                <span style="color:#10B981; font-weight:800;" id="sumIncomeVal">Rs. 0</span>
             </div>
 
-            <button type="button" class="btn-view-report" onclick="window.location.href='reports.html'">
-                <span>View Full Report →</span>
-            </button>
+            <div class="summary-row">
+                <span style="color:var(--ink-secondary); font-weight:600;">Total Expense</span>
+                <span style="color:#EF4444; font-weight:800;" id="sumExpenseVal">Rs. 0</span>
+            </div>
+
+            <div class="summary-row">
+                <span style="color:var(--ink-secondary); font-weight:600;">Total Savings</span>
+                <span style="color:#3B82F6; font-weight:800;" id="sumSavingsVal">Rs. 0</span>
+            </div>
+
+            <a href="reports.html" class="btn-full-report">
+                <span>View Full Report</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
         </section>
 
-        <!-- 9. RECENT RECORDS FEED -->
-        <section class="recent-activity-card">
-            <div class="section-headline">
-                <span>Recent Activity</span>
-                <a href="daily-register.html" style="font-size:12px; color:var(--forest-700); text-decoration:none; font-weight:700;">View All</a>
+        <!-- 9. RECENT ACTIVITY FEED -->
+        <section class="recent-feed-card">
+            <div class="card-title-row">
+                <h3 class="section-header-title" style="margin-bottom:0;">Recent Activity</h3>
+                <a href="daily-register.html" style="font-size:12px; color:var(--forest-700); font-weight:700; text-decoration:none;">View All</a>
             </div>
 
             <div id="recentActivityList">
-                <!-- Activity Tiles dynamically mounted from Firestore -->
-                <div class="activity-tile">
-                    <div class="activity-left">
-                        <div class="activity-icon-box">🛒</div>
-                        <div class="activity-meta">
-                            <span class="activity-title-str">Grocery Shopping</span>
-                            <span class="activity-cat-str">Food & Groceries</span>
-                        </div>
-                    </div>
-                    <div class="activity-right">
-                        <span class="activity-price">Rs. 2,450</span>
-                        <span class="activity-time">Today, 09:12 AM</span>
-                    </div>
-                </div>
-
-                <div class="activity-tile">
-                    <div class="activity-left">
-                        <div class="activity-icon-box">🎓</div>
-                        <div class="activity-meta">
-                            <span class="activity-title-str">School Fees</span>
-                            <span class="activity-cat-str">School</span>
-                        </div>
-                    </div>
-                    <div class="activity-right">
-                        <span class="activity-price">Rs. 8,000</span>
-                        <span class="activity-time">Yesterday, 04:32 PM</span>
-                    </div>
-                </div>
-
-                <div class="activity-tile">
-                    <div class="activity-left">
-                        <div class="activity-icon-box">⛽</div>
-                        <div class="activity-meta">
-                            <span class="activity-title-str">Petrol</span>
-                            <span class="activity-cat-str">Transport</span>
-                        </div>
-                    </div>
-                    <div class="activity-right">
-                        <span class="activity-price">Rs. 3,200</span>
-                        <span class="activity-time">10 Sep, 08:15 AM</span>
-                    </div>
-                </div>
-
-                <div class="activity-tile">
-                    <div class="activity-left">
-                        <div class="activity-icon-box">💡</div>
-                        <div class="activity-meta">
-                            <span class="activity-title-str">Electricity Bill</span>
-                            <span class="activity-cat-str">Home & Utilities</span>
-                        </div>
-                    </div>
-                    <div class="activity-right">
-                        <span class="activity-price">Rs. 4,780</span>
-                        <span class="activity-time">09 Sep, 06:42 PM</span>
-                    </div>
-                </div>
-
-                <div class="activity-tile">
-                    <div class="activity-left">
-                        <div class="activity-icon-box">🌾</div>
-                        <div class="activity-meta">
-                            <span class="activity-title-str">Fertilizer Purchase</span>
-                            <span class="activity-cat-str">Agriculture / Land</span>
-                        </div>
-                    </div>
-                    <div class="activity-right">
-                        <span class="activity-price">Rs. 6,500</span>
-                        <span class="activity-time">08 Sep, 03:20 PM</span>
-                    </div>
-                </div>
+                <div style="text-align:center; padding:20px; color:var(--ink-tertiary); font-size:13px;">Syncing latest transactions...</div>
             </div>
         </section>
 
-        <!-- 10. INSPIRATIONAL QUOTE BANNER -->
+        <!-- 10. MOTIVATIONAL SPROUT BANNER -->
         <section class="quote-banner-card">
-            <div class="quote-leaf-icon">🌱</div>
-            <span class="quote-text">Small steps today build big dreams tomorrow.</span>
+            <div class="quote-sprout-icon">🌱</div>
+            <p class="quote-text-str">Small steps today build big dreams tomorrow.</p>
         </section>
 
     </main>
 
-    <!-- FLOATING MOBILE ISLAND DOCK -->
+    <!-- FLOATING MOBILE DOCK NAVIGATION -->
     <div class="dock-container">
         <nav class="mobile-dock">
             <a href="dashboard.html" class="dock-btn active">
@@ -1311,7 +1261,7 @@
             </a>
 
             <div class="dock-fab-wrapper">
-                <a href="add.html" class="dock-fab" title="Quick Add Record">
+                <a href="add.html" class="dock-fab" title="Add Transaction">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </a>
             </div>
@@ -1328,210 +1278,248 @@
         </nav>
     </div>
 
-    <!-- QUICK ADD INCOME MODAL -->
-    <div class="modal-overlay" id="incomeModal">
-        <div class="modal-window">
-            <h3 style="font-size:17px; font-weight:800; color:var(--forest-900);">Add Income Record</h3>
-            <form id="incomeForm" style="display:flex; flex-direction:column; gap:12px;">
-                <input type="text" id="incomeSourceInput" placeholder="Income Source (e.g. Salary, Rent, Crop Sale)" required style="height:48px; border:1px solid #E2E8E4; border-radius:12px; padding:0 14px; font-size:14px; outline:none;">
-                <input type="number" id="incomeAmountInput" placeholder="Amount (Rs.)" min="1" required style="height:48px; border:1px solid #E2E8E4; border-radius:12px; padding:0 14px; font-size:14px; outline:none;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <button type="button" id="closeIncomeBtn" style="height:44px; border:1px solid #CBD5E1; background:#FFF; border-radius:12px; font-weight:700; cursor:pointer;">Cancel</button>
-                    <button type="submit" style="height:44px; border:none; background:var(--btn-gradient); color:#FFF; border-radius:12px; font-weight:700; cursor:pointer;">Save Income</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- ==========================================================================
-       12. FIREBASE REALTIME MULTI-DATA TELEMETRY ENGINE
+       5. CORE FIREBASE DASHBOARD ENGINE (REAL-TIME COMPUTATION)
        ========================================================================== -->
     <script type="module">
         import { auth, db } from './firebase/firebase-config.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
             collection, 
             query, 
             where, 
             onSnapshot, 
-            addDoc, 
-            serverTimestamp 
+            doc, 
+            getDoc 
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
         // DOM Handles
-        const greetingName = document.getElementById('greetingName');
-        const headerAvatarFrame = document.getElementById('headerAvatarFrame');
-        const bannerTotalBalance = document.getElementById('bannerTotalBalance');
-        const bannerMonthExpense = document.getElementById('bannerMonthExpense');
-        const bannerMonthIncome = document.getElementById('bannerMonthIncome');
-        const bannerSavings = document.getElementById('bannerSavings');
-        const mainBalanceDisplay = document.getElementById('mainBalanceDisplay');
+        const userNavAvatar = document.getElementById('userNavAvatar');
+        const userGreetingTitle = document.getElementById('userGreetingTitle');
+        const heroTotalBalance = document.getElementById('heroTotalBalance');
+        const heroMonthExpense = document.getElementById('heroMonthExpense');
+        const heroMonthIncome = document.getElementById('heroMonthIncome');
+        const heroSavings = document.getElementById('heroSavings');
+        const masterBalanceNumber = document.getElementById('masterBalanceNumber');
         const toggleBalanceEye = document.getElementById('toggleBalanceEye');
-        const balanceEyeIcon = document.getElementById('balanceEyeIcon');
-        const summaryIncomeVal = document.getElementById('summaryIncomeVal');
-        const summaryExpenseVal = document.getElementById('summaryExpenseVal');
-        const summarySavingsVal = document.getElementById('summarySavingsVal');
+        const donutCenterAmount = document.getElementById('donutCenterAmount');
+        const categoryLegendList = document.getElementById('categoryLegendList');
+        const topCategoriesContainer = document.getElementById('topCategoriesContainer');
+        const sumIncomeVal = document.getElementById('sumIncomeVal');
+        const sumExpenseVal = document.getElementById('sumExpenseVal');
+        const sumSavingsVal = document.getElementById('sumSavingsVal');
         const recentActivityList = document.getElementById('recentActivityList');
-        const donutCenterSum = document.getElementById('donutCenterSum');
+        const calMonthTitle = document.getElementById('calMonthTitle');
+        const calendarGrid = document.getElementById('calendarGrid');
 
-        // Income Modal Handles
-        const openIncomeBtn = document.getElementById('openIncomeBtn');
-        const closeIncomeBtn = document.getElementById('closeIncomeBtn');
-        const incomeModal = document.getElementById('incomeModal');
-        const incomeForm = document.getElementById('incomeForm');
+        let isBalanceVisible = true;
+        let cachedBalance = 0;
+        let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
 
-        let rawIncome = 57800;
-        let rawExpense = 32600;
-        let isBalanceHidden = false;
-
-        // Balance Eye Toggle Logic
+        // Toggle Balance Eye Visibility
         toggleBalanceEye.addEventListener('click', () => {
-            isBalanceHidden = !isBalanceHidden;
-            const netBalance = rawIncome - rawExpense;
-            if (isBalanceHidden) {
-                mainBalanceDisplay.innerText = "Rs. •••••••";
-                balanceEyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
-            } else {
-                mainBalanceDisplay.innerText = `Rs. ${netBalance.toLocaleString()}`;
-                balanceEyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
-            }
+            isBalanceVisible = !isBalanceVisible;
+            masterBalanceNumber.innerText = isBalanceVisible ? `Rs. ${cachedBalance.toLocaleString()}` : 'Rs. •••••••';
+            toggleBalanceEye.style.opacity = isBalanceVisible ? "1" : "0.5";
         });
 
-        // Income Modal Controls
-        openIncomeBtn.addEventListener('click', () => incomeModal.classList.add('active'));
-        closeIncomeBtn.addEventListener('click', () => incomeModal.classList.remove('active'));
+        // Interactive Calendar Generation (Current Anchor: September 2026)
+        let calDate = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        incomeForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const source = document.getElementById('incomeSourceInput').value.trim();
-            const amt = parseFloat(document.getElementById('incomeAmountInput').value) || 0;
-            const activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+        function renderCalendar() {
+            const year = calDate.getFullYear();
+            const month = calDate.getMonth();
+            calMonthTitle.innerText = `${monthNames[month]} ${year}`;
 
-            try {
-                await addDoc(collection(db, "income"), {
-                    familyId: activeFamilyId,
-                    source: source,
-                    amount: amt,
-                    date: new Date().toISOString().split('T')[0],
-                    createdAt: serverTimestamp()
-                });
-                incomeModal.classList.remove('active');
-                incomeForm.reset();
-            } catch (err) {
-                alert("Saved locally: " + err.message);
-                incomeModal.classList.remove('active');
-            }
-        });
+            const daysLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            let html = daysLabels.map(d => `<div class="cal-day-label">${d}</div>`).join('');
 
-        // Interactive Calendar Month Logic
-        const calMonthTitle = document.getElementById('calendarMonthTitle');
-        const calendarGridDays = document.getElementById('calendarGridDays');
-        let currentCalDate = new Date();
-
-        function renderCalendar(date) {
-            const y = date.getFullYear();
-            const m = date.getMonth();
-            calMonthTitle.innerText = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-            const firstDay = new Date(y, m, 1).getDay();
-            const daysInMonth = new Date(y, m + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
             const today = new Date();
 
-            // Clear previous day cells (retain headers)
-            const headers = calendarGridDays.querySelectorAll('.cal-day-label');
-            calendarGridDays.innerHTML = '';
-            headers.forEach(h => calendarGridDays.appendChild(h));
-
-            // Leading blanks
             for (let i = 0; i < firstDay; i++) {
-                const blank = document.createElement('div');
-                blank.className = 'cal-cell muted';
-                calendarGridDays.appendChild(blank);
+                html += `<div class="cal-date-node muted"></div>`;
             }
 
-            // Days of month
-            for (let d = 1; d <= daysInMonth; d++) {
-                const cell = document.createElement('div');
-                cell.className = 'cal-cell';
-                cell.innerText = d;
-                if (d === today.getDate() && m === today.getMonth() && y === today.getFullYear()) {
-                    cell.classList.add('today');
-                }
-                calendarGridDays.appendChild(cell);
+            for (let day = 1; day <= totalDays; day++) {
+                const isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                html += `<div class="cal-date-node ${isToday ? 'active-today' : ''}">${day}</div>`;
             }
+
+            calendarGrid.innerHTML = html;
         }
 
-        renderCalendar(currentCalDate);
-        document.getElementById('calPrevBtn').addEventListener('click', () => {
-            currentCalDate.setMonth(currentCalDate.getMonth() - 1);
-            renderCalendar(currentCalDate);
+        document.getElementById('prevCalMonthBtn').addEventListener('click', () => {
+            calDate.setMonth(calDate.getMonth() - 1);
+            renderCalendar();
         });
-        document.getElementById('calNextBtn').addEventListener('click', () => {
-            currentCalDate.setMonth(currentCalDate.getMonth() + 1);
-            renderCalendar(currentCalDate);
+        document.getElementById('nextCalMonthBtn').addEventListener('click', () => {
+            calDate.setMonth(calDate.getMonth() + 1);
+            renderCalendar();
         });
+        renderCalendar();
 
-        // Realtime Firebase Integration
-        onAuthStateChanged(auth, (user) => {
+        // Realtime Data Ingestion & Calculation Engine
+        onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
                 return;
             }
 
+            // User Profile Header Setup
             const userName = user.displayName || "Family Member";
-            greetingName.innerText = `Good Morning, ${userName.split(' ')[0]}!`;
-            headerAvatarFrame.innerText = userName.charAt(0).toUpperCase();
+            const firstName = userName.split(' ')[0];
+            userGreetingTitle.innerText = `Good Day, ${firstName}!`;
+            userNavAvatar.innerText = firstName.charAt(0).toUpperCase();
 
-            const activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
+            // Load Workspace Identity
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    activeFamilyId = userDoc.data().familyId || activeFamilyId;
+                    localStorage.setItem("ROZ_ACTIVE_FAMILY_ID", activeFamilyId);
+                }
+            } catch(e) {}
 
-            // Listen to records
-            const q = query(collection(db, "records"), where("familyId", "==", activeFamilyId));
+            // Real-Time Ledger Query
+            const recordsRef = collection(db, "records");
+            const q = query(recordsRef, where("familyId", "==", activeFamilyId));
+
             onSnapshot(q, (snapshot) => {
-                let expenseSum = 0;
-                let recordsList = [];
+                let totalIncome = 0;
+                let totalExpense = 0;
+                let catBreakdown = {
+                    "Food & Groceries": 0,
+                    "Home & Utilities": 0,
+                    "Transport": 0,
+                    "School": 0,
+                    "Agriculture / Land": 0,
+                    "Other": 0
+                };
+                let allRecords = [];
 
-                snapshot.forEach(doc => {
-                    const d = doc.data();
-                    expenseSum += parseFloat(d.totalPrice) || 0;
-                    recordsList.push({ id: doc.id, ...d });
+                snapshot.forEach(docSnap => {
+                    const r = docSnap.data();
+                    allRecords.push(r);
+                    const amt = parseFloat(r.totalPrice) || 0;
+
+                    if (r.type === 'income') {
+                        totalIncome += amt;
+                    } else {
+                        totalExpense += amt;
+
+                        // Categorize
+                        const cat = (r.category || '').toLowerCase();
+                        if (cat.includes('food') || cat.includes('groc')) catBreakdown["Food & Groceries"] += amt;
+                        else if (cat.includes('home') || cat.includes('util')) catBreakdown["Home & Utilities"] += amt;
+                        else if (cat.includes('trans') || cat.includes('fuel')) catBreakdown["Transport"] += amt;
+                        else if (cat.includes('school')) catBreakdown["School"] += amt;
+                        else if (cat.includes('agri') || cat.includes('zameen')) catBreakdown["Agriculture / Land"] += amt;
+                        else catBreakdown["Other"] += amt;
+                    }
                 });
 
-                if (recordsList.length > 0) {
-                    rawExpense = expenseSum;
-                    const balance = rawIncome - rawExpense;
-                    const savings = Math.max(0, balance);
+                // Compute Metrics
+                const balance = totalIncome - totalExpense;
+                cachedBalance = balance;
+                const savings = Math.max(0, balance);
 
-                    bannerMonthExpense.innerText = `Rs. ${rawExpense.toLocaleString()}`;
-                    bannerTotalBalance.innerText = `Rs. ${balance.toLocaleString()}`;
-                    bannerSavings.innerText = `Rs. ${savings.toLocaleString()}`;
-                    summaryExpenseVal.innerText = `Rs. ${rawExpense.toLocaleString()}`;
-                    summarySavingsVal.innerText = `Rs. ${savings.toLocaleString()}`;
-                    donutCenterSum.innerText = `Rs. ${(rawExpense / 1000).toFixed(1)}K`;
+                // Update UI Figures
+                if (isBalanceVisible) {
+                    masterBalanceNumber.innerText = `Rs. ${balance.toLocaleString()}`;
+                }
+                heroTotalBalance.innerText = `Rs. ${balance.toLocaleString()}`;
+                heroMonthExpense.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+                heroMonthIncome.innerText = `Rs. ${totalIncome.toLocaleString()}`;
+                heroSavings.innerText = `Rs. ${savings.toLocaleString()}`;
 
-                    if (!isBalanceHidden) {
-                        mainBalanceDisplay.innerText = `Rs. ${balance.toLocaleString()}`;
+                sumIncomeVal.innerText = `Rs. ${totalIncome.toLocaleString()}`;
+                sumExpenseVal.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+                sumSavingsVal.innerText = `Rs. ${savings.toLocaleString()}`;
+
+                donutCenterAmount.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+
+                // Calculate Category Donut Graph Angles & Legends
+                const legendColors = {
+                    "Food & Groceries": "#F59E0B",
+                    "Home & Utilities": "#3B82F6",
+                    "Transport": "#10B981",
+                    "School": "#065F46",
+                    "Agriculture / Land": "#047857",
+                    "Other": "#0284C7"
+                };
+
+                const circumference = 238; // 2 * pi * 38
+                let cumulativeOffset = 0;
+                let legendHTML = '';
+                let topCatHTML = '';
+
+                Object.entries(catBreakdown).forEach(([cName, cAmt], idx) => {
+                    const pct = totalExpense > 0 ? Math.round((cAmt / totalExpense) * 100) : 0;
+                    const strokeDash = (pct / 100) * circumference;
+
+                    // Update SVG Segment
+                    const segEl = document.getElementById(`donutSeg${idx + 1}`);
+                    if (segEl) {
+                        segEl.setAttribute('stroke-dasharray', `${strokeDash} ${circumference}`);
+                        segEl.setAttribute('stroke-dashoffset', `${-cumulativeOffset}`);
                     }
+                    cumulativeOffset += strokeDash;
 
-                    // Render Recent List
-                    recordsList.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-                    recentActivityList.innerHTML = recordsList.slice(0, 5).map(r => `
-                        <div class="activity-tile">
-                            <div class="activity-left">
-                                <div class="activity-icon-box">${r.category === 'Grocery' ? '🛒' : (r.category === 'School' ? '🎓' : (r.category === 'Zameen' ? '🌾' : '💡'))}</div>
-                                <div class="activity-meta">
-                                    <span class="activity-title-str">${r.itemName}</span>
-                                    <span class="activity-cat-str">${r.category}</span>
+                    // Build Legend Row
+                    legendHTML += `
+                        <div class="legend-item-row">
+                            <div class="legend-left">
+                                <span class="dot-indicator" style="background:${legendColors[cName]};"></span>
+                                <span>${cName}</span>
+                            </div>
+                            <div class="legend-right">
+                                <span class="pct-badge">${pct}%</span>
+                                <span>Rs. ${cAmt.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    // Top Category Progress Item
+                    topCatHTML += `
+                        <div class="cat-progress-item">
+                            <div class="progress-meta-row">
+                                <span style="font-weight:700; color:var(--ink-headline); font-size:12.5px;">${cName}</span>
+                                <span style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700;">Rs. ${cAmt.toLocaleString()}</span>
+                            </div>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" style="width:${pct}%; background:${legendColors[cName]};"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                categoryLegendList.innerHTML = legendHTML;
+                topCategoriesContainer.innerHTML = topCatHTML;
+
+                // Render Recent Activity Feed
+                if (allRecords.length === 0) {
+                    recentActivityList.innerHTML = `<div style="text-align:center; padding:20px; color:var(--ink-tertiary); font-size:13px;">No transactions recorded yet. Tap + to add one.</div>`;
+                } else {
+                    allRecords.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+                    recentActivityList.innerHTML = allRecords.slice(0, 5).map(r => `
+                        <div class="activity-tile-item">
+                            <div class="act-left-meta">
+                                <div class="act-avatar">${r.category === 'School' ? '🎓' : (r.category === 'Grocery' ? '🛒' : '📌')}</div>
+                                <div>
+                                    <div class="act-title-str">${r.itemName || 'Expense'}</div>
+                                    <div class="act-sub-str">${r.category || 'General'}</div>
                                 </div>
                             </div>
-                            <div class="activity-right">
-                                <span class="activity-price">Rs. ${parseFloat(r.totalPrice).toLocaleString()}</span>
-                                <span class="activity-time">${r.date || 'Today'}</span>
+                            <div class="act-right-meta">
+                                <div class="act-amount-val">- Rs. ${(r.totalPrice || 0).toLocaleString()}</div>
+                                <div class="act-date-val">${r.date || 'Today'}</div>
                             </div>
                         </div>
                     `).join('');
                 }
-            }, (err) => {
-                console.warn("[Dashboard Offline Cache]:", err);
             });
         });
     </script>
