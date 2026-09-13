@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#F8FAFC">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FAFAFA">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Roz E Hisab — Master Household Dashboard</title>
@@ -15,7 +17,9 @@
     <!-- Global Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
     <style>
         /* ==========================================================================
@@ -37,22 +41,18 @@
             --ink-secondary: #475569;
             --ink-tertiary: #94A3B8;
 
-            /* Category Specific Theme Accents */
-            --cat-food: #F59E0B;
-            --cat-food-bg: #FEF3C7;
-            --cat-home: #3B82F6;
-            --cat-home-bg: #EFF6FF;
-            --cat-transport: #10B981;
-            --cat-transport-bg: #ECFDF5;
-            --cat-school: #8B5CF6;
-            --cat-school-bg: #F5F3FF;
-            --cat-agri: #059669;
-            --cat-agri-bg: #E6F4EA;
-            --cat-other: #06B6D4;
-            --cat-other-bg: #ECFEFF;
+            /* Dynamic Chart Colors */
+            --chart-c1: #F59E0B;
+            --chart-c2: #3B82F6;
+            --chart-c3: #10B981;
+            --chart-c4: #8B5CF6;
+            --chart-c5: #059669;
+            --chart-c6: #06B6D4;
 
             --danger-ink: #EF4444;
             --danger-bg: #FEF2F2;
+            --success-ink: #10B981;
+            --success-bg: #ECFDF5;
 
             --border-subtle: rgba(15, 23, 42, 0.06);
             --border-card: #EDF2F7;
@@ -60,6 +60,7 @@
             --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
             --shadow-dock: 0 -8px 24px -4px rgba(0, 0, 0, 0.06);
             --shadow-fab: 0 14px 28px -4px rgba(4, 120, 87, 0.45);
+            --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.16);
 
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -74,7 +75,8 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             min-height: 100%;
             background-color: var(--canvas);
@@ -95,6 +97,17 @@
             position: relative;
         }
 
+        /* Ambient Canvas Lighting */
+        .ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(90% 50% at 50% 0%, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
         /* ==========================================================================
            2. EXECUTIVE TOP APP BAR (LOGO REPLACES HAMBURGER MENU)
            ========================================================================== */
@@ -111,7 +124,6 @@
             gap: 12px;
         }
 
-        /* App Logo (Replaced 3 Lines Menu) */
         .app-logo-link {
             width: 38px;
             height: 38px;
@@ -132,7 +144,6 @@
             object-fit: cover;
         }
 
-        /* Search Capsule */
         .header-search-capsule {
             flex: 1;
             height: 40px;
@@ -167,7 +178,6 @@
             color: var(--ink-tertiary);
         }
 
-        /* Header Right Group */
         .header-right-group {
             display: flex;
             align-items: center;
@@ -232,6 +242,8 @@
             flex-direction: column;
             gap: 16px;
             padding: 16px;
+            position: relative;
+            z-index: 10;
         }
 
         .hero-banner-card {
@@ -288,7 +300,6 @@
             filter: drop-shadow(0 6px 12px rgba(6, 78, 59, 0.15));
         }
 
-        /* 4 Quick Stat Pills Grid */
         .stats-quad-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -451,7 +462,7 @@
             color: var(--ink-tertiary);
         }
 
-        /* Circle Donut Chart Card (My Ufone / Telecom App Style) */
+        /* Dynamic Donut Chart */
         .donut-overview-card {
             background: var(--surface);
             border-radius: 22px;
@@ -547,6 +558,9 @@
             gap: 6px;
             color: var(--ink-secondary);
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .legend-dot-indicator {
@@ -564,7 +578,7 @@
         }
 
         /* ==========================================================================
-           6. MONTHLY OVERVIEW LINE CHART (INTERACTIVE SVG GRAPH)
+           6. MONTHLY OVERVIEW LINE CHART (DYNAMIC INTERACTIVE SVG)
            ========================================================================== */
         .monthly-line-chart-card {
             background: var(--surface);
@@ -598,7 +612,7 @@
         }
 
         /* ==========================================================================
-           7. TOP CATEGORIES WITH PROGRESS BARS
+           7. DYNAMIC TOP CATEGORIES WITH PROGRESS BARS
            ========================================================================== */
         .categories-progress-card {
             background: var(--surface);
@@ -606,6 +620,12 @@
             padding: 20px 18px;
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #topCategoriesContainer {
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -646,6 +666,9 @@
         .cat-label-text {
             font-weight: 700;
             color: var(--ink-title);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .cat-price-text {
@@ -653,6 +676,7 @@
             color: var(--ink-title);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
+            flex-shrink: 0;
         }
 
         .cat-meter-track {
@@ -729,6 +753,11 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cal-day-cell:hover {
+            background: var(--surface-subtle);
         }
 
         .cal-day-cell.active-today {
@@ -774,6 +803,15 @@
             gap: 12px;
             padding-bottom: 12px;
             border-bottom: 1px solid #F1F5F9;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .activity-item-row:hover {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 8px;
+            margin: -8px;
         }
 
         .activity-item-row:last-child {
@@ -836,6 +874,9 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        .activity-price-income { color: var(--success-ink); }
+        .activity-price-expense { color: var(--danger-ink); }
+
         .activity-time-str {
             font-size: 10.5px;
             color: var(--ink-tertiary);
@@ -857,6 +898,107 @@
             gap: 8px;
             text-decoration: none;
             box-shadow: 0 8px 18px -4px rgba(6, 78, 59, 0.4);
+            transition: transform 0.2s var(--ease-spring);
+        }
+        
+        .btn-full-report-cta:active {
+            transform: scale(0.96);
+        }
+
+        /* ==========================================================================
+           8. TRANSACTION DETAIL POPUP (MODAL)
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 56, 42, 0.45);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 26px 22px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-modal);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            animation: slideUpModal 0.28s var(--ease-spring);
+        }
+
+        @keyframes slideUpModal {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title-str {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--ink-headline);
+        }
+
+        .modal-close-btn {
+            background: var(--surface-subtle);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--ink-secondary);
+        }
+
+        .modal-invoice-grid {
+            background: var(--surface-subtle);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .invoice-row-label { color: var(--ink-secondary); font-weight: 500; }
+        .invoice-row-val { font-weight: 700; color: var(--ink-title); font-family: 'JetBrains Mono', monospace; text-align: right;}
+
+        .btn-modal-dismiss {
+            width: 100%;
+            height: 48px;
+            background: var(--surface);
+            border: 1px solid var(--border-card);
+            color: var(--ink-secondary);
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-dismiss:hover {
+            background: var(--surface-subtle);
+            color: var(--ink-title);
         }
 
         /* ==========================================================================
@@ -1087,15 +1229,15 @@
                         <span>Total Balance</span>
                         <svg id="eyeToggleIcon" style="cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </div>
-                    <div class="growth-pill">
-                        <span>↗ +12%</span>
+                    <div class="growth-pill" id="balanceGrowthPill">
+                        <span>↗ Active</span>
                     </div>
                 </div>
                 <div class="balance-number-display" id="mainBalanceDisplay">Rs. 0</div>
                 <div class="balance-timestamp-sub" id="lastUpdatedLabel">Last updated: Today</div>
             </section>
 
-            <!-- Circle Donut Graph (My Ufone / Telecom Style) -->
+            <!-- Circle Donut Graph (Dynamic Generation) -->
             <section class="donut-overview-card">
                 <div class="chart-header-row">
                     <h3 class="card-heading-title">Expense Overview</h3>
@@ -1103,18 +1245,12 @@
                 </div>
 
                 <div class="donut-stage-layout">
-                    <!-- SVG Donut Circle -->
+                    <!-- Dynamic SVG Donut Circle -->
                     <div class="donut-svg-wrapper">
-                        <svg class="donut-svg-core" viewBox="0 0 36 36">
+                        <svg class="donut-svg-core" viewBox="0 0 36 36" id="donutSvgGraphic">
                             <!-- Background Track -->
                             <path stroke="#F1F5F9" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <!-- Colored Segments (Real Live Breakdown) -->
-                            <path id="segFood" stroke="var(--cat-food)" stroke-dasharray="32, 100" stroke-dashoffset="0" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path id="segHome" stroke="var(--cat-home)" stroke-dasharray="18, 100" stroke-dashoffset="-32" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path id="segTransport" stroke="var(--cat-transport)" stroke-dasharray="12, 100" stroke-dashoffset="-50" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path id="segSchool" stroke="var(--cat-school)" stroke-dasharray="10, 100" stroke-dashoffset="-62" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path id="segAgri" stroke="var(--cat-agri)" stroke-dasharray="8, 100" stroke-dashoffset="-72" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path id="segOther" stroke="var(--cat-other)" stroke-dasharray="20, 100" stroke-dashoffset="-80" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <!-- JavaScript will inject dynamic color paths here -->
                         </svg>
 
                         <!-- Center Total Inside Circle -->
@@ -1124,108 +1260,33 @@
                         </div>
                     </div>
 
-                    <!-- Right Legend Stack -->
-                    <div class="donut-legend-stack">
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-food);"></span>
-                                <span>Food & Grocery</span>
-                            </div>
-                            <span class="legend-amount-block" id="legFoodAmt">Rs. 0</span>
-                        </div>
-
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-home);"></span>
-                                <span>Home Utilities</span>
-                            </div>
-                            <span class="legend-amount-block" id="legHomeAmt">Rs. 0</span>
-                        </div>
-
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-transport);"></span>
-                                <span>Transport / Fuel</span>
-                            </div>
-                            <span class="legend-amount-block" id="legTransportAmt">Rs. 0</span>
-                        </div>
-
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-school);"></span>
-                                <span>School & Fees</span>
-                            </div>
-                            <span class="legend-amount-block" id="legSchoolAmt">Rs. 0</span>
-                        </div>
-
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-agri);"></span>
-                                <span>Agriculture / Land</span>
-                            </div>
-                            <span class="legend-amount-block" id="legAgriAmt">Rs. 0</span>
-                        </div>
-
-                        <div class="legend-line-item">
-                            <div class="legend-name-block">
-                                <span class="legend-dot-indicator" style="background:var(--cat-other);"></span>
-                                <span>Other / Advances</span>
-                            </div>
-                            <span class="legend-amount-block" id="legOtherAmt">Rs. 0</span>
-                        </div>
+                    <!-- Dynamic Legend Stack -->
+                    <div class="donut-legend-stack" id="donutLegendList">
+                        <!-- Populated by JS -->
+                        <div style="font-size:11px; color:var(--ink-tertiary);">Calculating breakdown...</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Monthly Overview (Income vs Expense Line Graph) -->
+            <!-- Monthly Overview (Dynamic Line Graph) -->
             <section class="monthly-line-chart-card">
                 <div class="chart-header-row">
                     <h3 class="card-heading-title">Monthly Overview</h3>
                     <div class="chart-legend-row">
                         <div class="legend-pill-item">
-                            <span style="width:8px; height:8px; border-radius:50%; background:#059669;"></span>
+                            <span style="width:8px; height:8px; border-radius:50%; background:#10B981;"></span>
                             <span style="color:#059669;">Income</span>
                         </div>
                         <div class="legend-pill-item">
-                            <span style="width:8px; height:8px; border-radius:50%; background:#A7F3D0;"></span>
-                            <span style="color:#047857;">Expense</span>
+                            <span style="width:8px; height:8px; border-radius:50%; background:#04382A;"></span>
+                            <span style="color:#0F172A;">Expense</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Smooth SVG Line Chart -->
-                <svg class="line-chart-svg" viewBox="0 0 320 130">
-                    <defs>
-                        <linearGradient id="chartFillGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
-                            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
-                        </linearGradient>
-                    </defs>
-                    <!-- Grid Lines -->
-                    <line x1="0" y1="30" x2="320" y2="30" stroke="#F1F5F9" stroke-width="1"/>
-                    <line x1="0" y1="65" x2="320" y2="65" stroke="#F1F5F9" stroke-width="1"/>
-                    <line x1="0" y1="100" x2="320" y2="100" stroke="#F1F5F9" stroke-width="1"/>
-
-                    <!-- Income Curve Path -->
-                    <path d="M 10,95 Q 60,65 110,75 T 210,40 T 310,35" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="10" cy="95" r="3" fill="#059669"/>
-                    <circle cx="110" cy="75" r="3" fill="#059669"/>
-                    <circle cx="210" cy="40" r="3" fill="#059669"/>
-                    <circle cx="310" cy="35" r="3" fill="#059669"/>
-
-                    <!-- Expense Curve Path -->
-                    <path d="M 10,110 Q 60,85 110,95 T 210,70 T 310,65" fill="none" stroke="#A7F3D0" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="10" cy="110" r="3" fill="#34D399"/>
-                    <circle cx="110" cy="95" r="3" fill="#34D399"/>
-                    <circle cx="210" cy="70" r="3" fill="#34D399"/>
-                    <circle cx="310" cy="65" r="3" fill="#34D399"/>
-
-                    <!-- Month Labels -->
-                    <text x="10" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jan</text>
-                    <text x="70" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Apr</text>
-                    <text x="135" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jul</text>
-                    <text x="200" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Sep</text>
-                    <text x="280" y="125" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Dec</text>
+                <!-- Dynamic SVG Line Chart -->
+                <svg class="line-chart-svg" viewBox="0 0 320 130" id="monthlyLineChart">
+                    <!-- Populated by JS -->
                 </svg>
             </section>
 
@@ -1236,55 +1297,15 @@
                     <a href="categories.html" style="font-size:12px; color:var(--brand-primary); font-weight:700; text-decoration:none;">View All →</a>
                 </div>
 
-                <div class="cat-progress-item">
-                    <div class="cat-icon-chip" style="background:var(--cat-food-bg); color:var(--cat-food);">🛒</div>
-                    <div class="cat-body-column">
-                        <div class="cat-title-line">
-                            <span class="cat-label-text">Food & Groceries</span>
-                            <span class="cat-price-text" id="catFoodPrice">Rs. 0</span>
-                        </div>
-                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barFood" style="width: 32%; background:var(--cat-food);"></div></div>
-                    </div>
-                </div>
-
-                <div class="cat-progress-item">
-                    <div class="cat-icon-chip" style="background:var(--cat-home-bg); color:var(--cat-home);">⚡</div>
-                    <div class="cat-body-column">
-                        <div class="cat-title-line">
-                            <span class="cat-label-text">Home & Utilities</span>
-                            <span class="cat-price-text" id="catHomePrice">Rs. 0</span>
-                        </div>
-                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barHome" style="width: 18%; background:var(--cat-home);"></div></div>
-                    </div>
-                </div>
-
-                <div class="cat-progress-item">
-                    <div class="cat-icon-chip" style="background:var(--cat-school-bg); color:var(--cat-school);">🎓</div>
-                    <div class="cat-body-column">
-                        <div class="cat-title-line">
-                            <span class="cat-label-text">School Fees</span>
-                            <span class="cat-price-text" id="catSchoolPrice">Rs. 0</span>
-                        </div>
-                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barSchool" style="width: 10%; background:var(--cat-school);"></div></div>
-                    </div>
-                </div>
-
-                <div class="cat-progress-item">
-                    <div class="cat-icon-chip" style="background:var(--cat-agri-bg); color:var(--cat-agri);">🚜</div>
-                    <div class="cat-body-column">
-                        <div class="cat-title-line">
-                            <span class="cat-label-text">Agriculture / Zameen</span>
-                            <span class="cat-price-text" id="catAgriPrice">Rs. 0</span>
-                        </div>
-                        <div class="cat-meter-track"><div class="cat-meter-fill" id="barAgri" style="width: 8%; background:var(--cat-agri);"></div></div>
-                    </div>
+                <div id="topCategoriesContainer">
+                    <!-- Dynamically Populated by JS -->
                 </div>
             </section>
 
             <!-- Mini Calendar Widget -->
             <section class="calendar-widget-card">
                 <div class="calendar-nav-row">
-                    <span id="calendarMonthTitle">September 2026</span>
+                    <span id="calendarMonthTitle">Loading...</span>
                     <div style="display:flex; gap:6px;">
                         <button class="cal-arrow-btn" onclick="window.location.href='daily-register.html'">‹</button>
                         <button class="cal-arrow-btn" onclick="window.location.href='daily-register.html'">›</button>
@@ -1351,7 +1372,7 @@
                 </a>
 
                 <a href="settings.html" class="dock-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     <span>Settings</span>
                 </a>
             </nav>
@@ -1359,20 +1380,85 @@
 
     </main>
 
+    <!-- TRANSACTION DETAIL MODAL POPUP (POPU UI) -->
+    <div class="modal-overlay" id="transactionDetailModal">
+        <div class="modal-card">
+            <div class="modal-header-line">
+                <h3 class="modal-title-str" id="modalItemTitle">Transaction Details</h3>
+                <button type="button" class="modal-close-btn" id="modalCloseBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <div class="modal-invoice-grid">
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Category / Sector</span>
+                    <span class="invoice-row-val" id="modalItemCat">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Quantity & Measure</span>
+                    <span class="invoice-row-val" id="modalItemQty">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Calculated Unit Rate</span>
+                    <span class="invoice-row-val" id="modalItemRate">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Total Amount</span>
+                    <span class="invoice-row-val" id="modalItemAmount">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Time Logged</span>
+                    <span class="invoice-row-val" id="modalItemTime">--</span>
+                </div>
+                <div class="invoice-row">
+                    <span class="invoice-row-label">Payment Method</span>
+                    <span class="invoice-row-val" id="modalItemVendor">Cash</span>
+                </div>
+                <div class="invoice-row" id="modalNotesRow" style="display:none;">
+                    <span class="invoice-row-label">Remarks / Note</span>
+                    <span class="invoice-row-val" id="modalItemNotes" style="text-align: right; max-width: 150px;">--</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn-modal-dismiss" id="modalDismissBtn">Dismiss Details</button>
+        </div>
+    </div>
+
     <!-- ==========================================================================
-       10. CORE REALTIME FIREBASE DASHBOARD INTEGRATION ENGINE
+       10. CORE REALTIME FIREBASE DASHBOARD INTEGRATION ENGINE (STRICT LOGIC)
        ========================================================================== -->
     <script type="module">
-        import { auth, db } from './firebase/firebase-config.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
         import { 
+            getFirestore, 
             collection, 
             query, 
             where, 
             onSnapshot, 
             getDoc, 
-            doc 
+            doc,
+            enableIndexedDbPersistence
         } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // Verified Firebase Architecture Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA96woK4KuQtIHWWGGF8b556ea20XPZ76w",
+            authDomain: "roz-e-hisab.firebaseapp.com",
+            projectId: "roz-e-hisab",
+            storageBucket: "roz-e-hisab.firebasestorage.app",
+            messagingSenderId: "776423119730",
+            appId: "1:776423119730:web:19c78561f4826224771beb",
+            measurementId: "G-17Q9D41WNR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Multi-Tab Offline Cache
+        enableIndexedDbPersistence(db).catch(() => { });
 
         // DOM Handles
         const profileInitials = document.getElementById('profileInitials');
@@ -1382,20 +1468,21 @@
         const pillMonthIncome = document.getElementById('pillMonthIncome');
         const pillSavings = document.getElementById('pillSavings');
         const mainBalanceDisplay = document.getElementById('mainBalanceDisplay');
+        const balanceGrowthPill = document.getElementById('balanceGrowthPill');
         const donutCenterAmount = document.getElementById('donutCenterAmount');
-        const legFoodAmt = document.getElementById('legFoodAmt');
-        const legHomeAmt = document.getElementById('legHomeAmt');
-        const legTransportAmt = document.getElementById('legTransportAmt');
-        const legSchoolAmt = document.getElementById('legSchoolAmt');
-        const legAgriAmt = document.getElementById('legAgriAmt');
-        const legOtherAmt = document.getElementById('legOtherAmt');
-        const catFoodPrice = document.getElementById('catFoodPrice');
-        const catHomePrice = document.getElementById('catHomePrice');
-        const catSchoolPrice = document.getElementById('catSchoolPrice');
-        const catAgriPrice = document.getElementById('catAgriPrice');
+        const donutSvgGraphic = document.getElementById('donutSvgGraphic');
+        const donutLegendList = document.getElementById('donutLegendList');
+        const monthlyLineChart = document.getElementById('monthlyLineChart');
+        const topCategoriesContainer = document.getElementById('topCategoriesContainer');
         const recentActivityList = document.getElementById('recentActivityList');
         const calendarGridDays = document.getElementById('calendarGridDays');
+        const calendarMonthTitle = document.getElementById('calendarMonthTitle');
         const eyeToggleIcon = document.getElementById('eyeToggleIcon');
+
+        // Modal Handles
+        const transactionDetailModal = document.getElementById('transactionDetailModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalDismissBtn = document.getElementById('modalDismissBtn');
 
         // State Machine
         const now = new Date();
@@ -1403,6 +1490,7 @@
         const currentMonth = now.getMonth() + 1;
         let activeFamilyId = localStorage.getItem("ROZ_ACTIVE_FAMILY_ID") || "DEFAULT_FAMILY";
         let isBalanceHidden = false;
+        let cachedRecords = [];
 
         // Eye Toggle for Balance
         eyeToggleIcon.addEventListener('click', () => {
@@ -1412,19 +1500,26 @@
                 eyeToggleIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
             } else {
                 eyeToggleIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
-                recalculateTotals();
+                renderDashboardMetrics();
             }
         });
 
-        // Populate Mini Calendar (September 2026)
+        // Close Modal Handlers
+        modalCloseBtn.addEventListener('click', () => transactionDetailModal.classList.remove('active'));
+        modalDismissBtn.addEventListener('click', () => transactionDetailModal.classList.remove('active'));
+
+        // Mini Calendar Engine
         function renderMiniCalendar() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            calendarMonthTitle.innerText = `${monthNames[currentMonth - 1]} ${currentYear}`;
+
             const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
             const firstDayIndex = new Date(currentYear, currentMonth - 1, 1).getDay();
             const todayDate = now.getDate();
 
             let html = '';
             for (let i = 0; i < firstDayIndex; i++) {
-                html += `<div class="cal-day-cell" style="opacity:0.3;">${30 - (firstDayIndex - i) + 1}</div>`;
+                html += `<div class="cal-day-cell" style="opacity:0.3;">${new Date(currentYear, currentMonth - 1, 0).getDate() - firstDayIndex + i + 1}</div>`;
             }
             for (let d = 1; d <= daysInMonth; d++) {
                 const isToday = d === todayDate;
@@ -1434,103 +1529,253 @@
         }
         renderMiniCalendar();
 
-        // Category Icon Mapping
+        // Category Aesthetics Mapper
+        const chartColors = ['var(--chart-c1)', 'var(--chart-c2)', 'var(--chart-c3)', 'var(--chart-c4)', 'var(--chart-c5)', 'var(--chart-c6)'];
+        
         function getCatAvatar(cat) {
-            switch((cat || '').toLowerCase()) {
-                case 'grocery': case 'food': return { emoji: '🛒', bg: '#FEF3C7', color: '#F59E0B' };
-                case 'household': case 'home': return { emoji: '⚡', bg: '#EFF6FF', color: '#3B82F6' };
-                case 'transport': return { emoji: '⛽', bg: '#ECFDF5', color: '#10B981' };
-                case 'school': return { emoji: '🎓', bg: '#F5F3FF', color: '#8B5CF6' };
-                case 'zameen': case 'agriculture': return { emoji: '🚜', bg: '#E6F4EA', color: '#059669' };
-                default: return { emoji: '📌', bg: '#ECFEFF', color: '#06B6D4' };
-            }
+            const lc = (cat || '').toLowerCase();
+            if (lc.includes('grocery') || lc.includes('food')) return { emoji: '🛒', bg: 'var(--cat-food-bg)', color: 'var(--cat-food)' };
+            if (lc.includes('home') || lc.includes('util') || lc.includes('bill')) return { emoji: '⚡', bg: 'var(--cat-home-bg)', color: 'var(--cat-home)' };
+            if (lc.includes('transport') || lc.includes('fuel')) return { emoji: '⛽', bg: 'var(--cat-transport-bg)', color: 'var(--cat-transport)' };
+            if (lc.includes('school') || lc.includes('edu')) return { emoji: '🎓', bg: 'var(--cat-school-bg)', color: 'var(--cat-school)' };
+            if (lc.includes('zameen') || lc.includes('agri')) return { emoji: '🚜', bg: 'var(--cat-agri-bg)', color: 'var(--cat-agri)' };
+            if (lc.includes('salary') || lc.includes('business') || lc.includes('income')) return { emoji: '💼', bg: '#ECFDF5', color: '#10B981' };
+            return { emoji: '📌', bg: 'var(--cat-other-bg)', color: 'var(--cat-other)' };
         }
 
-        let cachedRecords = [];
+        // Expose open modal function to global scope for onclick handlers
+        window.openTransactionModal = function(id) {
+            const record = cachedRecords.find(r => r.id === id);
+            if (!record) return;
 
-        function recalculateTotals() {
+            document.getElementById('modalItemTitle').innerText = record.itemName || 'Transaction';
+            document.getElementById('modalItemCat').innerText = record.category || 'General';
+            document.getElementById('modalItemQty').innerText = record.quantity ? `${record.quantity} ${record.unit || 'Unit'}` : 'Amount Based';
+            document.getElementById('modalItemRate').innerText = record.unitPrice ? `Rs. ${parseFloat(record.unitPrice).toLocaleString()} / ${record.unit}` : '--';
+            document.getElementById('modalItemAmount').innerText = `Rs. ${parseFloat(record.totalPrice).toLocaleString()}`;
+            document.getElementById('modalItemAmount').style.color = record.type === 'income' ? 'var(--success-ink)' : 'var(--danger-ink)';
+            document.getElementById('modalItemTime').innerText = `${record.date} • ${(record.time || '').substring(0, 5)}`;
+            document.getElementById('modalItemVendor').innerText = record.paymentMethod || record.vendor || 'Cash';
+
+            if (record.notes) {
+                document.getElementById('modalItemNotes').innerText = record.notes;
+                document.getElementById('modalNotesRow').style.display = "flex";
+            } else {
+                document.getElementById('modalNotesRow').style.display = "none";
+            }
+
+            transactionDetailModal.classList.add('active');
+        };
+
+        // Master Computation Engine (STRICT FINANCIAL LOGIC)
+        function renderDashboardMetrics() {
             let totalExpense = 0;
             let totalIncome = 0;
-            let categorySums = { food: 0, home: 0, transport: 0, school: 0, agri: 0, other: 0 };
+            let categorySums = {};
+            let monthlyData = Array(12).fill().map(() => ({ inc: 0, exp: 0 }));
 
+            // 1. Strict Aggregation
             cachedRecords.forEach(r => {
                 const amount = parseFloat(r.totalPrice) || 0;
-                // Distinguish Income vs Expense
-                if (r.type === 'income') {
-                    totalIncome += amount;
-                } else {
-                    totalExpense += amount;
-                    const cat = (r.category || '').toLowerCase();
-                    if (cat.includes('food') || cat.includes('grocery')) categorySums.food += amount;
-                    else if (cat.includes('home') || cat.includes('household')) categorySums.home += amount;
-                    else if (cat.includes('transport') || cat.includes('fuel')) categorySums.transport += amount;
-                    else if (cat.includes('school')) categorySums.school += amount;
-                    else if (cat.includes('zameen') || cat.includes('agri')) categorySums.agri += amount;
-                    else categorySums.other += amount;
+                const m = parseInt(r.month) || 1;
+                const y = parseInt(r.year) || currentYear;
+
+                // Build Line Chart Data (Whole Year)
+                if (y === currentYear && m >= 1 && m <= 12) {
+                    if (r.type === 'income') {
+                        monthlyData[m - 1].inc += amount;
+                    } else {
+                        monthlyData[m - 1].exp += amount;
+                    }
+                }
+
+                // Filter for Current Month Dashboard Metrics
+                if (y === currentYear && m === currentMonth) {
+                    if (r.type === 'income') {
+                        totalIncome += amount;
+                    } else {
+                        totalExpense += amount;
+                        // Aggregate Expense Categories strictly
+                        const cat = r.category || 'Other';
+                        categorySums[cat] = (categorySums[cat] || 0) + amount;
+                    }
                 }
             });
 
-            // Default demo baseline if empty
-            if (totalIncome === 0 && totalExpense > 0) {
-                totalIncome = Math.round(totalExpense * 1.6); // Reasonable fallback ratio
-            }
-
-            const netBalance = Math.max(0, totalIncome - totalExpense);
-            const savings = Math.round(netBalance * 0.4);
+            // 2. Strict Mathematical Balance
+            const netBalance = totalIncome - totalExpense; // Can be negative
+            const savings = totalIncome > 0 ? (totalIncome - totalExpense) : 0; // Pure savings if income exists
 
             if (!isBalanceHidden) {
                 mainBalanceDisplay.innerText = `Rs. ${netBalance.toLocaleString()}`;
             }
+            
+            // Status Pill
+            if (netBalance < 0) {
+                balanceGrowthPill.style.background = "var(--danger-bg)";
+                balanceGrowthPill.style.color = "var(--danger-ink)";
+                balanceGrowthPill.innerHTML = `<span>↘ Deficit</span>`;
+            } else {
+                balanceGrowthPill.style.background = "#ECFDF5";
+                balanceGrowthPill.style.color = "#059669";
+                balanceGrowthPill.innerHTML = `<span>↗ Active</span>`;
+            }
+
             pillTotalBalance.innerText = `Rs. ${netBalance.toLocaleString()}`;
             pillMonthExpense.innerText = `Rs. ${totalExpense.toLocaleString()}`;
             pillMonthIncome.innerText = `Rs. ${totalIncome.toLocaleString()}`;
             pillSavings.innerText = `Rs. ${savings.toLocaleString()}`;
+
+            // 3. Dynamic Donut Chart Generation
             donutCenterAmount.innerText = `Rs. ${totalExpense.toLocaleString()}`;
+            
+            // Sort categories descending
+            const sortedCats = Object.entries(categorySums).sort((a, b) => b[1] - a[1]);
+            
+            let donutSvgHTML = `<path stroke="#F1F5F9" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />`;
+            let legendHTML = ``;
+            let topCategoriesHTML = ``;
 
-            // Update Legends
-            legFoodAmt.innerText = `Rs. ${categorySums.food.toLocaleString()}`;
-            legHomeAmt.innerText = `Rs. ${categorySums.home.toLocaleString()}`;
-            legTransportAmt.innerText = `Rs. ${categorySums.transport.toLocaleString()}`;
-            legSchoolAmt.innerText = `Rs. ${categorySums.school.toLocaleString()}`;
-            legAgriAmt.innerText = `Rs. ${categorySums.agri.toLocaleString()}`;
-            legOtherAmt.innerText = `Rs. ${categorySums.other.toLocaleString()}`;
+            if (totalExpense === 0) {
+                legendHTML = `<div style="font-size:11px; color:var(--ink-tertiary); text-align:center; padding-top:10px;">No expenses recorded this month.</div>`;
+                topCategoriesContainer.innerHTML = `<div style="font-size:12px; color:var(--ink-tertiary); text-align:center;">No data to generate category progress.</div>`;
+            } else {
+                let offset = 0;
+                let colorIndex = 0;
 
-            catFoodPrice.innerText = `Rs. ${categorySums.food.toLocaleString()}`;
-            catHomePrice.innerText = `Rs. ${categorySums.home.toLocaleString()}`;
-            catSchoolPrice.innerText = `Rs. ${categorySums.school.toLocaleString()}`;
-            catAgriPrice.innerText = `Rs. ${categorySums.agri.toLocaleString()}`;
+                // Process Top 5 + Aggregated "Other"
+                let displayCats = [];
+                if (sortedCats.length <= 5) {
+                    displayCats = sortedCats;
+                } else {
+                    displayCats = sortedCats.slice(0, 4);
+                    const otherSum = sortedCats.slice(4).reduce((acc, curr) => acc + curr[1], 0);
+                    displayCats.push(["Other", otherSum]);
+                }
 
-            // Compute Real Donut Circle Dash Arrays
-            if (totalExpense > 0) {
-                const pFood = (categorySums.food / totalExpense) * 100;
-                const pHome = (categorySums.home / totalExpense) * 100;
-                const pTransport = (categorySums.transport / totalExpense) * 100;
-                const pSchool = (categorySums.school / totalExpense) * 100;
-                const pAgri = (categorySums.agri / totalExpense) * 100;
-                const pOther = (categorySums.other / totalExpense) * 100;
+                displayCats.forEach(item => {
+                    const catName = item[0];
+                    const catAmt = item[1];
+                    const pct = (catAmt / totalExpense) * 100;
+                    const color = chartColors[colorIndex % chartColors.length];
 
-                document.getElementById('segFood').setAttribute('stroke-dasharray', `${pFood}, 100`);
-                document.getElementById('segHome').setAttribute('stroke-dasharray', `${pHome}, 100`);
-                document.getElementById('segHome').setAttribute('stroke-dashoffset', `-${pFood}`);
-                document.getElementById('segTransport').setAttribute('stroke-dasharray', `${pTransport}, 100`);
-                document.getElementById('segTransport').setAttribute('stroke-dashoffset', `-${pFood + pHome}`);
-                document.getElementById('segSchool').setAttribute('stroke-dasharray', `${pSchool}, 100`);
-                document.getElementById('segSchool').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport}`);
-                document.getElementById('segAgri').setAttribute('stroke-dasharray', `${pAgri}, 100`);
-                document.getElementById('segAgri').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport + pSchool}`);
-                document.getElementById('segOther').setAttribute('stroke-dasharray', `${pOther}, 100`);
-                document.getElementById('segOther').setAttribute('stroke-dashoffset', `-${pFood + pHome + pTransport + pSchool + pAgri}`);
+                    // Add Donut Slice Path
+                    donutSvgHTML += `<path stroke="${color}" stroke-dasharray="${pct}, 100" stroke-dashoffset="-${offset}" stroke-width="4.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="transition: stroke-dasharray 0.6s ease;" />`;
+                    offset += pct;
+
+                    // Add Legend Item
+                    legendHTML += `
+                        <div class="legend-line-item">
+                            <div class="legend-name-block">
+                                <span class="legend-dot-indicator" style="background:${color};"></span>
+                                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:85px;">${catName}</span>
+                            </div>
+                            <span class="legend-amount-block">Rs. ${catAmt.toLocaleString()}</span>
+                        </div>
+                    `;
+                    colorIndex++;
+                });
+
+                // Populate Top Categories Bar Cards
+                topCategoriesHTML = sortedCats.slice(0, 4).map(item => {
+                    const catName = item[0];
+                    const catAmt = item[1];
+                    const pct = Math.round((catAmt / totalExpense) * 100);
+                    const av = getCatAvatar(catName);
+                    return `
+                        <div class="cat-progress-item">
+                            <div class="cat-icon-chip" style="background:${av.bg}; color:${av.color};">${av.emoji}</div>
+                            <div class="cat-body-column">
+                                <div class="cat-title-line">
+                                    <span class="cat-label-text">${catName}</span>
+                                    <span class="cat-price-text">Rs. ${catAmt.toLocaleString()}</span>
+                                </div>
+                                <div class="cat-meter-track"><div class="cat-meter-fill" style="width: ${pct}%; background:${av.color};"></div></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                topCategoriesContainer.innerHTML = topCategoriesHTML;
             }
 
-            // Render Recent 5 Transactions
+            donutSvgGraphic.innerHTML = donutSvgHTML;
+            donutLegendList.innerHTML = legendHTML;
+
+            // 4. Dynamic Monthly Line Chart Generation (SVG)
+            // Find max value for Y-axis scaling
+            let maxVal = 0;
+            monthlyData.forEach(d => {
+                if (d.inc > maxVal) maxVal = d.inc;
+                if (d.exp > maxVal) maxVal = d.exp;
+            });
+            if (maxVal === 0) maxVal = 1000; // default scale if empty
+
+            // Chart dimensions: 320x130, Plot Area: X from 10 to 310, Y from 110 (bottom) to 30 (top)
+            let incPoints = [];
+            let expPoints = [];
+            const stepX = (310 - 10) / 11; // 12 months = 11 intervals
+
+            monthlyData.forEach((d, index) => {
+                const px = 10 + (index * stepX);
+                const pyInc = 110 - ((d.inc / maxVal) * 80);
+                const pyExp = 110 - ((d.exp / maxVal) * 80);
+                incPoints.push(`${px},${pyInc}`);
+                expPoints.push(`${px},${pyExp}`);
+            });
+
+            // Generate Path strings
+            const incPathStr = "M " + incPoints.join(" L ");
+            const expPathStr = "M " + expPoints.join(" L ");
+
+            // Generate Circles
+            const incCircles = incPoints.map(pt => {
+                const [cx, cy] = pt.split(',');
+                return `<circle cx="${cx}" cy="${cy}" r="3" fill="#10B981"/>`;
+            }).join('');
+            
+            const expCircles = expPoints.map(pt => {
+                const [cx, cy] = pt.split(',');
+                return `<circle cx="${cx}" cy="${cy}" r="3" fill="#0F172A"/>`;
+            }).join('');
+
+            // Assemble Line Chart SVG
+            monthlyLineChart.innerHTML = `
+                <!-- Grid Lines -->
+                <line x1="0" y1="30" x2="320" y2="30" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="70" x2="320" y2="70" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="110" x2="320" y2="110" stroke="#F1F5F9" stroke-width="1"/>
+
+                <!-- Expense Curve (Dark) -->
+                <path d="${expPathStr}" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linejoin="round"/>
+                ${expCircles}
+
+                <!-- Income Curve (Green) -->
+                <path d="${incPathStr}" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+                ${incCircles}
+
+                <!-- Month Labels -->
+                <text x="10" y="128" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jan</text>
+                <text x="64" y="128" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Mar</text>
+                <text x="146" y="128" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Jun</text>
+                <text x="228" y="128" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Sep</text>
+                <text x="300" y="128" font-size="9" fill="#94A3B8" font-family="Plus Jakarta Sans">Dec</text>
+            `;
+
+            // 5. Render Recent 5 Transactions
             if (cachedRecords.length === 0) {
                 recentActivityList.innerHTML = `<div style="text-align:center; padding:18px; color:var(--ink-tertiary); font-size:12px;">No transactions recorded yet. Tap + to add.</div>`;
             } else {
+                // Sort by absolute timestamp strictly
                 const latest5 = [...cachedRecords].sort((a,b) => (b.date + (b.time || '')).localeCompare(a.date + (a.time || ''))).slice(0, 5);
+                
                 recentActivityList.innerHTML = latest5.map(item => {
                     const av = getCatAvatar(item.category);
+                    const isInc = item.type === 'income';
+                    const sign = isInc ? '+' : '-';
+                    const priceClass = isInc ? 'activity-price-income' : 'activity-price-expense';
+                    
                     return `
-                        <div class="activity-item-row">
+                        <div class="activity-item-row" onclick="openTransactionModal('${item.id}')">
                             <div class="activity-left-block">
                                 <div class="activity-avatar-chip" style="background:${av.bg}; color:${av.color};">
                                     ${av.emoji}
@@ -1541,8 +1786,8 @@
                                 </div>
                             </div>
                             <div class="activity-right-block">
-                                <span class="activity-price-str">Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
-                                <span class="activity-time-str">${item.date}</span>
+                                <span class="activity-price-str ${priceClass}">${sign} Rs. ${parseFloat(item.totalPrice).toLocaleString()}</span>
+                                <span class="activity-time-str">${(item.time || '').substring(0, 5)}</span>
                             </div>
                         </div>
                     `;
@@ -1573,12 +1818,13 @@
                 snapshot.forEach(doc => {
                     cachedRecords.push({ id: doc.id, ...doc.data() });
                 });
-                recalculateTotals();
+                renderDashboardMetrics();
             }, (err) => {
                 console.warn("[Dashboard Offline Cache]:", err);
-                recalculateTotals();
+                renderDashboardMetrics();
             });
         });
     </script>
 </body>
+
 </html>
